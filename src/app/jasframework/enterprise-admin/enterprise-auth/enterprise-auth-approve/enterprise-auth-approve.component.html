@@ -1,0 +1,297 @@
+<div class="enp-auth-approve component clearfix">
+  <div class="title">
+    <span>{{authEnterpriseName}}</span>
+  </div>
+  <div class="line"></div>
+
+  <div class="content clearfix">
+    <div class="basic-info-header">
+      <span class="basic-info-header-title">认证信息</span>
+    </div>
+    <table *ngIf="enpAuthInfo" class="basic-info-table">
+      <tr>
+        <td colspan="2">
+          <span class="table-cell text-muted">认证企业全称：</span>
+          <span>{{enpAuthInfo.authEnterpriseName}}</span>
+          <span *ngIf="isSameName" class="hint">
+                <a>（已存在同名企业
+                  <a (click)="view(viewModal)" class="detailView"> 详情</a>
+                    ）</a>
+            </span>
+        </td>
+
+        <td>
+          <span class="table-cell text-muted">认证企业注册号：</span>
+          <span>{{enpAuthInfo.authRegisterNum}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <span class="table-cell text-muted">申请人：</span>
+          <span>{{enpAuthInfo.startUserName}}</span>
+        </td>
+        <td>
+          <span class="table-cell text-muted">申请时间：</span>
+          <span>{{enpAuthInfo.startTime}}</span>
+        </td>
+        <td>
+          <span class="table-cell text-muted">认证发起来源：</span>
+          <span>{{enpAuthInfo.fromAppName}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td width="100%">
+          <span class="text-muted">营业执照：</span>
+          <span *ngIf="authLicensePhoto">
+            <span *ngFor="let item of authLicensePhoto">
+              <img src='/cloudlink/v1/cloudlink-core-file/file/downLoad?fileId={{item}}' alt="营业执照" class="img-picture"
+                   (click)="showPictureBtn(item);showPictureModal.show()">
+            </span>
+          </span>
+          <span *ngIf="authLicensePhoto && 0 == authLicensePhoto.length">
+            <span>没有上传营业执照</span>
+          </span>
+        </td>
+        <td width="100%">
+          <span class="text-muted">身份证照：</span>
+          <span *ngIf="authIdCardPhoto">
+            <span *ngFor="let item of authIdCardPhoto">
+              <img src='/cloudlink/v1/cloudlink-core-file/file/downLoad?fileId={{item}}' alt="身份证照" class="img-picture"
+                   (click)="showPictureBtn(item);showPictureModal.show()">
+            </span>
+          </span>
+          <span *ngIf="authIdCardPhoto && 0 == authIdCardPhoto.length">
+            <span>没有上传法人身份证</span>
+          </span>
+        </td>
+        <td>
+
+        </td>
+      </tr>
+    </table>
+
+    <div class="basic-info-header">
+      <span class="basic-info-header-title">企业其他信息</span>
+    </div>
+    <table *ngIf="Info" class="basic-info-table">
+      <tr>
+        <td>
+          <span class="table-cell text-muted">企业名称：</span>
+          <span>{{Info.enterpriseName}}</span>
+        </td>
+        <td>
+          <span class="table-cell text-muted">企业注册号：</span>
+          <span>{{Info.registerNum}}</span>
+        </td>
+
+        <td>
+          <span class="table-cell text-muted">企业规模：</span>
+          <span>{{Info.enterpriseScale | enterpriseScale }}</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <span class="table-cell text-muted">企业联系电话：</span>
+          <span>{{Info.telephoneNum}}</span>
+        </td>
+        <td>
+          <span class="table-cell text-muted">企业地址：</span>
+          <span>{{Info.address}}</span>
+        </td>
+        <td>
+          <span class="table-cell text-muted">企业注册时间：</span>
+          <span>{{Info.createTime}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <span class="table-cell text-muted">企业管理员姓名：</span>
+          <span>{{Info.enpAdminName}}</span>
+        </td>
+        <td>
+          <span class="table-cell text-muted">企业管理员电话：</span>
+          <span>{{adminMobileNum}}</span>
+        </td>
+        <td>
+        </td>
+      </tr>
+    </table>
+
+    <div class="basic-info-header">
+      <span class="basic-info-header-title">历史审核记录</span>
+    </div>
+    <div class="tableList">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>序号</th>
+            <th>申请人</th>
+            <th>申请时间</th>
+            <th>审核人</th>
+            <th>审核时间</th>
+            <th>审核意见</th>
+            <th>审核结果</th>
+            <th>营业执照</th>
+            <th>身份证照</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="!isHistoryList">
+          <tr class="Userlist" *ngFor="let history of historise,let i = index">
+            <td class="table-hover">
+              {{i+1}}
+            </td>
+            <td class="table-hover">
+              {{history.startUserName}}
+            </td>
+            <td class="table-hover">
+              {{history.startTime}}
+            </td>
+            <td class="table-hover">
+              {{history.approveUserName}}
+            </td>
+            <td class="table-hover">
+              {{history.endTime}}
+            </td>
+            <td class="table-hover">
+              {{history.approveContent}}
+            </td>
+            <td class="table-hover">
+              {{history.approveResult}}
+            </td>
+            <td>
+              <span *ngIf="history.authLicensePhoto">
+              <span *ngFor="let item of history.authLicensePhoto.split(',')">
+                <img src='/cloudlink/v1/cloudlink-core-file/file/downLoad?fileId={{item}}' alt="营业执照"
+                     class="tableList-mg-picture" (click)="showPictureBtn(item);showPictureModal.show()">
+              </span>
+              </span>
+              <span *ngIf="!history.authLicensePhoto">没有图片</span>
+            </td>
+            <td>
+              <span *ngIf="history.authIdCardPhoto">
+               <span *ngFor="let item of history.authIdCardPhoto.split(',')">
+                <img src='/cloudlink/v1/cloudlink-core-file/file/downLoad?fileId={{item}}' alt="身份证照"
+                     class="tableList-mg-picture" (click)="showPictureBtn(item);showPictureModal.show()">
+              </span>
+              </span>
+              <span *ngIf="!history.authIdCardPhoto">没有图片</span>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="isHistoryList">
+          <tr>
+            <td colspan="8">
+              没有记录
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="approval">
+      <span>审核意见:</span>
+      <textarea type="text" rows="3" [(ngModel)]='advise' [ngClass]="{ 'tipcolor':warn }" cols="80" required autofocus class="textarea-style"></textarea>
+
+      <!--<span *ngIf="advise.errors && (advise.dirty || advise.touched)" class="warn">-->
+      <span *ngIf="warn" style="color:red">
+        审核意见不能为空
+      </span>
+    </div>
+
+    <button class="btn btn-success btn-style" (click)="pass()" [disabled]="disabled || isSameName">通&nbsp;过</button>
+    <button class="btn btn-danger" (click)="turn()" [disabled]="disabled">驳&nbsp;回</button>
+    <button class="btn btn-warning" (click)="cancle()" [disabled]="disabled">返&nbsp;回</button>
+  </div>
+
+</div>
+
+<!--提示框-->
+<p-confirmDialog header="提示" icon="fa fa-question-circle" width="425" #cd>
+  <p-footer>
+    <button type="button" pButton icon="fa-close" label="取消" (click)="cd.reject()" class="btn-cancle"></button>
+    <button type="button" pButton icon="fa-check" label="确认" (click)="cd.accept()" class="btn-reset"></button>
+  </p-footer>
+</p-confirmDialog>
+
+
+<div class="modal fade" bsModal #viewModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left modal-title-color">{{sameEnpName}}</h4>
+        <button type="button" class="close pull-right colorbgc" aria-label="Close" (click)="viewModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table *ngIf="sameEnp" class="basic-info-table">
+          <tr>
+            <td>
+              <span class="table-cell text-muted">企业名称：</span>
+              <span>{{sameEnp.enterpriseName}}</span>
+            </td>
+            <td>
+              <span class="table-cell text-muted">企业注册号：</span>
+              <span>{{sameEnp.registerNum}}</span>
+            </td>
+
+          </tr>
+          <tr>
+            <td>
+              <span class="table-cell text-muted">企业规模：</span>
+              <span>{{sameEnp.enterpriseScale | enterpriseScale }}</span>
+            </td>
+            <td>
+              <span class="table-cell text-muted">企业联系电话：</span>
+              <span>{{sameEnp.telephoneNum}}</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="table-cell text-muted">企业地址：</span>
+              <span>{{sameEnp.address}}</span>
+            </td>
+            <td>
+              <span class="table-cell text-muted">企业注册时间：</span>
+              <span>{{sameEnp.createTime}}</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="table-cell text-muted">企业管理员姓名：</span>
+              <span>{{sameEnp.enpAdminName}}</span>
+            </td>
+            <td>
+              <span class="table-cell text-muted">企业管理员电话：</span>
+              <span>{{adminMobileNum}}</span>
+            </td>
+
+          </tr>
+        </table>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 handle ">
+          <button type="button " class="btn btn-default pull-right " (click)='viewModal.hide()'> 取消</button>
+        </div>
+        <div style="clear:both; "></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--弹窗显示图片-->
+<div class="modal fade" bsModal #showPictureModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content bgc-content">
+      <div>
+        <!--<h4 class="modal-title pull-left">图片</h4>-->
+        <!--<button type="button" class="close pull-right colorbgc " (click)="showPictureModal.hide()" aria-label="Close">-->
+        <span class="close-show-picture" aria-hidden="true" (click)="showPictureModal.hide()">&times;</span>
+        <!--</button>-->
+      </div>
+      <span *ngIf="pictureFileId" class="span-show">
+        <img src='/cloudlink/v1/cloudlink-core-file/file/downLoad?fileId={{pictureFileId}}' alt="图片">
+      </span>
+    </div>
+  </div>
+</div>

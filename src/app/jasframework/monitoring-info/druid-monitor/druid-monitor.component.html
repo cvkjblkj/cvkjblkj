@@ -1,0 +1,672 @@
+<div class="list-show-view component  clearfix">
+  <div class="title">
+    <span>数据库监控</span>
+  </div>
+  <div class="line"></div>
+  <div class="content">
+    <div class="search-style appService clearfix">
+
+      <span *ngIf="dropDownServerNames && dropDownPort" class="primeng-dropdown primeng-treeTable">
+        <p-dropdown [options]="dropDownServerNames" [(ngModel)]="selectServerName" placeholder="请选择服务名"
+                    (onChange)="onChangeService(selectServerName)" [style]="{'width':'200px','padding':'1px'}">
+        </p-dropdown>
+        <p-dropdown [options]="dropDownPort" [(ngModel)]="selectPort" placeholder="请选择端口号"
+                    [style]="{'width':'150px','padding':'1px'}">
+        </p-dropdown>
+      </span>
+      <span>&nbsp;&nbsp;&nbsp;时间：</span>
+      <span class="timer">
+        <span class="date">
+          <p-calendar [(ngModel)]="selectStartTime" [showTime]="true" dateFormat="yy-mm-dd"
+                      [yearNavigator]="true" yearRange="2000:2030" [locale]="zh" [monthNavigator]="true"
+                      [showSeconds]="true"></p-calendar>
+          &nbsp;—&nbsp;
+          <p-calendar [(ngModel)]="selectEndTime" [showTime]="true" dateFormat="yy-mm-dd"
+                      [yearNavigator]="true" yearRange="2000:2030" [locale]="zh" [monthNavigator]="true"
+                      [showSeconds]="true"></p-calendar>
+        </span>
+      </span>
+      
+      
+      <div>
+        <button class="btn btn-reset search-btn" (click)="search()">搜索</button>
+      </div>
+    
+    </div>
+    <div class="database-show-list border-set">
+      <tabset class="define-nav">
+        <tab heading="数据源">
+          <p-dataTable scrollable="true" [value]="dataSourceList" [emptyMessage]='emptyMessage'>
+            <!--scrollHeight="200px" frozenWidth="200px" unfrozenWidth="600px">-->
+            <p-column field="name" header="数据源名称" [style]="{'width':'200px'}"></p-column>
+            <p-column field="serviceName" header="微服务名称" [style]="{'width':'200px'}"></p-column>
+            <p-column field="servicePort" header="端口"></p-column>
+            <p-column field="createTime" header="创建时间" [style]="{'width':'150px'}"></p-column>
+            <p-column field="poolingCount" header="池中连接数"></p-column>
+            <p-column field="activeCount" header="活跃连接数"></p-column>
+            <p-column field="executeCount" header="执行数"></p-column>
+            <p-column field="errorCount" header="错误数"></p-column>
+            <p-column header="操作">
+              <template let-data="rowData" pTemplate="body">
+                <span class="operate">
+                  <button class="editor" (click)="viewShow(dataSourceModal, data)">查看</button>
+                </span>
+              </template>
+            </p-column>
+          </p-dataTable>
+          <div #screenWidth>
+            <!--数据太多提示-->
+            <query-data-overloaded *ngIf="totalItemsDS > 1000" class="message-info"
+                                   [total]="totalItemsDS"></query-data-overloaded>
+            <grid-pagination [totalPages]="totalPagesDS" [totalItems]='totalItemsDS > 1000 ? 1000: totalItemsDS'
+                             [size]='pageSizeDS' [pageSize]='rowsPerPageOptions' [maxSize]='maxSizeDS'
+                             (sizeChanged)='sizeChangedDS($event)'
+                             (pageChanged)='paginateDS($event)'></grid-pagination>
+          </div>
+
+        </tab>
+
+        <tab heading="SQL监控" (select)="getSqlTabWidth()">
+          <div class="sql-list-info">
+            <p-dataTable scrollable="true" [value]="sqlMonitorList" [emptyMessage]='emptyMessage'
+                         frozenWidth="150px" unfrozenWidth="{{tabWidth - 150 + 'px'}}">
+              <p-column field="id" header="SQL" [style]="{'width':'150px'}" frozen="true">
+                <template let-data="rowData" pTemplate="body">
+                <span class="operate">
+                  <a class="link-a" (click)="viewShow(sqlModal, data)" title="{{data?.sql}}">
+                    {{data?.sql?.slice(0,15) + '...'}}</a>
+                </span>
+                </template>
+              </p-column>
+              <p-column field="serviceName" header="微服务名称" [style]="{'width':'160px'}"></p-column>
+              <p-column field="servicePort" header="端口" [style]="{'width':'70px'}"></p-column>
+              <p-column field="createTime" header="创建时间" [style]="{'width':'130px'}"></p-column>
+              <p-column field="executeCount" header="执行数" [style]="{'width':'100px'}"></p-column>
+              <p-column field="totalTime" header="执行时间" [style]="{'width':'100px'}"></p-column>
+              <p-column field="maxTimespan" header="最慢" [style]="{'width':'100px'}"></p-column>
+              <p-column field="inTransactionCount" header="事务中" [style]="{'width':'100px'}"></p-column>
+              <p-column field="errorCount" header="错误数" [style]="{'width':'100px'}"></p-column>
+              <p-column field="effectedRowCount" header="更新行数" [style]="{'width':'100px'}"></p-column>
+              <p-column field="fetchRowCount" header="读取行数" [style]="{'width':'100px'}"></p-column>
+              <p-column field="runningCount" header="执行中" [style]="{'width':'100px'}"></p-column>
+              <p-column field="concurrentMax" header="最大并发" [style]="{'width':'100px'}"></p-column>
+              <p-column field="histogram" header="执行时间分布" [style]="{'width':'130px'}"></p-column>
+              <p-column field="executeAndResultHoldTimeHistogram" header="执行+RS时分布"
+                        [style]="{'width':'130px'}"></p-column>
+              <p-column field="fetchRowCountHistogram" header="读取行分布" [style]="{'width':'100px'}"></p-column>
+              <p-column field="effectedRowCountHistogram" header="更新行分布" [style]="{'width':'100px'}"></p-column>
+            </p-dataTable>
+            <div #screenWidthSQL>
+              <query-data-overloaded *ngIf="totalItemsSQL > 1000" class="message-info"
+                                     [total]="totalItemsSQL"></query-data-overloaded>
+              <grid-pagination [totalPages]="totalPagesSQL" [totalItems]='totalItemsSQL > 1000 ? 1000: totalItemsSQL'
+                               [size]='pageSizeSQL' [pageSize]='rowsPerPageOptions' [maxSize]='maxSizeSQL'
+                               (sizeChanged)='sizeChangedSQL($event)'
+                               (pageChanged)='paginateSQL($event)'></grid-pagination>
+            </div>
+          </div>
+        
+        
+        </tab>
+        
+        <tab heading="URI监控">
+          <p-dataTable scrollable="true" [value]="uriMonitorList" [emptyMessage]='emptyMessage'>
+            <p-column field="uri" header="URI" [style]="{'width':'150px'}"></p-column>
+            <p-column field="serviceName" header="微服务名称" [style]="{'width':'150px'}"></p-column>
+            <p-column field="servicePort" header="端口" [style]="{'width':'60px'}"></p-column>
+            <p-column field="createTime" header="创建时间" [style]="{'width':'130px'}"></p-column>
+            <p-column field="requestCount" header="请求次数" [style]="{'width':'60px'}"></p-column>
+            <p-column field="requestTimeMillis" header="请求时间" [style]="{'width':'60px'}"></p-column>
+            <p-column field="concurrentMax" header="最大并发" [style]="{'width':'60px'}"></p-column>
+            <!--<p-column field="jdbcExecuteCount" header="Jdbc执行数" [style]="{'width':'100px'}"></p-column>-->
+            <p-column field="jdbcExecuteErrorCount" header="Jdbc出错数" [style]="{'width':'70px'}"></p-column>
+            <!--<p-column field="histogram" header="区间分布" [style]="{'width':'100px'}"></p-column>-->
+            <p-column header="操作" [style]="{'width':'70px'}">
+              <template let-data="rowData" pTemplate="body">
+                <span class="operate">
+                  <button class="editor" (click)="viewShow(URIModal, data)">查看</button>
+                </span>
+              </template>
+            </p-column>
+          </p-dataTable>
+          <div #screenWidthURI>
+            <query-data-overloaded *ngIf="totalItemsURI > 1000" class="message-info"
+                                   [total]="totalItemsURI"></query-data-overloaded>
+            <grid-pagination [totalPages]="totalPagesURI" [totalItems]='totalItemsURI > 1000 ? 1000: totalItemsURI'
+                             [size]='pageSizeSQL' [pageSize]='rowsPerPageOptions' [maxSize]='maxSizeURI'
+                             (sizeChanged)='sizeChangedURI($event)'
+                             (pageChanged)='paginateURI($event)'></grid-pagination>
+          </div>
+        
+        </tab>
+      </tabset>
+    </div>
+  
+  </div>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+</div>
+
+
+<!--数据源详情弹窗-->
+<div class="modal fade common-modal" bsModal #dataSourceModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1"
+     role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">数据源详情</h4>
+        <button type="button" class="close pull-right colorbgc" aria-label="Close" (click)="dataSourceModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="database-show-list">
+          <tabset class="define-nav">
+            <tab heading="基本信息">
+              <div #dataSourceBasicHeight>
+                <table class="basic-info">
+                  <tr>
+                    <td>数据源名称</td>
+                    <td>{{dataDetail?.name}}</td>
+                  </tr>
+                  <tr>
+                    <td>微服务名称</td>
+                    <td>{{dataDetail?.serviceName}}</td>
+                  </tr>
+                  <tr>
+                    <td>端口</td>
+                    <td>{{dataDetail?.servicePort}}</td>
+                  </tr>
+                  <tr>
+                    <td>创建时间</td>
+                    <td>{{dataDetail?.createTime}}</td>
+                  </tr>
+                  <tr>
+                    <td>用户名</td>
+                    <td>{{dataDetail?.userName}}</td>
+                  </tr>
+                  <tr>
+                    <td>连接地址</td>
+                    <td>{{dataDetail?.url}}</td>
+                  </tr>
+                  <tr>
+                    <td>数据库类型</td>
+                    <td>{{dataDetail?.dbType}}</td>
+                  </tr>
+                  <tr>
+                    <td>驱动类名</td>
+                    <td>{{dataDetail?.driverClassName}}</td>
+                  </tr>
+                  <tr>
+                    <td>filter类名</td>
+                    <td>{{dataDetail?.filterClassNames}}</td>
+                  </tr>
+                  <tr>
+                    <td>获取连接时检测</td>
+                    <td>{{dataDetail?.testOnBorrow}}</td>
+                  </tr>
+                  <tr>
+                    <td>空闲时检测</td>
+                    <td>{{dataDetail?.testWhileIdle}}</td>
+                  </tr>
+                  <tr>
+                    <td>连接放回连接池时检测</td>
+                    <td>{{dataDetail?.testOnReturn}}</td>
+                  </tr>
+                  <tr>
+                    <td>初始化连接大小</td>
+                    <td>{{dataDetail?.initialSize}}</td>
+                  </tr>
+                  <tr>
+                    <td>最小空闲连接数</td>
+                    <td>{{dataDetail?.minIdle}}</td>
+                  </tr>
+                  <tr>
+                    <td>最大连接数</td>
+                    <td>{{dataDetail?.maxActive}}</td>
+                  </tr>
+                  <tr>
+                    <td>查询超时时间</td>
+                    <td>{{dataDetail?.queryTimeout}}</td>
+                  </tr>
+                  <tr>
+                    <td>事务查询超时时间</td>
+                    <td>{{dataDetail?.transactionQueryTimeout}}</td>
+                  </tr>
+                  <tr>
+                    <td>登录超时时间</td>
+                    <td>{{dataDetail?.loginTimeout}}</td>
+                  </tr>
+                  <tr>
+                    <td>连接有效性检查类名</td>
+                    <td>{{dataDetail?.validConnectionCheckerClassName}}</td>
+                  </tr>
+                  <tr>
+                    <td>ExceptionSorter类名</td>
+                    <td>{{dataDetail?.exceptionSorterClassName}}</td>
+                  </tr>
+                  <tr>
+                    <td>默认autocommit设置</td>
+                    <td>{{dataDetail?.defaultAutoCommit}}</td>
+                  </tr>
+                  <tr>
+                    <td>默认只读设置</td>
+                    <td>{{dataDetail?.defaultReadOnly}}</td>
+                  </tr>
+                  <tr>
+                    <td>默认事务隔离</td>
+                    <td>{{dataDetail?.defaultTransactionIsolation}}</td>
+                  </tr>
+                  <tr>
+                    <td>等待次数</td>
+                    <td>{{dataDetail?.notEmptyWaitCount}}</td>
+                  </tr>
+                  <tr>
+                    <td>等待最大时长</td>
+                    <td>{{dataDetail?.notEmptyWaitMillis}}</td>
+                  </tr>
+                  <tr>
+                    <td>等待线程数量</td>
+                    <td>{{dataDetail?.waitThreadCount}}</td>
+                  </tr>
+                  <tr>
+                    <td>事务启动数</td>
+                    <td>{{dataDetail?.startTransactionCount}}</td>
+                  </tr>
+                  <tr>
+                    <td>事务时间分布</td>
+                    <td>{{dataDetail?.transactionHistogram}}</td>
+                  </tr>
+                  <tr>
+                    <td>池中连接数</td>
+                    <td>{{dataDetail?.poolingCount}}</td>
+                  </tr>
+                  <tr>
+                    <td>池中连接数峰值</td>
+                    <td>{{dataDetail?.activePeak}}</td>
+                  </tr>
+                  <tr>
+                    <td>活跃连接数峰值时间</td>
+                    <td>{{dataDetail?.activePeakTime}}</td>
+                  </tr>
+                  <tr>
+                    <td>逻辑连接打开次数</td>
+                    <td>{{dataDetail?.logicConnectCount}}</td>
+                  </tr>
+                  <tr>
+                    <td>逻辑连接关闭次数</td>
+                    <td>{{dataDetail?.logicCloseCount}}</td>
+                  </tr>
+                  <tr>
+                    <td>逻辑连接错误次数</td>
+                    <td>{{dataDetail?.logicConnectErrorCount}}</td>
+                  </tr>
+                  <tr>
+                    <td>物理连接打开次数</td>
+                    <td>{{dataDetail?.physicalConnectCount}}</td>
+                  </tr>
+                  <tr>
+                    <td>物理关闭数量</td>
+                    <td>{{dataDetail?.physicalCloseCount}}</td>
+                  </tr>
+                  <tr>
+                    <td>物理连接错误次数</td>
+                    <td>{{dataDetail?.physicalConnectErrorCount}}</td>
+                  </tr>
+                  <tr>
+                    <td>执行数</td>
+                    <td>{{dataDetail?.executeCount}}</td>
+                  </tr>
+                  <tr>
+                    <td>错误数</td>
+                    <td>{{dataDetail?.errorCount}}</td>
+                  </tr>
+                  <tr>
+                    <td>提交数</td>
+                    <td>{{dataDetail?.commitCount}}</td>
+                  </tr>
+                  <tr>
+                    <td>回滚数</td>
+                    <td>{{dataDetail?.rollbackCount}}</td>
+                  </tr>
+                  <tr>
+                    <td>PSCache访问次数</td>
+                    <td>{{dataDetail?.pscacheAccessCount}}</td>
+                  </tr>
+                  <tr>
+                    <td>PSCache命中次数</td>
+                    <td>{{dataDetail?.pscacheHitCount}}</td>
+                  </tr>
+                  <tr>
+                    <td>PSCache不命中次数</td>
+                    <td>{{dataDetail?.pscacheMissCount}}</td>
+                  </tr>
+                  <tr>
+                    <td>连接持有时间分布</td>
+                    <td>{{dataDetail?.connectionHoldTimeHistogram}}</td>
+                  </tr>
+                  <tr>
+                    <td>Clob打开次数</td>
+                    <td>{{dataDetail?.clobOpenCount}}</td>
+                  </tr>
+                  <tr>
+                    <td>Blob打开次数</td>
+                    <td>{{dataDetail?.blobOpenCount}}</td>
+                  </tr>
+                </table>
+              </div>
+            </tab>
+            
+            <tab heading="连接池中连接信息">
+              <div #dataSourceConnectHeight>
+                <div *ngIf="dataDetail?.poolingConnectionInfo">
+                  <p-dataTable scrollable="true" [value]="dataDetail?.poolingConnectionInfo" scrollHeight="500px"
+                               [emptyMessage]='emptyMessage'>
+                    <p-column field="id" header="ID" [style]="{'width':'60px'}"></p-column>
+                    <p-column field="connectionId" header="ConnectionId" [style]="{'width':'100px'}"></p-column>
+                    <p-column field="useCount" header="UseCount" [style]="{'width':'100px'}"></p-column>
+                    <p-column field="connectTime" header="ConnectTime" [style]="{'width':'120px'}"></p-column>
+                    <p-column field="lastActiveTime" header="LastActiveTime" [style]="{'width':'120px'}"></p-column>
+                    <p-column field="holdability" header="Holdability" [style]="{'width':'100px'}"></p-column>
+                    <p-column field="transactionIsolation" header="TransactionIsolation"
+                              [style]="{'width':'200px'}"></p-column>
+                    <p-column field="autoCommit" header="AutoCommit" [style]="{'width':'120px'}"></p-column>
+                    <p-column field="readoOnly" header="ReadoOnly" [style]="{'width':'100px'}"></p-column>
+                    <p-column field="sql" header="Sql" [style]="{'width':'100px'}"></p-column>
+                    <p-column field="defaultRowPrefetch" header="DefaultRowPrefetch"
+                              [style]="{'width':'200px'}"></p-column>
+                    <p-column field="rowPrefetch" header="RowPrefetch" [style]="{'width':'120px'}"></p-column>
+                    <p-column field="hitCount" header="HitCount" [style]="{'width':'100px'}"></p-column>
+                    <p-column field="pscache" header="Pscache" [style]="{'width':'100px'}"></p-column>
+                    <p-column field="keepAliveCheckCount" header="KeepAliveCheckCount"
+                              [style]="{'width':'200px'}"></p-column>
+                  </p-dataTable>
+                </div>
+                <div *ngIf="!dataDetail?.poolingConnectionInfo">
+                  未查到相关数据。
+                </div>
+              </div>
+            
+            
+            </tab>
+          
+          </tabset>
+        </div>
+        <div class="button close-btn clearfix">
+          <button type="button" class="btn btn-reset fr" (click)="dataSourceModal.hide()">关闭</button>
+        </div>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--SQL监控 SQL语句弹窗-->
+<div class="modal fade common-modal" bsModal #sqlModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1"
+     role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">SQL详细信息</h4>
+        <button type="button" class="close pull-right colorbgc" aria-label="Close" (click)="sqlModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div #SQLHeight>
+          <div class="sql-div">
+            <div class="sql-info">FULL SQL:</div>
+            <textarea name="" id="" class="sql-text" readonly="readonly">{{dataDetail?.sql}}</textarea>
+          </div>
+          <div class="sql-div">
+            <div class="sql-info">
+              ParseView:
+            </div>
+            <table class="basic-info">
+              <tr>
+                <td>Tables</td>
+                <td>{{dataDetail?.parsedTable}}</td>
+              </tr>
+              <tr>
+                <td>Fields</td>
+                <td>{{dataDetail?.parsedFields}}</td>
+              </tr>
+              <tr>
+                <td>Conditions</td>
+                <td>{{dataDetail?.parsedConditions}}</td>
+              </tr>
+              <tr>
+                <td>Relationships</td>
+                <td>{{dataDetail?.parsedRelationships}}</td>
+              </tr>
+              <tr>
+                <td>OrderByColumns</td>
+                <td>{{dataDetail?.parsedOrderbycolumns}}</td>
+              </tr>
+            </table>
+          </div>
+          <div class="sql-div">
+            <div class="sql-info">LastSlowView:</div>
+            <table class="basic-info">
+              <tr>
+                <td>MaxTimespan</td>
+                <td>{{dataDetail?.maxTimespan}}</td>
+              </tr>
+              <tr>
+                <td>MaxTimespanOccurTime</td>
+                <td>{{dataDetail?.maxTimespanOccurTime}}</td>
+              </tr>
+              <tr>
+                <td>LastSlowParameters</td>
+                <td>{{dataDetail?.lastSlowParameters}}</td>
+              </tr>
+            </table>
+          </div>
+          <div class="sql-div">
+            <div class="sql-info">LastErrorView:</div>
+            <table class="basic-info">
+              <tr>
+                <td>LastErrorMessage</td>
+                <td>{{dataDetail?.lastErrorMessage}}</td>
+              </tr>
+              <tr>
+                <td>LastErrorClass</td>
+                <td>{{dataDetail?.lastErrorClass}}</td>
+              </tr>
+              <tr>
+                <td>LastErrorTime</td>
+                <td>{{dataDetail?.lastErrorTime}}</td>
+              </tr>
+              <tr>
+                <td>LastErrorStackTrace</td>
+                <td>{{dataDetail?.lastErrorStackTrace}}</td>
+              </tr>
+            </table>
+          </div>
+          <div class="sql-div">
+            <div class="sql-info">OtherView:</div>
+            <table class="basic-info">
+              <tr>
+                <td>BatchSizeMax</td>
+                <td>{{dataDetail?.batchSizeMax}}</td>
+              </tr>
+              <tr>
+                <td>BatchSizeTotal</td>
+                <td>{{dataDetail?.batchSizeTotal}}</td>
+              </tr>
+              <tr>
+                <td>BlobOpenCount</td>
+                <td>{{dataDetail?.blobOpenCount}}</td>
+              </tr>
+              <tr>
+                <td>ClobOpenCount</td>
+                <td>{{dataDetail?.clobOpenCount}}</td>
+              </tr>
+              <tr>
+                <td>ReaderOpenCount</td>
+                <td>{{dataDetail?.readerOpenCount}}</td>
+              </tr>
+              <tr>
+                <td>InputStreamOpenCount</td>
+                <td>{{dataDetail?.inputStreamOpenCount}}</td>
+              </tr>
+              <tr>
+                <td>ReadStringLength</td>
+                <td>{{dataDetail?.readStringLength}}</td>
+              </tr>
+              <tr>
+                <td>ReadBytesLength</td>
+                <td>{{dataDetail?.readBytesLength}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        
+        <div class="button close-btn clearfix">
+          <button type="button" class="btn btn-reset fr" (click)="sqlModal.hide()">关闭</button>
+        </div>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--URI详情弹窗-->
+<div class="modal fade common-modal" bsModal #URIModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1"
+     role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">URI详情</h4>
+        <button type="button" class="close pull-right colorbgc" aria-label="Close" (click)="URIModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div #URIHeight>
+          <table class="basic-info">
+            <tr>
+              <td>URI</td>
+              <td>{{dataDetail?.uri}}</td>
+            </tr>
+            <tr>
+              <td>微服务名称</td>
+              <td>{{dataDetail?.serviceName}}</td>
+            </tr>
+            <tr>
+              <td>端口</td>
+              <td>{{dataDetail?.servicePort}}</td>
+            </tr>
+            <tr>
+              <td>创建时间</td>
+              <td>{{dataDetail?.createTime}}</td>
+            </tr>
+            <tr>
+              <td>请求次数</td>
+              <td>{{dataDetail?.requestCount}}</td>
+            </tr>
+            <tr>
+              <td>请求时间</td>
+              <td>{{dataDetail?.requestTimeMillis}}</td>
+            </tr>
+            <tr>
+              <td>最后访问时间</td>
+              <td>{{dataDetail?.lastAccessTime}}</td>
+            </tr>
+            <tr>
+              <td>执行中</td>
+              <td>{{dataDetail?.runningCount}}</td>
+            </tr>
+            <tr>
+              <td>最大并发</td>
+              <td>{{dataDetail?.concurrentMax}}</td>
+            </tr>
+            <tr>
+              <td>Jdbc执行数</td>
+              <td>{{dataDetail?.jdbcExecuteCount}}</td>
+            </tr>
+            <tr>
+              <td>区间分布</td>
+              <td>{{dataDetail?.histogram}}</td>
+            </tr>
+            <tr>
+              <td>Jdbc出错数</td>
+              <td>{{dataDetail?.jdbcExecuteErrorCount}}</td>
+            </tr>
+            <tr>
+              <td>jdbc执行峰值</td>
+              <td>{{dataDetail?.jdbcExecutePeak}}</td>
+            </tr>
+            <tr>
+              <td>Jdbc时间</td>
+              <td>{{dataDetail?.jdbcExecuteTimeMillis}}</td>
+            </tr>
+            <tr>
+              <td>事务提交数</td>
+              <td>{{dataDetail?.jdbcCommitCount}}</td>
+            </tr>
+            <tr>
+              <td>事务回滚数</td>
+              <td>{{dataDetail?.jdbcRollbackCount}}</td>
+            </tr>
+            <tr>
+              <td>读取行数</td>
+              <td>{{dataDetail?.jdbcFetchRowCount}}</td>
+            </tr>
+            <tr>
+              <td>jdbc查询取回行数峰值</td>
+              <td>{{dataDetail?.jdbcFetchRowPeak}}</td>
+            </tr>
+            <tr>
+              <td>更新行数</td>
+              <td>{{dataDetail?.jdbcUpdateCount}}</td>
+            </tr>
+            <tr>
+              <td>jdbc更新峰值</td>
+              <td>{{dataDetail?.jdbcUpdatePeak}}</td>
+            </tr>
+            <tr>
+              <td>连接池获取连接次数</td>
+              <td>{{dataDetail?.jdbcPoolConnectionOpenCount}}</td>
+            </tr>
+            <tr>
+              <td>连接池关闭连接次数</td>
+              <td>{{dataDetail?.jdbcPoolConnectionCloseCount}}</td>
+            </tr>
+            <tr>
+              <td>ResultSet打开次数</td>
+              <td>{{dataDetail?.jdbcResultSetOpenCount}}</td>
+            </tr>
+            <tr>
+              <td>ResultSet关闭次数</td>
+              <td>{{dataDetail?.jdbcResultSetCloseCount}}</td>
+            </tr>
+          </table>
+          
+          <div>
+            <h4 style="padding-top: 20px;">Profiles</h4>
+            <p-dataTable scrollable="true" [value]="dataDetail?.profiles" scrollHeight="500px"
+                         [emptyMessage]='emptyMessage'>
+              <p-column field="name" header="Name" [style]="{'width':'60px'}"></p-column>
+              <p-column field="parent" header="Parent" [style]="{'width':'100px'}"></p-column>
+              <p-column field="type" header="Type" [style]="{'width':'100px'}"></p-column>
+              <p-column field="executeCount" header="ExecuteCount" [style]="{'width':'120px'}"></p-column>
+              <p-column field="executeTimeMillis" header="ExecuteTimeMillis" [style]="{'width':'120px'}"></p-column>
+            </p-dataTable>
+          </div>
+        </div>
+        
+        <div style="padding-bottom: 20px"></div>
+        <div class="button close-btn clearfix">
+          <button type="button" class="btn btn-reset fr" (click)="URIModal.hide()">关闭</button>
+        </div>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--提示信息-->
+<p-growl [value]="msgs"></p-growl>

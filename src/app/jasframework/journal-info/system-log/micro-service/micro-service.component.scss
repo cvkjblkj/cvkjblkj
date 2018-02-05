@@ -1,0 +1,9 @@
+@import './../system-log.component.scss';
+@import './../../journal-info.component.scss';
+@import './../../business-log/business-log.component.scss';
+.micro-service {
+    .Property {
+        color: #FFAB81;
+        padding: 10px 0
+    }
+}

@@ -1,0 +1,194 @@
+<div class="statistic-analysis fixed-dataTable-height component primeng-treeTable clearfix">
+  <!--页面标题  -->
+  <!-- <div class="title">
+    <span>指标统计</span>
+  </div>
+  <div class="line"></div> -->
+  <!--内容区域  -->
+  <div class="content">
+
+    <!--数据的筛选条件区  -->
+    <div class="filter-condition clearfix">
+      <!--应用列表  -->
+      <div class="fixed-condition">
+        <div class="app tiling-filter clearfix">
+          <span class="label-filter fl">应用：</span>
+          <ul class="clearfix app-list">
+            <li class="list" *ngFor="let appItem of appListData" (click)="getEnterpriseAppItem(appItem)">
+              <span>  
+                <a #a [ngClass]='{"selected":appCode==a.id}' id={{appItem.appCode}}  >{{appItem?.appName}}</a>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="line"></div>
+        <!--指标选择区  -->
+        <div class="index clearfix primeng-dropdown">
+          <span class="label-filter fl">指标：</span>
+          <p-dropdown [options]="indexData" [(ngModel)]="indexValue" (onChange)='changeSelectindexData($event)' [style]="{'width':'150px'}">
+          </p-dropdown>
+        </div>
+      </div>
+
+      <div class="custom-condition primeng-dropdown clearfix">
+        <!--维度  -->
+        <div class="dimension fl">
+          <span class="label-filter fl">维度：</span>
+          <p-dropdown [options]="dimensionData" [(ngModel)]="dimensionValue" placeholder='请选择---' (onChange)='changeSelectdimensionData($event)' [style]="{'width':'150px'}">
+          </p-dropdown>
+          <span class="select-close" *ngIf="dimensionValue" (click)="resetDimension()">&times;</span>
+        </div>
+
+
+      </div>
+      <!--筛选  -->
+      <div class="primeng-dropdown clearfix">
+        <span class="label-filter fl">筛选：</span>
+        <div class="custom-condition-filter fl clearfix">
+          <span class="filter-custom" id={{i}} *ngFor="let i of loop;let idx =index">
+                <filter-condition [index]=idx (addData)="addValue($event)" (removeData)="removeValue($event)" (resetData)='resetValue($event)'></filter-condition>
+              </span>
+        </div>
+      </div>
+      <!--搜索按钮  -->
+      <div class="fr" style="clear:both">
+        <button [disabled]='isSearched' class="btn btn-reset" (click)="search()">搜索</button>
+      </div>
+    </div>
+
+    <!--echarts图表  -->
+    <div class="echarts-able primeng-dropdown">
+
+      <!--时间选择区域  -->
+      <div class="time-filter clearfix">
+        <p-dropdown [options]="dateData" [(ngModel)]="dateValue" (onChange)='changeSelectdateData($event)' [style]="{'width':'100px','float':'left'}">
+        </p-dropdown>
+        <!-- 时间选择 组件-->
+        <timeSwitch [timeType]='dateValue' (dateValue)='dateClick($event)'></timeSwitch>
+
+      </div>
+      <!--时间选择区域  -->
+
+      <!--图表展示区  -->
+      <div class="echarts-show clearfix">
+        <!--选择图表类型  -->
+        <div class="clearfix">
+          <ul class="type clearfix" (click)='selectCharts($event)'>
+            <li><span><i class="fa fa-line-chart" [ngClass]='{"selected":chart=="line"}' aria-hidden="true"></i></span></li>
+            <li *ngIf='dimensionValue'><span><i class="fa fa-pie-chart" [ngClass]='{"selected":chart=="pie"}' aria-hidden="true"></i></span></li>
+          </ul>
+        </div>
+        <!--选择图表类型  -->
+
+        <div style="height:300px;width:100%">
+          <div *ngIf="totalData && totalData.length==0" style="text-align:center;line-height:300px;font-size:22px;color:#ccc">
+            未查到相关数据
+          </div>
+          <div *ngIf="totalData && totalData.length>0">
+
+            <div *ngIf="chart=='pie'&& dimensionValueEchart" style="height:300px;width:100%">
+              <div [ng2-echarts]="echartsOptions" style="height: 300px; width: 100%"></div>
+            </div>
+            <div *ngIf="chart=='pie'&& !dimensionValueEchart" style="height:300px;width:100%">
+              <div [ng2-echarts]="echartsOptions" style="height: 300px; width: 100%"></div>
+            </div>
+            <div *ngIf="chart=='line' && dimensionValueEchart " style="height:300px;width:100%">
+              <div [ng2-echarts]="echartsOptions" style="height: 300px; width: 100%"></div>
+            </div>
+            <div *ngIf="chart=='line' && !dimensionValueEchart" style="height:300px;width:100%">
+              <div [ng2-echarts]="echartsOptions" style="height: 300px; width: 100%"></div>
+            </div>
+          </div>
+
+
+        </div>
+
+      </div>
+      <!--图表展示区  -->
+
+    </div>
+    <!--echarts图表  -->
+
+    <!--列表  -->
+    <div class="data-list">
+      <div class="clearfix" [hidden]="!listShowData ||(listShowData && listShowData.length==0)">
+        <button class="btn btn-reset fr" [disabled]="!button.statisticAnalysisDownload" (click)="downloadData()">
+              <i class="fa fa-download" aria-hidden="true"></i>
+              下载
+            </button>
+
+        <!-- <grid-pagination [totalPages]="totalPages" [totalItems]='totalItems' [size]='size' [pageSize]='rowsPerPageOptions' [maxSize]='maxSize' (sizeChanged)='sizeChanged($event)' (pageChanged)='paginate($event)'></grid-pagination> -->
+      </div>
+      <div class="border-set clearfix" *ngIf="chart=='line'">
+        <!-- [style]="{'margin-top':'20px'}" -->
+        <div style="width:180px;position:absolute;left:0;top:0">
+          <span class='th-title'>
+            {{customFrozenOptions?.frozenHeader?.name}}
+          </span>
+          <ul *ngIf="listShowData && listShowData.length!=0">
+            <li class="tr-content" *ngFor="let item of customFrozenOptions?.frozenHeader?.data;let i=index" [ngClass]="{'list-style':i!=0}"><span class="td-content">{{item}}</span></li>
+          </ul>
+          <ul *ngIf="!listShowData || (listShowData && listShowData.length == 0)">
+            <li class="tr-content"><span class="td-content">未查到相关数据</span></li>
+          </ul>
+        </div>
+        <div class="list-show" [ngClass]="{'noTotal': !listShowData || (listShowData && listShowData.length == 0)}">
+          <p-dataTable #dt [value]="listShowData" scrollable="true" frozenWidth='180px' [emptyMessage]='emptyMessage'>
+            <!-- <p-column field="name" [header]=headerName dtFrozen [frozen]='true' [style]="{'width':'180px'}"></p-column> -->
+            <p-column *ngFor="let col of options;let i=index" [field]="col.field" [header]="col.header" [style]="{'width':'180px'}">
+              <template let-col let-row='rowData' pTemplate="body">
+              <a class="jump" (click)="drillDown(row,col)">{{row[col.field]}}</a>
+
+            </template>
+            </p-column>
+          </p-dataTable>
+        </div>
+        <div style="width:180px;position:absolute;right:0;top:0" *ngIf="listShowData && listShowData.length!=0">
+          <span class='th-title'>
+              总计
+            </span>
+          <ul>
+            <li class="tr-content" *ngFor="let item of customFrozenOptions?.frozenFooter?.data;let i = index" [ngClass]="{'list-style':i!=0}" [style.min-height]="i==0?'45px':'44px'"><span class="td-content">{{item}}</span></li>
+          </ul>
+        </div>
+      </div>
+
+
+      <div class="border-set clearfix" *ngIf="chart=='pie'">
+        <!-- [style]="{'margin-top':'20px'}" -->
+        <div style="width:180px;position:absolute;left:0;top:0">
+          <span class='th-title'>
+              {{customFrozenOptions?.frozenHeader?.name}}
+            </span>
+          <ul *ngIf="listShowData && listShowData.length!=0">
+            <li class="tr-content" *ngFor="let item of customFrozenOptions?.frozenHeader?.data;let i=index" [ngClass]="{'list-style':i!=0}"><span class="td-content">{{item}}</span></li>
+          </ul>
+          <ul *ngIf="!listShowData || (listShowData && listShowData.length == 0)">
+            <li class="tr-content"><span class="td-content">未查到相关数据</span></li>
+          </ul>
+        </div>
+        <div class="list-show" [ngClass]="{'noTotal': !listShowData || (listShowData && listShowData.length == 0)}">
+          <p-dataTable #dt [value]="listShowData" scrollable="true" frozenWidth='180px' [emptyMessage]='emptyMessage'>
+            <!-- <p-column field="name" [header]=headerName dtFrozen [frozen]='true' [style]="{'width':'180px'}"></p-column> -->
+            <p-column *ngFor="let col of options;let i=index" [field]="col.field" [header]="col.header" [style]="{'width':'180px'}">
+              <template let-col let-row='rowData' pTemplate="body">
+                <a class="jump" (click)="drillDown(row,col)">{{row[col.field]}}</a>
+              </template>
+            </p-column>
+          </p-dataTable>
+        </div>
+        <div style="width:180px;position:absolute;right:0;top:0" *ngIf="listShowData && listShowData.length!=0">
+          <span class='th-title'>
+                总百分比
+          </span>
+          <ul>
+            <li class="tr-content" *ngFor="let item of pieTotalPercentArr;let i = index" [ngClass]="{'list-style':i!=0}" [style.min-height]="i==0?'45px':'44px'"><span class="td-content">{{item}}</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>

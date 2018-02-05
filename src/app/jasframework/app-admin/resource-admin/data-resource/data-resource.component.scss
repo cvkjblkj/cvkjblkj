@@ -1,0 +1,53 @@
+@import './../resource-admin.component.scss';
+@import './../../../../theme/sass/vendor/table-view.scss';
+.primeng-treeTable {
+  // 列表第一列 名称为 样式，功能为点击查看
+  .view-btn {
+    color: #00AA7A;
+    &:hover {
+      text-decoration: underline;
+      text-decoration-color: rgba(0, 170, 122, 0.5);
+    }
+  }
+}
+
+div.dropdowntree {
+  display: none;
+  height: 200px;
+  background-color: #fff;
+  overflow-x: auto;
+  overflow-y: auto;
+  z-index: 20;
+  position: absolute;
+  box-shadow: 0px 1px 3px 1px #888888;
+  width: 87%;
+}
+
+.caret-down {
+  position: absolute;
+  left: 205px;
+  top: 15px;
+}
+
+.dropdowntree {
+  .searchBlock {
+    border: solid 1px #ddd;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    position: relative;
+    margin: 5px 4px;
+  }
+  .searchText {
+    border: none;
+    margin: 2px 5px;
+    outline: 0 none;
+  }
+  .node-search {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #ccc;
+  }
+}

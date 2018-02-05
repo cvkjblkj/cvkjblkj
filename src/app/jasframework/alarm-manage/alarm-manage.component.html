@@ -1,0 +1,25 @@
+<div class="alarm-manage component journal-info clearfix primeng-treeTable">
+    <div class="title">
+        <span>报警管理</span>
+    </div>
+    <div class="line"></div>
+    <!--<div class="content">
+        <div class="tab">
+            <button class="btn btn-reset " (click)='click()'>创建报警规则</button>
+            <ul class="clearfix">
+                <li>
+
+                    <a [routerLink]="['./alarm-rule']" routerLinkActive='active'>报警规则</a>
+                </li>
+                <li>
+
+                    <a [routerLink]="['./alarm-history']" routerLinkActive='active'>报警历史</a>
+                </li>
+            </ul>
+
+        </div>-->
+    <div class="alarmContent">
+        <router-outlet></router-outlet>
+    </div>
+
+</div>

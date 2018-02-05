@@ -1,0 +1,99 @@
+.list-show-view .content {
+  padding: 1px 25px;
+}
+
+/*操作中字体的颜色*/
+div.tabset-content .toAuth {
+  color: #00aa7a;
+}
+
+/*操作中字体鼠标放上去的颜色*/
+div.tabset-content .toAuth:hover {
+  color: #000000;
+}
+
+.define-nav11 .nav.nav-tabs {
+  background: none;
+  border-bottom: 1px solid #ddd;
+}
+
+//详情弹窗表格样式
+.basic-info {
+  width: 100%;
+  //margin-bottom: 20px;
+  tr {
+    > td:nth-child(2n) {
+      width: 70%;
+      border: 1px solid #ccc;
+      padding: 10px 0 10px 5px;
+    }
+    > td:nth-child(2n-1) {
+      background-color: #F0F0F0;
+      border: 1px solid #ccc;
+      padding: 10px 0 10px 5px;
+    }
+  }
+}
+
+
+
+//sql详情弹窗按钮样式
+.link-a {
+  text-decoration: underline !important; //!important
+  cursor: pointer;
+  color: #00aa7a !important;
+}
+
+//文本框样式
+.sql-text {
+  width: 99%;
+  height: 120px;
+  border: 1px #A8C7CE solid;
+  line-height: 20px;
+  font-size: 12px;
+  //margin-bottom: 20px !important;
+}
+
+.sql-div {
+  margin-bottom: 20px;
+}
+
+//搜索部分风格
+.content .search-style {
+  border: 1px solid #EDEDED;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  margin-top: 10px;
+}
+
+//搜索按钮位置
+.search-btn {
+  float: right;
+  position: relative;
+  top: -3px;
+}
+
+//弹窗关闭按钮风格
+.close-btn {
+  padding-top: 10px;
+}
+
+//SQL语句弹窗
+.sql-info {
+  font-size: 14px;
+  height: 20px;
+}
+
+//SQL列表右边边框颜色
+.sql-list-info {
+  border-right: 1px solid #f0f0f0;
+}
+
+//查询的数据太多，超过1000条提示风格
+.message-info {
+  float: left;
+  position: relative;
+  left: 20px;
+  top: 20px;
+}

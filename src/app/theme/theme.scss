@@ -1,0 +1,15 @@
+@import "sass/conf/conf";
+@import "sass/bootstrap-overrides/overrides";
+@import "~animate.css/animate";
+@import "sass/typography";
+@import "sass/buttons";
+@import "sass/icons";
+@import "sass/layout";
+@import "sass/socicon";
+@import "sass/table";
+@import "sass/form";
+@import "sass/treeView";
+// 内容区域的页面布局样式  宁
+@import "sass/vendor/basic.scss";
+@import "sass/vendor/content-layout.scss";
+@import "sass/vendor/app-list.scss"; // 应用列表的样式

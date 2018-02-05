@@ -1,0 +1,132 @@
+<div class="application component clearfix primeng-treeTable " #application>
+
+    <div class="title">
+        <span>应用列表</span>
+    </div>
+    <p-toolbar class="fr">
+        <div class="ui-toolbar-group-left add-app-btn">
+            <button pButton type="button" icon="fa-plus" (click)="add(addModal)" class="btn-reset" [disabled]='!button.appAddBtn' label="添加应用"></button>
+        </div>
+    </p-toolbar>
+    <div class="line"></div>
+    <p-growl [value]="msgs"></p-growl>
+    <p-confirmDialog header="提示" icon="fa fa-question-circle" width="425" #cd>
+        <p-footer>
+            <button type="button" pButton icon="fa-close" label="取消" (click)="cd.reject()" class="btn-cancle"></button>
+            <button type="button" pButton icon="fa-check" label="确认" class="btn btn-default pull-right btn-space" (click)="cd.accept()" class="btn-reset"></button>
+        </p-footer>
+    </p-confirmDialog>
+    <div class="content">
+        <div class="model-content list-order">
+            <p-dataTable [value]="rows" #dt scrollable="true" [emptyMessage]='emptyMessage' (onSort)="changeSort($event)" selectionMode="single" [sortField]="sortF" [sortOrder]="sortO" [(selection)]="selectedEnterprise">
+                <p-column field="appName" [sortable]="true" header="应用名称"></p-column>
+                <p-column field="appCode" [sortable]="true" header="应用编码"></p-column>
+
+                <p-column field="url" [sortable]="true" header="应用URL"></p-column>
+                <p-column field="createTime" [sortable]="true" header="注册时间">
+                </p-column>
+                <p-column header="操作" [style]="{'width':'150px','text-align':'right'}">
+                    <template let-Modal="rowData" pTemplate='body'>
+          <span class="operate">
+              <button type="button " class="manager " (click)="manager(Modal)" [disabled]='!button.appViewBtn'><span>管理</span></button>
+              <span class="secant-line">&nbsp;|&nbsp;</span>
+              <button  type="button" class="manager " (click)="start(Modal)"  *ngIf="Modal.status=='0' " [disabled]='!button.appEnableBtn' ><span>启用</span></button>
+              <button  type="button" class="manager " (click)="stop(Modal)"  *ngIf="Modal.status=='1' "  [disabled]='!button.appDisableBtn'><span>停用</span></button>
+          </span>
+        </template>
+                </p-column>
+            </p-dataTable>
+            <div *ngIf="rows?.length != 0">
+                <grid-pagination [totalPages]='totalPages' [totalItems]='totalItems' [size]='size' [pageSize]='rowsPerPageOptions' [maxSize]='maxSize' (sizeChanged)='sizeChanged($event)' (pageChanged)='paginate($event)'></grid-pagination>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade common-modal" bsModal #addModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left modal-title-color">添加应用</h4>
+                    <button type="button" class="close pull-right colorbgc" (click)="hide(addModal,addForm)" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form #addForm="ngForm" class="form-horizontal" novalidate="false">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                            <div class="form-group control-body ">
+                                <label for="appName" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">应用名称：</label>
+                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5  ">
+                                    <input type="text" class="form-control input-color " required name="appName" id="appName" required [(ngModel)]="model.appName" maxlength="20" #appName="ngModel" pattern='^([A-Za-z0-9_\u4E00-\u9FA5]|-)+$' novalidate="true" (blur)="nameIsExist(this.model.appName,this.appId)">
+                                    <span class="confirm-error">长度1-20个字符或汉字，允许英文字母、数字、”-”、”_”</span>
+                                </div>
+                                <span *ngIf="appName.errors && (appName.dirty || appName.touched)" class='fal'>
+
+                                <span [hidden]="!appName.errors.required">
+                                    应用名称不能为空
+                                </span>
+                                <span [hidden]="!appName.errors.pattern">
+                                    格式不正确
+                                </span>
+
+                                </span>
+                                <span [hidden]="nameExistRel" class="error">
+                                    {{nameExistMes}}
+                                </span>
+                            </div>
+                            <div class="form-group control-body">
+                                <label for="appCode" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">应用编码：</label>
+                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 ">
+                                    <input type="text" class="form-control  " name="appCode" required id="appCode" #appCode='ngModel' [(ngModel)]="model.appCode" maxlength="50" pattern="^([A-Za-z0-9_]|-)+$" #appCode="ngModel" novalidate="true" (blur)="codeIsExist(this.model.appCode,this.appId)">
+                                    <span class="confirm-error">长度为1-50个字符，允许英文字母、数字、”-” 、”_”<br/><span style="color:#a94442">应用编码注册后不可修改</span></span>
+                                </div>
+                                <span *ngIf="appCode.errors && (appCode.dirty || appCode.touched)" class='fal'>
+
+                                <span [hidden]="!appCode.errors.required">
+                                   功能编码不能为空
+                                </span>
+                                <span [hidden]="!appCode.errors.pattern">
+                                    格式不正确
+                                </span>
+                                </span>
+                                <span [hidden]="codeExistRel" class="error">
+                                    {{codeExistMes}}
+                                </span>
+                            </div>
+                            <div class="form-group control-body">
+                                <label for="url" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">应用URL：</label>
+                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 ">
+                                    <input type="text" class="form-control input-color" name="url" id="url" [(ngModel)]="model.url" #url="ngModel" (blur)='telephoneCheck(model.url)'>
+                                    <span class="confirm-error">地址必须以http/https/ftp/ftps开头</span>
+                                </div>
+                                <span *ngIf="urlMismatch" class="error">
+                                    URL格式不正确
+                                </span>
+
+                            </div>
+                            <div class="form-group control-body">
+                                <label for="description" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label ">描述：</label>
+                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 control-text">
+                                    <textarea class="form-control input-color" id="description" name="description" placeholder='最多200个字' [(ngModel)]="model.description" #description="ngModel" maxlength='200' cols="20" rows="10"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group control-body">
+                                <label for="remark" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label ">备注：</label>
+                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 control-text">
+                                    <textarea class="form-control input-color" id="remark" name="remark" placeholder='最多200个字' [(ngModel)]="model.remark" #remark="ngModel" maxlength='200' cols="20" rows="10"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-body">
+                            <button type="button" class="btn btn-default pull-right btn-space" (click)="hide(addModal,addForm)">取消</button>
+                            <button type="button" class="btn btn-default pull-right btn-space btn-reset" (click)="addsave(addModal,addForm)" [disabled]="!addForm.form.valid || isEixtShow||EixtShow||urlMismatch">保存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

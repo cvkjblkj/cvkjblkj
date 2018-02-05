@@ -1,0 +1,120 @@
+/*正文跟二级菜单边距设置*/
+
+.content {
+    /*margin-right: 60px;*/
+    padding: 1px 25px;
+}
+
+
+/*基本信息标题栏风格*/
+
+.basic-info-header {
+    margin-top: 10px;
+    margin-bottom: -1px;
+    height: 40px;
+    background: #F5f6FA;
+    line-height: 38px;
+    border: 1px solid #eeeeee;
+    position: relative;
+    border-left: 4px solid #00aa7a;
+}
+
+
+/*基本信息标题字风格设置*/
+
+.basic-info-header .basic-info-header-title {
+    font-size: 14px;
+    color: #333333;
+    display: inline-block;
+    margin-left: 16px;
+}
+
+.basic-info-table {
+    width: 100%;
+}
+
+
+/*表格中的一个单元格边距*/
+
+.basic-info-table td {
+    padding: 11px 20px;
+    border: 1px solid #eeeeee;
+    width: 33.33%;
+}
+
+
+/*表单中,每个单元格键与值之间的距离*/
+
+.basic-info-table .table-cell {
+    /*.basic-info-table td span {*/
+    padding-right: 8px;
+    /*表单字段与值 之间的距离*/
+}
+
+
+/*图片显示栏目风格*/
+/*.picture {*/
+    /*padding: 5px;*/
+    /*border: 1px solid #ccc;*/
+    /*background-color: rgba(3, 3, 3, .1);*/
+/*}*/
+
+/*显示图片缩略图*/
+.img-picture {
+    width: 70px;
+    height: 80px;
+}
+
+/*弹窗显示图片设置*/
+.span-show {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+/*鼠标放到图片上后,图片放大*/
+/*.picture .picture-show:hover {*/
+    /*z-index: 10;*/
+    /*margin-left: 50%;*/
+    /*transform: scale(3);*/
+    /*-webkit-transform: scale(3);*/
+    /*!* Safari 和 Chrome *!*/
+    /*-ms-transform: scale(3);*/
+    /*!* IE 9 *!*/
+    /*-moz-transform: scale(3);*/
+    /*!* Firefox *!*/
+    /*-o-transform: scale(3);*/
+/*}*/
+
+.authed-approve button.btn.btn-self {
+    border: 1px solid #ccc;
+    background: #ddd;
+    border-radius: 0;
+    margin: 30px 0 0 0;
+}
+
+table {
+    font-size: 12px;
+}
+
+div.bgc-content {
+  min-width: 1000px;
+  min-height: 500px;
+  position: relative;
+  background-color: transparent;
+  background-clip: padding-box;
+  /* border: 1px solid rgba(0,0,0,.2); */
+  border-radius: .3rem;
+  outline: 0;
+}
+
+span.close-show-picture {
+  float: right;
+  font-size: 28px;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+}
+
+span.close-show-picture:hover {
+  color: rgba(255, 255, 255, 0.8);
+}

@@ -1,0 +1,26 @@
+@import './../create-rule/create-rule.component';
+.monitorCategory {
+    position: relative;
+    .caret-down {
+        position: absolute;
+        left: 262px;
+        z-index: 1;
+        top: 18px;
+    }
+}
+
+.monitorData {
+    width: 80%;
+    margin-left: 110px;
+    padding: 10px 0px;
+    position: relative;
+    .caret-down {
+        position: absolute;
+        left: 262px;
+        z-index: 1;
+        top: 18px;
+    }
+    .sign {
+        color: rgba(255, 0, 0, 0.8)
+    }
+}

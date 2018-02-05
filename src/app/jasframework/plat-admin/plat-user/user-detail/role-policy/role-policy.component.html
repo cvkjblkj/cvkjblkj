@@ -1,0 +1,41 @@
+<div class="role-policy component clearfix">
+    <div class="title">
+        <span>
+            角色分配-{{userName}}
+        </span>
+    </div>
+    <p-toolbar class="fr">
+        <div class="ui-toolbar-group-left">
+            <button pButton type="button" label="保存" icon="fa-plus" (click)="saveRole()" class="btn-reset"></button>
+        </div>
+    </p-toolbar>
+    <div class="line"></div>
+    <div class="content">
+        <div class="orgtree checkbox-tree">
+            <tree-root #tree [nodes]="nodeTree" [options]="treeOptions" (onActivate)="selectNode($event)">
+
+                <template #treeNodeTemplate let-node="node" let-index="index">
+
+    <input
+      (change)="check( node, $event)"
+      type="checkbox"
+
+      [checked]="node.data.checked"
+      id='myCheck-{{node.data.id}}'>
+       <label for="myCheck-{{node.data.id}}" class="checkbox-lable"></label>
+     <span class="tree-content">
+         {{ node.data.text }}
+         </span>
+
+  </template>
+
+            </tree-root>
+        </div>
+    </div>
+
+    <!--------------提示信息-------------------->
+    <p-growl [value]="msgs"></p-growl>
+
+    <!--------------提示信息-------------------->
+
+</div>

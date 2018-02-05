@@ -1,0 +1,298 @@
+<div class="function  component clearfix primeng-treeTable " #function>
+  <button (click)="add(addModal)" class="btn btn-reset fr" [disabled]='!button.appFuncResourceAddBtn'>
+    <i class=" fa fa-plus"></i>
+    添加功能
+  </button>
+  <div class="search-textinput fl">
+    <select class="search-select" [(ngModel)]="selectName" #select>
+          <option value="funcName" class="funcName" selected="selected">名称</option>
+        </select>
+    <input class="search-input" type="text" [(ngModel)]='searchValue' size="36" placeholder="请输入关键字搜索">
+    <button class="btn btn-reset" (click)='search(searchValue)'>搜索</button>
+  </div>
+  <div class="contentainer">
+    <div class="model-contentainer">
+      <p-treeTable [value]="listRows" [(selection)]="selectedNodeTreeTable" scrollable="true" selectionMode="single">
+        <p-column field="funcName" header="名称"></p-column>
+        <p-column field="opened" header="是否受控"></p-column>
+        <p-column field="description" header="描述"></p-column>
+        <p-column field="resourceName" header="关联数据"></p-column>
+        <p-column header="操作" [style]="{'width':'150px','text-align':'right'}">
+          <template let-row="rowData" pTemplate='body'>
+              <span class="operate">
+            <button  class="manager" (click)="edit(row,editModal)" [disabled]='!button.appFuncResourceEditBtn'><span>编辑</span></button>
+            <!-- *ngIf="row.parent!=undefined" -->
+            <span class="secant-line">&nbsp;|&nbsp;</span>
+            <!-- *ngIf="row.parent!=undefined" -->
+            <button  type="button" class="manager" (click)="delete(row,addForm)"  [disabled]='!button.appFuncResourceDelBtn'><span>删除</span></button>
+            <span class="secant-line" *ngIf="row.children && row.children.length==0 && row.data.opened == '是'">&nbsp;|&nbsp;</span>
+            <button  type="button" class="manager" (click)="associateModal(row,dataModal)" *ngIf="row.children && row.children.length==0 && row.data.opened == '是'" [disabled]='!button.appFuncResourceAssociatedData'><span>关联数据</span></button>
+            </span>
+          </template>
+        </p-column>
+      </p-treeTable>
+
+    </div>
+  </div>
+
+  <!--添加弹出框 -->
+  <div class="modal fade common-modal" bsModal #addModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title pull-left modal-title-color">添加功能资源</h4>
+          <button type="button" class="close pull-right colorbgc" aria-label="Close" (click)="hiden(addModal,addForm)">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+
+        <div class="modal-body">
+          <form class="form-horizontal" #addForm="ngForm" novalidate="false">
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group ">
+                <label for="funcName" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">功能名称：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 ">
+                  <input type="text" class="form-control  " name="funcName" id="funcName" required [(ngModel)]="model.funcName" pattern='^([A-Za-z0-9_\u4E00-\u9FA5]|-)+$' maxlength="20" #funcName="ngModel" novalidate="true">
+                  <span class="confirm-error">长度1-20个字符或汉字，允许英文字母、数字、”-”、”_”</span>
+                </div>
+                <span *ngIf="funcName.errors && (funcName.dirty || funcName.touched)" class='error'>
+                                <span [hidden]="!funcName.errors.required">
+                                    功能名称不能为空
+                                </span>
+                <span [hidden]="!funcName.errors.pattern">
+                                    格式不正确
+                                </span>
+                </span>
+
+              </div>
+              <div class="form-group ">
+                <label for="funcCode" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">功能编码：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 ">
+                  <input type="text" class="form-control  " name="funcCode" id="funcCode" required [(ngModel)]="model.funcCode" maxlength="50" pattern="^([A-Za-z0-9_]|-)+$" #funcCode="ngModel" (blur)="isExist(this.model.funcCode,this.appId)" novalidate="true">
+                  <span class="confirm-error">长度为1-50个字符，允许英文字母、数字、”-” 、”_”<br/><span style="color:#a94442">功能编码名称注册后不可更改</span></span>
+
+                </div>
+                <span *ngIf="funcCode.errors && (funcCode.dirty || funcCode.touched)" class='fal'>
+                                <span [hidden]="!funcCode.errors.required">
+                                    功能编码不能为空
+                                </span>
+                <span [hidden]="!funcCode.errors.pattern">
+                                    格式不正确
+                                </span>
+                </span>
+                <span [hidden]="isExistRel" class="error">
+                                  {{isExistMes}}
+                                 </span>
+
+              </div>
+
+              <div class="form-group ">
+                <label for="parentName" class="col-lg-3 col-md-3 col-sm-3 col-xs-3  control-label">父级：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 ">
+                  <div id="dropdownTree" (click)='drop(dropdowntree)'>
+                    <span class='caret-down'></span>
+                    <input type="text" class="form-control input-color" id="parentName" required name="parentName" [(ngModel)]='model.parentName' readonly>
+                  </div>
+                  <div class='dropdowntree' #dropdowntree (click)="stopBubble($event)">
+                    <div class="searchBlock">
+                      <input type="text" id="search" name="search" class="searchText" autofocus [(ngModel)]='searchNodeValue'> <i class="iconfont-jas icon-jas-search node-search" (click)="nodeModalSearch()"></i>
+                    </div>
+                    <p-tree [value]="dropDownTree" selectionMode="single" [(selection)]="selectedFile" (onNodeSelect)="addDropDownSelect($event,dropdowntree)" (onNodeUnselect)="nodeUnselect($event)"></p-tree>
+                  </div>
+                </div>
+
+              </div>
+              <!-- <div class="form-group ">
+                <label for="action" class="col-lg-3 col-md-3 col-sm-3 col-xs-3  control-label">Action：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 ">
+                  <input type="text" class="form-control input-color" name="action" id="action" [(ngModel)]="model.action" #action="ngModel">
+
+                </div>
+
+              </div> -->
+
+              <div class="form-group ">
+                <label for="description" class="col-lg-3 col-md-3 col-sm-3 col-xs-3  control-label">描述：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 ">
+                  <textarea class="form-control input-color" id="description" placeholder='最多200个字' [(ngModel)]="model.description" maxlength='200' #description="ngModel" name="description" cols="20" rows="10"></textarea>
+                </div>
+
+              </div>
+              <div class="form-group ">
+                <label for="remark" class="col-lg-3 col-md-3 col-sm-3 col-xs-3  control-label">备注：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 ">
+                  <textarea class="form-control input-color" id="remark" placeholder='最多200个字' [(ngModel)]="model.remark" maxlength='200' #remark="ngModel" name="remark" cols="10" rows="10"></textarea>
+                </div>
+
+              </div>
+              <div class="form-group ">
+                <label for="opened" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">是否受控：</label>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-text">
+                  <div *ngIf="isOpened" style="display:inline-block"><input type="radio" name="opened" value='0' [(ngModel)]='model.opened'>是</div>
+                  <div style="display:inline-block"> <input type="radio" name="opened" value='1' [(ngModel)]='model.opened'>否</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-body">
+              <button type="button" class="btn btn-default pull-right btn-space" (click)="hide(addModal,addForm)">取消</button>
+              <button type="button" class="btn btn-default pull-right btn-space btn-reset" (click)="funcSave(addModal,addForm)" [disabled]="!addForm.form.valid|| isEixtShow"> 保存</button>
+            </div>
+          </form>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--编辑弹出框-->
+  <div class="modal fade common-modal" bsModal #editModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title pull-left modal-title-color">编辑功能资源</h4>
+          <button type="button" class="close pull-right colorbgc" aria-label="Close" (click)="editModal.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+
+        <div class="modal-body">
+          <form class="form-horizontal" #orgForm="ngForm" novalidate="false" *ngIf="message">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+              <div class="form-group ">
+                <label for="funcName" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">功能名称：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 ">
+                  <input type="text" class="form-control " name="funcName" id="funcName" required [(ngModel)]="message.funcName" #funcName='ngModel' pattern='^([A-Za-z0-9_\u4E00-\u9FA5]|-)+$' maxlength="40" novalidate="true">
+                  <span class="confirm-error">长度1-20个字符或汉字，允许英文字母、数字、”-”、”_”</span>
+                </div>
+                <span *ngIf="funcName.errors && (funcName.dirty || funcName.touched)" class='error'>
+                                <span [hidden]="!funcName.errors.required">
+                                    功能名称不能为空
+                                </span>
+                <span [hidden]="!funcName.errors.pattern">
+                                    格式不正确
+                                </span>
+                </span>
+              </div>
+              <div class="form-group ">
+                <label for="funcCode" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">功能编码：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 ">
+                  <input type="text" class="form-control" name="funcCode" id="funcCode" required [(ngModel)]="message.funcCode" #funcCode="ngModel" novalidate="true" readonly>
+
+                </div>
+              </div>
+              <!-- *ngIf="parentIdIsExit" -->
+              <div class="form-group ">
+                <label for="parentName" class="col-lg-3 col-md-3 col-sm-3 col-xs-3  control-label">父级：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 ">
+                  <div id="dropdownTree" (click)='isShow(dropdowntree)'>
+                    <span class='caret-down'></span>
+                    <input type="text" class="form-control input-color" id="parentName" name="parentName" required [(ngModel)]='message.parentName' readonly>
+                  </div>
+                  <div class='dropdowntree' #dropdowntree (click)="stopBubble($event)">
+                    <div class="searchBlock">
+                      <input type="text" id="search" name="search" class="searchText" autofocus [(ngModel)]='searchNodeValue'> <i class="iconfont-jas icon-jas-search node-search" (click)="nodeModalSearch()"></i>
+                    </div>
+                    <p-tree [value]="dropDownTree" selectionMode="single" [(selection)]="selectedNode" (onNodeSelect)="dropDownSelect($event,dropdowntree)" (onNodeUnselect)="nodeUnselect($event)"></p-tree>
+                  </div>
+                </div>
+
+              </div>
+              <!-- <div class="form-group ">
+                <label for="action" class="col-lg-3 col-md-3 col-sm-3 col-xs-3  control-label">Action：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 ">
+                  <input type="text" class="form-control input-color" name="action" id="action" [(ngModel)]="message.action" #action="ngModel">
+
+                </div>
+
+              </div> -->
+
+              <div class="form-group ">
+                <label for="description" class="col-lg-3 col-md-3 col-sm-3 col-xs-3  control-label">描述：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 ">
+                  <textarea class="form-control input-color" id="description" placeholder='最多200个字' [(ngModel)]="message.description" maxlength='200' #description="ngModel" name="description" cols="20" rows="10"></textarea>
+                </div>
+
+              </div>
+              <div class="form-group ">
+                <label for="remark" class="col-lg-3 col-md-3 col-sm-3 col-xs-3  control-label">备注：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 ">
+                  <textarea class="form-control input-color" id="remark" placeholder='最多200个字' [(ngModel)]="message.remark" maxlength='200' #remark="ngModel" name="remark" cols="10" rows="10"></textarea>
+                </div>
+
+              </div>
+              <div class="form-group ">
+                <label for="opened" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">是否受控：</label>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-text">
+                  <div *ngIf="isOpened" style="display:inline-block" (click)="controll()">
+                    <input type="radio" name="opened" value='0' [(ngModel)]='message.opened'>是
+                  </div>
+                  <div style="display:inline-block" (click)="unControll()">
+                    <input type="radio" name="opened" value='1' [(ngModel)]='message.opened'>否
+                    <span *ngIf="message.opened==1 && ungovernables && isClick" style="color:darkorange">(所有子节点更新为不受控) </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-body">
+              <button type="button" class="btn btn-default pull-right btn-space default" (click)="hide(editModal,orgForm)">取消</button>
+              <button type="button" class="btn btn-default pull-right btn-space btn-reset " (click)="editSave(editModal,orgForm)" [disabled]="!orgForm.form.valid|| isEixtShow">保存</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 关联数据的弹窗 -->
+<div class="modal fade common-modal" bsModal #dataModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left modal-title-color">关联数据</h4>
+        <button type="button" class="close pull-right colorbgc" aria-label="Close" (click)="dataModal.hide()"><span aria-hidden="true">&times;</span></button>
+      </div>
+
+      <div class="modal-body">
+        <div>
+          <table class="associated">
+            <tr>
+              <td><span>功能资源：</span></td>
+              <td>{{selectFuncRowData?.funcName}}</td>
+
+            </tr>
+            <tr>
+              <td class="tree-name"><span>关联的数据资源：</span></td>
+              <td>
+                <p-tree [value]="resourceTreeData && resourceTreeData[0] && resourceTreeData[0].children" [style]="{'border':'none','color':'#707070','font-weight':'400','min-height':'400px'}">
+                  <template let-node pTemplate="default">
+                    <input #checkbox type="checkbox" id="{{node.id}}" [checked]="node.checked" *ngIf="!node.children || (node.children && node.children.length==0)" (change)="nodeSelect($event)">
+                    <label for="{{node.id}}">{{node.label}}</label>
+                  </template>
+                </p-tree>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-body" style="border-top: 1px solid #e5e5e5">
+          <button type="button" class="btn btn-default pull-right btn-space" (click)="dataModal.hide()">取消</button>
+          <button type="button" class="btn pull-right btn-space btn-reset" (click)="connectionData()">确认
+                </button>
+        </div>
+        <div style="clear: both"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<p-confirmDialog header="提示" icon="fa fa-question-circle" width="425" #cd style="z-index:9999">
+  <p-footer>
+    <button type="button" pButton icon="fa-close" label="取消" (click)="cd.reject()" class="btn-cancle"></button>
+    <button type="button" pButton icon="fa-check" label="确认" (click)="cd.accept()" class="btn-reset "></button>
+  </p-footer>
+</p-confirmDialog>
+<p-growl [value]="msgs"></p-growl>

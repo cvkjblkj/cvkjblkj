@@ -1,0 +1,53 @@
+<!-- 左边菜单 -->
+<div class="modelRight" #navBar>
+  <div class="navBar">
+    <div class='nav-header'>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 header-left">{{menu.title}}</div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 header-right"><span class=" fa fa-angle-left icon header-right-icon" (click)='goback()'></span></div>
+    </div>
+    <div class="tab-head">
+      <ul #item *ngIf="menu && menu.children && menu.children[0]">
+        <li class="item" *ngFor="let menuItem of menu.children let i=index" #singleLi id={{menuItem.id}} (click)='tabChange(singleLi.id)'>
+          <span *ngIf="i==0">
+                <a routerLink={{menuItem.attributes.url}}  [queryParams]="{id: menu.id,selfId:menuItem.id}"  routerLinkActive='actived'>{{menuItem.text}}</a>
+            </span>
+          <span *ngIf="i!=0">
+                <a routerLink={{menuItem.attributes.url}}  [queryParams]="{id: menuItem.id}" routerLinkActive='actived'>{{menuItem.text}}</a>
+            </span>
+        </li>
+      </ul>
+
+
+    </div>
+
+
+    <!-- 右边菜单 -->
+    <div class="navbar-tab-content" #tabContent *ngIf="menu && menu.children && menu.children[0]">
+      <div *ngFor="let menuItem of menu.children let i = index" #tabContentDiv class="hide" id={{menuItem.id+1}} [ngClass]="{'show':numIndex==tabContentDiv.id}">
+        <ul *ngIf="i ==0">
+          <li *ngFor="let itemChild of menuItem.children let i = index" class="item">
+            <span *ngIf="i==0">
+                <a routerLink={{itemChild.attributes.url}} routerLinkActive='actived'>{{itemChild.text}}</a>
+            </span>
+            <span *ngIf="i!=0">
+                <a routerLink={{itemChild.attributes.url}} [queryParams]="{id: itemChild.id}" routerLinkActive='actived'>{{itemChild.text}}</a>
+            </span>
+          </li>
+        </ul>
+
+
+        <ul *ngIf="i !=0">
+          <li *ngFor="let itemChild of menuItem.children let i = index" class="item">
+            <span *ngIf="i==0">
+                <a routerLink={{itemChild.attributes.url}} routerLinkActive='actived'>{{itemChild.text}}</a>
+            </span>
+            <span *ngIf="i!=0">
+                <a routerLink={{itemChild.attributes.url}} [queryParams]="{id: itemChild.id}" routerLinkActive='actived'>{{itemChild.text}}</a>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>

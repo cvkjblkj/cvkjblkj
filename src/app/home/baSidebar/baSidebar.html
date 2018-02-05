@@ -1,0 +1,14 @@
+<aside class="al-sidebar" (mouseleave)="hoverElemTop=outOfArea" sidebarResize>
+
+    <div class='collapse-btn' #collapseBtn (click)="toggleMenu()">
+        <a href class="collapse-btn-link ion-navicon"></a>
+    </div>
+
+    <!--<ba-menu [menuHeight]="menuHeight"
+           [sidebarCollapsed]="isMenuCollapsed"
+           (expandMenu)="menuExpand()"></ba-menu>-->
+    <div class='menu-position' #collapseMenu>
+        <menuItem [menu]='menu'></menuItem>
+    </div>
+
+</aside>

@@ -1,0 +1,51 @@
+<!--<div class="arc-gis-map" (click)="modalHidden($event)">-->
+<div class="arc-gis-map" (click)="modalHidden($event)">
+  
+  <div class="arcgis-map" #arcGisMapDiv>
+    <div  [ngClass]="{'btn-arcgis2D': !is3D, 'btn-arcgis3D': is3D}">
+      <!--2d 3d地图切换按钮-->
+      <div (click)="Switch2DTo3D($event)" class="arcgis-map-btn">
+        <img src="./../../../../assets/img/arcgis/2D.png" height="20px" width="20px" alt="" [hidden]="!is3D" title="切换到2D">
+        <img src="./../../../../assets/img/arcgis/3D.png" height="20px" width="20px" alt="" [hidden]="is3D"
+             title="切换到3D">
+      </div>
+      <!--<span>-->
+        <!--&lt;!&ndash;地图切换列表&ndash;&gt;-->
+        <!--<p-dropdown [options]="baseMaps" [(ngModel)]="baseMap" (onChange)='changeBaseMap($event)'-->
+                    <!--[style]="{'width':'170px'}" filter="filter">-->
+        <!--</p-dropdown>-->
+      <!--</span>-->
+      <!--图层按钮-->
+      <div (click)="stopBubble($event)" class="clearfix">
+        <span (click)="showLayerFlag = !showLayerFlag" class="arcgis-map-btn fl" title="图层">
+          <img src="./../../../../assets/img/arcgis/layer1.png" height="20px" width="20px"
+               alt=""  [hidden]="showLayerFlag">
+          <img src="./../../../../assets/img/arcgis/layer2.png" height="20px" width="20px"
+               alt=""  [hidden]="!showLayerFlag">
+        </span>
+      </div>
+      <!--鹰眼图按钮-->
+      <div (click)="overViewShowFlag = !overViewShowFlag;" class="arcgis-map-btn" title="鹰眼图">
+        <img src="./../../../../assets/img/arcgis/overViewMap1.png" height="20px" width="20px"
+             alt="" [hidden]="overViewShowFlag">
+        <img src="./../../../../assets/img/arcgis/overViewMap2.png" height="20px" width="20px"
+             alt="" [hidden]="!overViewShowFlag">
+      </div>
+      
+    </div>
+  </div>
+  <!--鹰眼图-->
+  <div id="overviewDiv" [hidden]="!overViewShowFlag">
+    <div id="extentDiv">
+    </div>
+  </div>
+  <!--图层列表-->
+  <div *ngIf="showLayerFlag" [ngClass]="{'arcgis-map-layer2D': !is3D, 'arcgis-map-layer3D': is3D}"
+       (click)="stopBubble($event)">
+    <!--https://www.primefaces.org/primeng/#/tree-->
+    <p-tree [value]="layerBtnLists" selectionMode="checkbox" [(selection)]="layerBtnListsSelect"
+            (onNodeSelect)="addMapLayre()" (onNodeUnselect)="addMapLayre()"
+            [style]="{'width':'220px'}"></p-tree>
+  </div>
+
+</div>

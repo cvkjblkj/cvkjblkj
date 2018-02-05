@@ -1,0 +1,30 @@
+.alarm-history {
+    .search-filter {
+        margin: 0 10px;
+        border-bottom: 1px solid #e5e5e5;
+    }
+    .search-btn {
+        margin-bottom: 5px
+    }
+    .contentain {
+        clear: both;
+        padding: 20px 6px 10px 6px;
+        top: 50px;
+        bottom: 0;
+        width: 100%;
+        .titleName {
+            height: 35px;
+            background: #e5e5e5;
+            line-height: 35px;
+            padding: 0 10px;
+            position: absolute;
+            width: 100%;
+        }
+        .default-empty {
+            font-size: 14px;
+            color: #ccc;
+            line-height: 300px;
+            text-align: center;
+        }
+    }
+}

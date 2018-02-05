@@ -1,0 +1,32 @@
+// 搜索条件
+.search-textinput {
+  margin-bottom: 10px;
+  .btn-reset {
+    height: 30px;
+    line-height: 1;
+  }
+  .search-select {
+    height: 30px;
+    box-shadow: 0px 0px 3px #ccc;
+  }
+  .search-input {
+    margin: 0 10px;
+    padding: 5px;
+    min-width: 180px;
+    box-shadow: 0px 0px 3px #ccc;
+    height: 30px;
+    font-size: 12px;
+  }
+}
+
+// 样式demo
+// <div class="search-textinput fl">
+// <select class="search-select" [(ngModel)]="selectName" #select>
+//   <option value="资源名称" class="resourceName" selected="selected">资源名称</option>
+//   <option value="资源编码" class="resourceCode">资源编码</option>
+//   <option value="资源类别" class="resourceCategory">资源类别</option>
+//   <option value="描述" class="description">描述</option>
+// </select>
+// <input class="search-input" type="text" [(ngModel)]='searchValue' size="36" placeholder="请输入{{selectName}}进行模糊查询">
+// <button class="btn btn-reset" (click)='search()'>搜索</button>
+// </div>

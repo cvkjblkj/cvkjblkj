@@ -1,0 +1,131 @@
+@import './../../../journal-info/journal-info.component.scss';
+@import ' ./../../../filter-condition/filter-condition.component.scss';
+.statistic-analysis {
+  .content {
+    //   维度筛选
+    .index {
+      margin-bottom: 15px;
+    }
+    span.label-filter {
+      line-height: 28px;
+    }
+    ul.app-list {
+      margin-left: 35px;
+    }
+    .custom-condition {
+      margin-bottom: 15px;
+      .dimension {
+        margin-right: 40px;
+        position: relative;
+      }
+    }
+    .filter-custom {
+      display: block;
+      margin-bottom: 6px;
+      // width: 100%;
+    }
+    .line {
+      margin-top: 0;
+      margin-bottom: 10px;
+      margin-left: 0;
+    }
+  }
+  // 图表展示区
+  .echarts-able {
+    padding: 0;
+    >div {
+      padding: 10px 15px;
+    }
+    .time-filter {
+      border-bottom: 1px solid #EDEDED;
+    }
+    // 图表切换
+    .type {
+      float: right;
+      li {
+        float: left;
+      }
+      i {
+        font-size: 20px;
+        color: #DBDBDB;
+        display: inline-block;
+        background: #fff;
+        border: 1px solid #EDEDED;
+        cursor: pointer;
+        &.selected {
+          color: #fff;
+          background: #21B38E;
+        }
+      }
+    }
+  }
+  // 列表区
+  .data-list {
+    .jump {
+      cursor: pointer;
+      &:hover {
+        color: #21B38E;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// 下载按钮所在位置
+div.download-position {
+  position: relative;
+  .button-position {
+    display: inline-block;
+    position: absolute;
+    top: 25%;
+    left: 20px;
+  }
+}
+
+span.select-close {
+  position: absolute;
+  right: -20px;
+  top: 0;
+}
+
+// 列表布局
+.border-set {
+  position: relative;
+  .th-title {
+    width: 180px;
+    height: 58px;
+    display: inline-block;
+    padding: 20px;
+    background: #ebedf0;
+    color: #999;
+  }
+  .tr-content {
+    border: 1px solid #eee;
+    margin-top: 1px;
+    min-height: 44px;
+  }
+  .tr-content:nth-child(2n) {
+    background-color: #fafafb;
+  }
+  .td-content {
+    display: inline-block;
+    padding: 13px;
+    font-weight: 400;
+  }
+  .list-show {
+    margin: 0 180px;
+  }
+  .noTotal {
+    margin-right: 0;
+    border-right: 1px solid #eee;
+  }
+  // 自定义的 固定的头尾 的列表布局
+  .list-style {
+    margin-top: 0px;
+    border-top: none;
+  }
+}
+
+.bottom-total .total-content {
+  width: 100px
+}

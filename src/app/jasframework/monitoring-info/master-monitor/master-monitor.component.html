@@ -1,0 +1,64 @@
+<div class="master-monitor component journal-info clearfix primeng-treeTable">
+  <div class="title">
+    <span>主机监控</span>
+  </div>
+  <div class="line"></div>
+  <div class="master-box">
+    <div class="date-search col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="select-box clearfix primeng-dropdown col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+        <div class="filter" style="display:inline-block">
+          <span>对象：</span>
+          <p-dropdown [options]="typeNameList" [(ngModel)]="typeName" (onChange)="onChangeType($event)" [style]="{'min-width':'200px','padding':'1px'}">
+          </p-dropdown>
+        </div>
+
+
+      </div>
+      <div class="dete-box col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <ul class="date-list clearfix" (click)="datePicker($event)">
+          <li><span [ngClass]="{'bgc-checked':isClick=='one'}" id="one">最近1小时</span></li>
+          <li><span [ngClass]="{'bgc-checked':isClick=='three'}" id="three">最近3小时</span></li>
+          <li><span [ngClass]="{'bgc-checked':isClick=='six'}" id="six">最近6小时</span></li>
+          <li class='self-date'>
+            <span [ngClass]="{'bgc-checked':isClick=='self'|| isSelectedDate}" id='self'>自定义</span>
+            <span class="show-time" *ngIf="isSelectedDate">{{dateStartShow }} ~ {{dateEndShow }} </span>
+            <div class="date-picker appService clearfix primeng-datePicker" *ngIf="isClick=='self'" (click)='stopBubble($event)'>
+              <div class="fl calendar-father">
+                <p-calendar [(ngModel)]="dateStart" [inline]="true" [showSeconds]='true' [monthNavigator]="true" showTime="showTime" hourFormat="24" [yearNavigator]="true" yearRange="2000:2030" [style]="{'position':'relative','top':'-16px'}" (onSelect)='selectStartDate($event)'
+                  [locale]="zn" [maxDate]='dateEnd'></p-calendar>
+              </div>
+              <div class="fr calendar-father">
+                <p-calendar [(ngModel)]="dateEnd" [inline]="true" [showSeconds]='true' [monthNavigator]="true" showTime="showTime" hourFormat="24" [yearNavigator]="true" yearRange="2000:2030" [style]="{'position':'relative','top':'-16px'}" (onSelect)='selectEndDate($event)'
+                  [locale]="zn" [minDate]='dateStart' [maxDate]='maxDate'></p-calendar>
+              </div>
+              <div class="button" style="clear:both;clear:both;position: absolute;bottom: -10px;right: 0;">
+                <button class="btn btn-reset sure" (click)='sure($event)'>确定</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+    <div class="my-content">
+      <!--tab页-->
+      <div class="tab">
+        <ul class="clearfix">
+          <li>
+            <!-- [routerLink]="['./base-monitor']" [queryParams]="objRouteParams"  -->
+            <a (click)="routelinkBasic()" [ngClass]='{"active":routeStatesBasic  && routeStatesBasic != -1}'>基础监控</a>
+          </li>
+          <li>
+            <a (click)="routelinkHandle()" [ngClass]='{"active":routeStatesHandle  && routeStatesHandle != -1}'>操作系统监控</a>
+          </li>
+        </ul>
+      </div>
+      <div class="route-content">
+        <router-outlet></router-outlet>
+      </div>
+
+    </div>
+  </div>
+
+</div>

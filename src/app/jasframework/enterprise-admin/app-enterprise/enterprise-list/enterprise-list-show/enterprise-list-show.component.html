@@ -1,0 +1,106 @@
+<div class="enterprise-list component clearfix" #enterpriseListShow>
+  <div class="title">
+    <span>企业信息管理</span>
+  </div>
+  <div class="line"></div>
+  <ba-card>
+    <!--http://www.cnblogs.com/webflash/archive/2009/08/23/1552462.html  JavaScript事件冒泡 -->
+    <!-- <div class="init" (click)="appClick($event)"> -->
+    <!-- <div class="appname">
+        <span>　　应用： </span>
+      </div>
+
+      <div class="appleft">
+        <span *ngIf="enterpriseAppList !== []">
+        <span class="status" *ngFor="let item of enterpriseAppList" (click)="getEnterpriseAppItem(item)">
+          <a #a [ngClass]="{'bacColor':appCode==a.id}" id={{item.appCode}} class="status">{{item.appName}}</a>
+        </span>
+        </span>
+      </div> -->
+
+    <div class="tiling-filter clearfix" (click)="appClick($event)">
+      <span class="label-filter fl"> 应用：</span>
+      <ul class="clearfix app-list">
+        <li class="list" *ngFor="let item of enterpriseAppList" (click)="getEnterpriseAppItem(item)">
+          <span>
+              <a #a [ngClass]='{"selected":appCode==a.id}' id={{item.appCode}}  >{{item?.appName}}</a>
+            </span>
+        </li>
+      </ul>
+    </div>
+    <!-- <div class="init"> -->
+    <div class="tiling-filter clearfix">
+      <span class="label-filter fl">认证状态： </span>
+      <ul class="clearfix app-list">
+        <li class="list">
+          <span><a class="status" [ngClass]="{'selected':authenticateStatus === ''}"
+          (click)="searchStatus('')">全部状态</a></span>
+        </li>
+        <li class="list">
+          <span><a class="status" [ngClass]="{'selected':authenticateStatus === 0}" (click)="searchStatus(0)">未认证</a></span>
+        </li>
+        <li class="list">
+          <span><a class="status" [ngClass]="{'selected':authenticateStatus === 1}"
+              (click)="searchStatus(1)">认证通过</a></span>
+        </li>
+        <li class="list">
+          <span><a class="status" [ngClass]="{'selected':authenticateStatus === -1}"
+              (click)="searchStatus(-1)">认证驳回</a></span>
+        </li>
+        <li class="list">
+          <span><a class="status" [ngClass]="{'selected':authenticateStatus === 2}" (click)="searchStatus(2)">待审核</a></span>
+        </li>
+
+      </ul>
+    </div>
+    <div>
+      <span class="info">企业名称：</span>
+      <input class="enterprise-list-search-btn" type="text" [(ngModel)]="searchValue" placeholder="请输入企业名称" #input>
+      <button class="btn btn-info btn-reset" (click)="searchEnterprise()">搜索</button>
+    </div>
+
+  </ba-card>
+
+  <ba-card baCardClass="with-scroll">
+    <p-dataTable class="dataTable" scrollable="true" [value]="datas" selectionMode="single" [(selection)]="selectedEnterprise" [emptyMessage]='emptyMessage'>
+      <!--<p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column>-->
+      <p-column field="enterpriseName" header="企业名称"></p-column>
+      <p-column field="enterpriseScale" header="企业规模"></p-column>
+      <p-column field="registerNum" header="企业注册号"></p-column>
+      <p-column field="telephoneNum" header="联系电话"></p-column>
+      <p-column field="authenticateStatus" header="认证状态"></p-column>
+
+      <p-column header="操作" [style]="{'width':'150px','text-align':'right'}">
+        <template let-col let-opt="rowData" pTemplate="body">
+          <span class="operate">
+            <button class="manager" (click)="showView(opt)" [disabled]='!button.appEnpViewBtn'>管理</button>
+          </span>
+          <span></span>
+        </template>
+      </p-column>
+    </p-dataTable>
+    <div *ngIf="datas?.length != 0">
+      <grid-pagination [totalPages]='totalPages' [totalItems]='totalItems' [size]='size' [pageSize]='rowsPerPageOptions' [maxSize]='maxSize' (sizeChanged)='sizeChanged($event)' (pageChanged)='paginate($event)'></grid-pagination>
+    </div>
+
+
+  </ba-card>
+</div>
+
+
+<!--删除确认框-->
+<p-confirmDialog header="提示" icon="fa fa-question-circle" width="425" #cd>
+  <p-footer>
+    <button type="button" pButton icon="fa-close" label="取消" (click)="cd.reject()" class="btn-cancle"></button>
+    <button type="button" pButton icon="fa-check" label="确认" (click)="cd.accept()" class="btn-reset"></button>
+  </p-footer>
+</p-confirmDialog>
+
+<!--操作成功之后的弹出框-->
+<p-dialog [(visible)]="mesDisplay" modal="modal" width="500">
+  <div style="width:100%;height:50px;color: black">
+    <p>{{message}}</p>
+  </div>
+</p-dialog>
+
+<p-growl [value]='msgs'></p-growl>

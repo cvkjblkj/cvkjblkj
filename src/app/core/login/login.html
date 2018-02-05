@@ -1,0 +1,57 @@
+<div class="auth-main">
+  <div class="theme">
+    <h1>云产品研发平台</h1>
+  </div>
+  <div class="auth-block">
+    <div class="title">
+      <span>用户登录</span>
+    </div>
+
+
+    <!--<a routerLink="/register" class="auth-link">新用户? 注册!</a>-->
+
+    <div class="message-error" [class.fadeout]="error" [hidden]="!error"><span>{{error}}</span></div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="form-horizontal">
+      <div class="form-group row" [ngClass]="{'has-error': (!text.valid && text.touched), 'has-success': (text.valid && text.touched)}">
+        <!--<label for="inputUser3" class="col-sm-2 control-label">登录账号</label>-->
+
+        <div class="offset-sm-1 col-sm-10">
+          <label class="icon-font">
+            <i class="fa fa-user" aria-hidden="true"></i>
+          </label>
+          <input [formControl]="text" type="text" class="form-control content-area" id="inputUser3" placeholder="请输入手机号">
+        </div>
+      </div>
+      <div class="form-group row" [ngClass]="{'has-error': (!password.valid && password.touched), 'has-success': (password.valid && password.touched)}">
+        <!--<label for="inputPassword3" class="col-sm-2 control-label">密码</label>-->
+
+        <div class="offset-sm-1 col-sm-10">
+          <label class="icon-font">
+            <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+          </label>
+          <input [formControl]="password" type="password" class="form-control content-area" id="inputPassword3" placeholder="请输入登录密码">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="offset-sm-1 col-sm-10">
+          <button [disabled]="!form.valid || !isLogin" type="submit" class="btn btn-auth">登录</button>
+          <!--<a routerLink="/login" class="forgot-pass">忘记密码?</a>-->
+        </div>
+      </div>
+    </form>
+
+    <!--<div class="auth-sep"><span><span>or Sign in with one click</span></span>
+    </div>-->
+    <!--<div class="al-share-auth">
+      <ul class="al-share clearfix">
+        <li><i class="socicon socicon-facebook" title="Share on Facebook"></i></li>
+        <li><i class="socicon socicon-twitter" title="Share on Twitter"></i></li>
+        <li><i class="socicon socicon-google" title="Share on Google Plus"></i></li>
+      </ul>
+    </div>-->
+
+  </div>
+  <div class="footer">
+    <span>版权所有&nbsp;北京中盈安信技术服务股份有限公司&nbsp;京ICP备12006059号-1</span>
+  </div>
+</div>

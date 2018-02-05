@@ -1,0 +1,52 @@
+<div class="arcgis-version-three-map">
+  <div style="margin: 5px;">
+    <label>图层id:</label>
+    <input id="layerId" [(ngModel)]="this.queryLayerId">
+    <label>objectId:</label>
+    <input id="objectId" [(ngModel)]="this.queryLayerPoint">
+  
+    <button class="btn-default" (click)="positionBtn()">定位</button>
+    <!--<button class="btn-default">清除</button>-->
+  </div>
+
+  <div class="map-view" #arcGisMapDiv>
+    <div class="map-widget-toolbars">
+      <ul>
+        <li><img src="./../../../../assets/img/arcgis/hand.png" title="平移地图" (click)="moveMap()"></li>
+        <li><img src="./../../../../assets/img/arcgis/zoomIn.png" title="放大地图" (click)="zoomIn()"></li>
+        <li><img src="./../../../../assets/img/arcgis/zoomOut.png" title="缩小地图" (click)="zoomOut()"></li>
+        <li><img src="./../../../../assets/img/arcgis/measureDistance.png" title="测量距离" (click)="getLength()"></li>
+        <li><img src="./../../../../assets/img/arcgis/measureArea.png" title="测量面积" (click)="getAreaBtn()"></li>
+        <li><img src="./../../../../assets/img/arcgis/clear.png" title="清空标记" (click)="clearAllGraphics()"></li>
+        <li><img src="./../../../../assets/img/arcgis/draw.png" title="地图标绘" (click)="drawBoxFlag = !drawBoxFlag;"></li>
+      </ul>
+    </div>
+    
+    <div *ngIf="this.drawBoxFlag" class="map-widget-DrawBox">
+      <ul>
+        <li><img src="./../../../../assets/img/arcgis/plot/delete.png" title="点击删除某个标绘"
+                 (click)="startDrawAndEdit('DELETE')"></li>
+        <li><img src="./../../../../assets/img/arcgis/plot/point.png" title="画一个点"
+                 (click)="startDrawAndEdit('POINT')"></li>
+        <li><img src="./../../../../assets/img/arcgis/plot/line.png" title="画一个线"
+                 (click)="startDrawAndEdit('LINE')"></li>
+        <li><img src="./../../../../assets/img/arcgis/plot/polyline.png" title="画一个折线"
+                 (click)="startDrawAndEdit('POLYLINE')"></li>
+        <li><img src="./../../../../assets/img/arcgis/plot/polygon.png" title="画一个面"
+                 (click)="startDrawAndEdit('POLYGON')"></li>
+        <li><img src="./../../../../assets/img/arcgis/plot/rect.png" title="画一个矩形"
+                 (click)="startDrawAndEdit('RECTANGLE')"></li>
+        <li><img src="./../../../../assets/img/arcgis/plot/arrows.png" title="画一个箭头"
+                 (click)="startDrawAndEdit('ARROW')"></li>
+        <li><img src="./../../../../assets/img/arcgis/plot/circle.png" title="画一个圆"
+                 (click)="startDrawAndEdit('CIRCLE')"></li>
+        <li><img src="./../../../../assets/img/arcgis/plot/ellipse.png" title="画一个椭圆"
+                 (click)="startDrawAndEdit('ELLIPSE')"></li>
+        <li><img src="./../../../../assets/img/arcgis/plot/bitmap.png" title="一个图片"
+                 (click)="startDrawAndEdit('PICTURE')"></li>
+        <li><img src="./../../../../assets/img/arcgis/plot/text.png" title="文字"
+                 (click)="startDrawAndEdit('TEXT')"></li>
+      </ul>
+    </div>
+  </div>
+</div>

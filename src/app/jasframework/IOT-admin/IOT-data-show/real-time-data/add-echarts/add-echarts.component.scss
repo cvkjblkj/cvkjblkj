@@ -1,0 +1,16 @@
+.content-data {
+  width: 100%;
+  text-align: center;
+  >span {
+    width: 100%;
+    display: inline-block;
+    font-size: 12px;
+  }
+  span.btn {
+    cursor: pointer;
+    color: #21B38E;
+  }
+  span.cancle-btn {
+    color: #ddd;
+  }
+}

@@ -1,0 +1,28 @@
+<div class="component clearfix resource-admin">
+  <div class="title">
+    <span>{{appInfo?.appName}}-资源管理</span>
+  </div>
+  <div class="line clearfix"></div>
+  <div class="tab">
+    <ul class="clearfix">
+      <li>
+        <a (click)="goAppFunc('appFunc')" [ngClass]='{"active":appFuncDafault}'>功能资源</a>
+        <!-- <a routerLink="./func" routerLinkActive='active' preserveQueryParams='true'>功能资源</a> -->
+      </li>
+      <li>
+        <a (click)="goAppFunc(' dataResource ')" [ngClass]='{ "active":!appFuncDafault} '>数据资源</a>
+        <!-- <a routerLink="./data" routerLinkActive='active' preserveQueryParams='true'>数据资源</a> -->
+      </li>
+    </ul>
+  </div>
+  <div class="reesource-content">
+    <!-- <router-outlet></router-outlet> -->
+    <!-- 功能资源 -->
+    <app-func (configBtn)="configBtn($event)" *ngIf="appFuncDafault"></app-func>
+
+
+    <!-- 数据资源 -->
+    <data-resource *ngIf="!appFuncDafault"></data-resource>
+  </div>
+
+</div>

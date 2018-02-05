@@ -1,0 +1,139 @@
+<div class="basicInformation" #basicInformation>
+    <div class="title">
+        <span>
+            {{appName}}
+            </span>
+    </div>
+    <!--弹出编辑框 -->
+    <div class="line"></div>
+    <p-growl [value]="msgs"></p-growl>
+    <div class="model-contentainer">
+        <div class="table-viewer-header ">
+            <span class="table-viewer-topbar-title">基本信息</span>
+            <div class="pull-right table-viewer-topbar-content">
+                <div class="ng-editor">
+                    <button class=" btn default " [disabled]='!button.appEditBtn' (click)="edit(addModal)">
+                        编辑
+                    </button>
+                </div>
+            </div>
+        </div>
+        <table *ngIf='Message' style="table-layout:fixed" class="table-default-viewer ng-scope">
+            <tbody>
+                <tr class="simple-table-row">
+                    <td class="simple-table-cell" width="33.33333333333333%">
+                        <span class="text-muted">应用名称：</span>
+                        <span>{{Message.appName}}</span>
+                    </td>
+                    <td class="simple-table-cell" width="33.33333333333333%">
+                        <span class="text-muted">应用编码：</span>
+                        <span>{{Message.appCode}}</span>
+                    </td>
+
+                    <td class="simple-table-cell" width="33.33333333333333%">
+                        <span class="text-muted">应用URL：</span>
+                        <span>{{Message.url}}</span>
+                    </td>
+                </tr>
+
+                <tr class="simple-table-row">
+                    <td class="simple-table-cell" width="33.33333333333333%">
+                        <span class="text-muted">注册时间：</span>
+                        <span>{{Message.createTime}}</span>
+                    </td>
+                    <td class="simple-table-cell" width="33.33333333333333%">
+                        <span class="text-muted">类型：</span>
+                        <span>{{Message.appType}}</span>
+                    </td>
+
+                </tr>
+                <tr class="simple-table-row">
+                    <td class="simple-table-cell" colspan='3'>
+                        <span class="text-muted">应用描述：</span>
+                        <span>{{Message.description}}</span>
+                    </td>
+                </tr>
+                <tr class="simple-table-row">
+                    <td class="simple-table-cell" colspan='3'>
+                        <span class="text-muted">备注：</span>
+                        <span>{{Message.remark}}</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--编辑框-->
+    <div class="modal fade common-modal" bsModal #addModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left modal-title-color">修改应用</h4>
+                    <button type="button" class="close pull-right colorbgc" (click)="hide(addModal,addForm)" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form #addForm="ngForm" class="form-horizontal" novalidate="false" *ngIf="message">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                            <div class="form-group control-body ">
+                                <label for="appName" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">应用名称：</label>
+                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5  ">
+                                    <input type="text" class="form-control input-color " required name="appName" id="appName" required [(ngModel)]="message.appName" maxlength="20" #appName="ngModel" pattern='^([A-Za-z]|[\u4E00-\u9FA5])+$' novalidate="true" (blur)="nameIsExist(this.message.appName, this.appId)">
+                                    <span class="confirm-error">长度为1-20字符，中英文皆可</span>
+                                </div>
+
+                                <span *ngIf="appName.errors && (appName.dirty || appName.touched)" class='fal'>
+
+                                <span [hidden]="!appName.errors.required">
+                                    应用名称不能为空
+                                </span>
+                                <span [hidden]="!appName.errors.pattern">
+                                    格式不正确
+                                </span>
+                                </span>
+                                <span [hidden]="isExistRel" class="error">
+                                    {{isExistMes}}
+                                </span>
+                            </div>
+                            <div class="form-group control-body">
+                                <label for="appCode" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">应用编码：</label>
+                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 ">
+                                    <input type="text" class="form-control  " name="appCode" id="appCode" required [(ngModel)]="message.appCode" readonly #appCode="ngModel" novalidate="true">
+
+                                </div>
+                            </div>
+                            <div class="form-group control-body">
+                                <label for="url" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">应用URL：</label>
+                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                    <input type="text" class="form-control input-color" name="url" id="url" [(ngModel)]="message.url" #url="ngModel" (blur)='telephoneCheck(message.url)'>
+                                    <span class="confirm-error">地址必须以http/https/ftp/ftps开头</span>
+                                </div>
+                                <span *ngIf="urlMismatch" class="error">
+                                    URL格式不正确
+                                </span>
+                            </div>
+                            <div class="form-group control-body">
+                                <label for="description" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">描述：</label>
+                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 ">
+                                    <textarea class="form-control input-color" id="description" name="description" placeholder='最多200个字' [(ngModel)]="message.description" #description="ngModel" maxlength='200' cols="20" rows="10"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group control-body">
+                                <label for="remark" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">备注：</label>
+                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 ">
+                                    <textarea class="form-control input-color" id="remark" name="remark" placeholder='最多200个字' [(ngModel)]="message.remark" #remark="ngModel" maxlength='200' cols="20" rows="10"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 handle">
+
+                            <button type="button" class="btn btn-default pull-right btn-space" (click)="hide(addModal,addForm)">取消</button>
+                            <button type="button" class="btn btn-default pull-right btn-space btn-reset" (click)="editSave(addModal.addForm)" [disabled]="!addForm.form.valid|| isEixtShow||urlMismatch">保存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,88 @@
+<!--<div class="term">
+    <label for="name">企业名称:</label>
+    <input type="text" id="name" class="btn-search" [(ngModel)]="searchname">
+    <button class="btn btn-info" (click)="search(selectPage.value,searchname,currentPage)">查询</button>
+</div>-->
+
+<div class="enp-auth component clearfix">
+  <div class="title">
+    <span>企业认证审核</span>
+
+  </div>
+  <div class="line"></div>
+  <div class="content">
+    <div class="appList tiling-filter clearfix">
+      <span class="label-filter fl"> 应用： </span>
+      <ul class="clearfix app-list">
+        <li class="list" *ngFor="let item of appList">
+          <span>
+              <a  (click)='getAppEnpList(item)' [ngClass]="{selected:selectId == item.objectId }" >{{item?.appName}}</a>
+            </span>
+        </li>
+      </ul>
+    </div>
+    <div class="tabset-content">
+      <tabset #staticTabs class="define-nav">
+        <tab heading="待审核">
+          <div>
+
+          </div>
+          <p-dataTable class="dataTable" scrollable="true" [value]="enterpriseAuth" selectionMode="single" [(selection)]="selectedEnterprise" [emptyMessage]='emptyMessage'>
+            <!--<p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column>-->
+            <p-column [style]="{'width':'290px'}" field="authEnterpriseName" header="企业认证名称"></p-column>
+            <p-column field="authRegisterNum" header="企业注册号"></p-column>
+            <p-column field="startUserName" header="申请人"></p-column>
+            <p-column field="startTime" header="申请时间"></p-column>
+            <p-column styleClass="col-button" header="操作" [style]="{'width':'150px','text-align':'right'}">
+
+              <template let-car="rowData" pTemplate="body">
+                <span class="operate">
+                  <button class="editor" [disabled]='!button.enpAuthApproveBtn'
+                        (click)="toAuth(car)">审核</button>
+                </span>
+              </template>
+            </p-column>
+          </p-dataTable>
+          <div *ngIf="enterpriseAuth?.length != 0">
+            <grid-pagination [totalPages]='totalPages' [totalItems]='totalItems' [size]='size' [pageSize]='rowsPerPageOptions' [maxSize]='maxSize' (sizeChanged)='sizeChanged($event)' (pageChanged)='paginate($event)'></grid-pagination>
+          </div>
+
+        </tab>
+        <tab heading="已审核">
+          <p-dataTable class="dataTable" scrollable="true" [value]="enterpriseAuthedList" selectionMode="single" [(selection)]="selectedEnterprise" [emptyMessage]='emptyMessage'>
+            <!--<p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column>-->
+            <!--<p-column [style]="{'width':'290px'}" field="authEnterpriseName" header="企业认证名称"></p-column>-->
+            <p-column field="authEnterpriseName" header="企业认证名称"></p-column>
+            <!--<p-column field="authRegisterNum" header="企业注册号"></p-column>-->
+            <p-column field="startUserName" header="申请人"></p-column>
+            <p-column field="startTime" header="申请时间"></p-column>
+            <p-column field="approveUserName" header="审核人"></p-column>
+            <p-column field="endTime" header="审核时间"></p-column>
+            <p-column field="approveResult" header="审核结果"></p-column>
+            <p-column styleClass="col-button" header="操作">
+              <template let-opt="rowData" pTemplate="body">
+                <a class="toAuth" (click)="toAuthedDetails(opt)">详情</a>
+              </template>
+            </p-column>
+          </p-dataTable>
+          <div *ngIf="enterpriseAuthedList?.length != 0">
+            <grid-pagination [totalPages]='authedTotalPages' [totalItems]='authedTotalItems' [size]='authedSize' [pageSize]='rowsPerPageOptions' [maxSize]='maxSize' (sizeChanged)='authedSizeChanged($event)' (pageChanged)='authedPaginate($event)'>
+            </grid-pagination>
+          </div>
+
+          <!--<p-paginator rows={{pageSize}} totalRecords={{totalItems}} [rowsPerPageOptions]='rowsPerPageOptions' (onPageChange)="paginate($event)"></p-paginator>-->
+          <!--[maxSize]='maxSize'-->
+        </tab>
+      </tabset>
+    </div>
+  </div>
+</div>
+
+
+<!--提示框-->
+<p-confirmDialog header="提示" icon="fa fa-question-circle" width="425" #cd>
+  <p-footer>
+    <button type="button" pButton icon="fa-close" label="取消" (click)="cd.reject()" class="btn-cancle"></button>
+    <button type="button" pButton icon="fa-check" label="确认" (click)="cd.accept()" class="btn-reset"></button>
+  </p-footer>
+</p-confirmDialog>

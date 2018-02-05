@@ -1,0 +1,182 @@
+.navBar {
+    width: 360px;
+    background: rgb(234, 237, 241);
+    color: #222222;
+    -webkit-transition: 0.5s ease all;
+    -moz-transition: 0.5s ease all;
+    position: absolute;
+    left: -180px;
+    height: 100%;
+}
+
+.navBar .nav {
+    width: 50%;
+    float: left;
+    height: 100%;
+}
+
+.navBar .tab-content {
+    width: 50%;
+    float: right;
+    height: 100%;
+}
+
+.navBar .nav-pills .nav-link {
+    display: block;
+    padding: .85em 2em;
+    color: rgb(51, 51, 51);
+    border-radius: 0;
+}
+
+.navBar .nav-pill {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.navBar .nav-pills .nav-link.active {
+    background-color: #ffffff !important;
+    color: rgb(51, 51, 51) !important
+}
+
+.navBar .nav-pill {
+    display: block;
+    width: 100%;
+    padding: 0 1.6em;
+    color: rgb(51, 51, 51)
+}
+
+.navBar .nav-pill.active {
+    background: #ffffff;
+}
+
+.navBar .nav-pills .nav-link:hover {
+    display: block;
+    background: rgb(244, 246, 248);
+}
+
+.navBar .tab-content {
+    padding: 0;
+    background: transparent;
+    color: rgb(51, 51, 51);
+}
+
+.navBar .tab-content div {
+    height: 40px;
+    line-height: 40px;
+}
+
+.navBar .tab-content div:hover {
+    background: rgb(244, 246, 248);
+}
+
+.navBar .nav-header {
+    width: 100%;
+    height: 70px;
+    background: #D9DEE4;
+}
+
+.navBar .nav-header .header-left {
+    height: 100%;
+    line-height: 70px;
+    text-indent: 8px;
+    font-weight: bold
+}
+
+.navBar .nav-header .header-right {
+    text-align: center;
+    height: 100%;
+    line-height: 70px;
+    font-size: 30px;
+    color: #546478;
+}
+
+.navBar .nav-header .header-right .icon {
+    cursor: pointer;
+}
+
+.navBar .nav-header .header-right .icon:hover {
+    color: #06C
+}
+
+.navBar .nav-stacked .nav-item+.nav-item {
+    margin-top: 0;
+    margin-left: 0;
+}
+
+
+/*点击按钮goback触发的收缩样式 */
+
+.modelRight .navBar {
+    width: 360px;
+    background: rgb(234, 237, 241);
+    color: #222222;
+    -webkit-transition: 0.5s ease all;
+    -moz-transition: 0.5s ease all;
+    position: absolute;
+    left: 0px;
+}
+
+.navBar {
+    position: absolute;
+    min-height: 100%;
+    top: 0;
+    bottom: 0;
+    background-color: rgb(234, 237, 241);
+}
+
+.navBar .tab-head {
+    float: left;
+    width: 180px;
+    min-height: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+}
+
+.navBar ul {
+    margin: 0;
+    padding: 0;
+}
+
+li.item {
+    list-style: none;
+}
+
+li.item>span {}
+
+li.item>span>a {
+    text-decoration: none;
+    padding: 10px 10px 10px 28px;
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 12px;
+    color: #000;
+}
+
+li.item>span>a :hover {
+    background: #F4F6F8;
+}
+
+.navbar-tab-content {
+    /*border: solid cornflowerblue 1px;*/
+    float: left;
+    width: 180px;
+    height: 100%;
+    box-sizing: border-box;
+    position: absolute;
+    left: 180px;
+}
+
+.navbar-tab-content>div.hide {
+    display: none;
+}
+
+.actived {
+    background-color: #fff;
+}
+
+.show {
+    display: block;
+}

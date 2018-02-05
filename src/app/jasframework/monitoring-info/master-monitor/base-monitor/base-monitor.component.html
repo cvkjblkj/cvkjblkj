@@ -1,0 +1,50 @@
+<div class="echarts clearfix" #echarts>
+  <div class="div-line-style" *ngFor="let option of logCountEcharts; let i = index">
+    <div class="echartsChild" (mouseover)="mouseover(i,option)" (mouseout)="mouseout(i,option)">
+      <div class="echartsBox">
+        <ul class="date-list" #dateList (click)="getpolyStyle(i,option,$event)">
+          <li [ngClass]="{'bgc-checked':chartsCondition[i].polystyle=='minimum' }" id="minimum">最小值</li>
+          <li [ngClass]="{'bgc-checked': (chartsCondition[i].polystyle==='average') || defaultStatus}" id="average">
+            平均值
+          </li>
+          <li [ngClass]="{'bgc-checked':chartsCondition[i].polystyle==='maximum'}" id="maximum">最大值</li>
+        </ul>
+        <div class="echartsIcon" (click)="spanClick(option,viewModal)">
+          <img src="./../../../../../assets/img/fd.png" alt="" srcset="">
+        </div>
+      </div>
+      <p class="titleName" *ngIf="option">{{option.chartName}}</p>
+      <div *ngIf="option?.legend?.data && option.legend?.data?.length > 0"
+           [ng2-echarts]="option" style="height: 300px; width:100%;"></div>
+      <div *ngIf="!option || option.legend?.data?.length == 0">
+        <p class="titleName">{{chartsCondition[i].name}}</p>
+        <p class="default-empty empty-show">未查到相关数据</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!--放大弹窗-->
+<div class="modal fade common-modal" bsModal #viewModal="bs-modal" [config]="{backdrop: 'static '}" tabindex="-1"
+     role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" style="overflow: auto;">
+      <div class="modal-header headerName">
+        <span>{{viewValue?.chartName}}</span>
+        <button type="button" class="close pull-right colorbgc" aria-label="Close" (click)="viewModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="viewValue">
+        <div *ngIf="true == flagShow">
+          <div [ng2-echarts]="viewValue" style="height: 300px; width:100%;"></div>
+        </div>
+        <div *ngIf="false == flagShow">
+          <div [ng2-echarts]="viewValue" style="height: 300px; width:100%;"></div>
+        </div>
+      </div>
+      <div style="clear:both"></div>
+    </div>
+  </div>
+</div>

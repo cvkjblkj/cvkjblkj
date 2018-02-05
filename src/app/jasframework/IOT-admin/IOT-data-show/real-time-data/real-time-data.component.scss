@@ -1,0 +1,91 @@
+.real-time {
+  padding: 0 15px 10px;
+  border: 1px solid #ECECEC;
+  .add-view {
+    width: 100%;
+    padding: 10px 15px;
+  }
+  .add-item {
+    border: 1px solid #ECECEC;
+    border-right: none;
+    border-left: none;
+    padding: 15px 0 0;
+    margin-bottom: 15px;
+  }
+  .dynamic-add {
+    border-top: none;
+    padding-top: 0;
+  }
+  span.custom-btn {
+    color: #21B38E;
+    cursor: pointer;
+  }
+  span.modal-span-btn {
+    line-height: 34px;
+  }
+  .detection {
+    >div {
+      border: 1px solid #EDEDED;
+      float: left;
+      width: 49%;
+      position: relative;
+    }
+    >div:nth-child(2n) {
+      float: right;
+    }
+    .default-echarts {
+      width: 100%;
+    }
+    .icon-delete {
+      background: #21B38E;
+      cursor: pointer;
+      padding: 4px;
+      position: absolute;
+      right: 0;
+      color: #fff;
+      font-size: 18px;
+      margin: 5px;
+      z-index: 4;
+    }
+  }
+  .form-group input {
+    border-radius: 0px;
+  }
+  // 弹窗添加 滚动条
+  .scroll-modal {
+    overflow: auto;
+  }
+  // 弹窗
+  .handle {
+    padding-bottom: 14px;
+    padding-top: 10px;
+  }
+}
+
+.default-echarts {
+  border: 1px solid #ccc;
+  height: 100%;
+  max-height: 900px;
+  padding-top: 20px;
+  .ecahrts {
+    height: 400px;
+  }
+}
+
+.content-data>span {
+  display: block;
+  padding: 5px;
+  >span {
+    text-align: left;
+  }
+  >span:first-child {
+    text-align: right;
+  }
+  .attribute {
+    color: #21B38E;
+  }
+}
+
+#inputFrequency {
+  width: 90px;
+}

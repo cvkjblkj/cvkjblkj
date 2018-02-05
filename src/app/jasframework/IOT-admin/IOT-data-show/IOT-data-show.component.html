@@ -1,0 +1,46 @@
+<div class="IOT-data-show component clearfix">
+  <div class="title">
+    <span>
+      数据展示
+    </span>
+  </div>
+  <div class="line"></div>
+  <div class="content clearfix">
+    <div class="data-source fl">
+      <div class="title">
+        数据源
+      </div>
+      <div class="data" *ngIf="treeValue && treeValue.length>0">
+        <tree-root #tree [nodes]="treeValue" [options]="treeOptions">
+          <template #treeNodeTemplate let-node="node" let-index="index">
+            <span *ngIf=" !node.data.root ">
+                <input (change)="checkedNode( node, $event)" type="checkbox" [checked]="node.data.checked" id='myCheck-{{node.data.id}}' [disabled]='node.data.disabled'>
+                <label for="myCheck-{{node.data.id}}" class="checkbox-lable"></label>
+            </span>
+            <span class="tree-content">
+             {{ node.data.text }}
+            </span>
+          </template>
+        </tree-root>
+      </div>
+    </div>
+    <div class="tab-content">
+      <div class="tab fr">
+        <ul class="clearfix">
+          <li>
+            <a (click)="routelinkRealData()" [ngClass]='{"active":routeStatesRealData  && routeStatesRealData  != -1}'>实时</a>
+          </li>
+          <li>
+            <a (click)="routelinkHistoryData()" [ngClass]='{"active":routeStatesHistoryData  && routeStatesHistoryData  != -1}'>历史</a>
+          </li>
+
+        </ul>
+      </div>
+      <div class="router-outlet">
+        <router-outlet></router-outlet>
+      </div>
+
+    </div>
+
+
+  </div>

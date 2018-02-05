@@ -1,0 +1,73 @@
+.system-log {
+    .log-info {
+        display: block;
+        width: 100%;
+        min-width: 100px;
+        min-height: 40px;
+        padding: 5px;
+        border: 1px solid #cccccc;
+    }
+    .tab {
+        padding: 0;
+        border-radius: 0;
+        margin: 0;
+        border: none;
+        li {
+            float: left;
+            border: 1px solid #E2E2E2;
+            width: 20%;
+            min-width: 100px;
+            height: 40px;
+            border-radius: 10px 10px 0 0;
+            border-bottom: none;
+            a,
+            .route-link {
+                text-align: center;
+                background-color: #F2F2F2;
+                width: 100%;
+                height: 100%;
+                display: inline-block;
+                color: #323232;
+                line-height: 40px;
+                border-radius: 10px 10px 0 0;
+                border: none;
+                &:not(disabled):hover {
+                    color: #00AA7A;
+                    background-color: #fff;
+                }
+            }
+            .active {
+                background-color: #fff;
+                color: #323232;
+                border-bottom: 3px solid #00AA7A;
+            }
+        }
+    }
+}
+
+div.download-position {
+    position: relative;
+    button.button-position {
+        position: absolute;
+        top: 25%;
+        left: 20px;
+    }
+}
+
+.system-tab-content {
+    padding: 0 15px 10px;
+    border: 1px solid #f0f0f0;
+    .filter-condition {
+        border-bottom: 1px solid #f0f0f0;
+        margin: 10px 0;
+    }
+    .date-list {
+        position: relative;
+        left: -15px;
+        top: 5px;
+    }
+    .select-box {
+        border-top: 1px solid #f0f0f0;
+        padding: 10px 0;
+    }
+}

@@ -1,0 +1,58 @@
+.date-list {
+  min-height: 25px;
+  >li {
+    float: left;
+    padding: 2px 15px;
+    border-left: 1px solid #a2a1a1;
+    cursor: pointer;
+  }
+  >li:first-child {
+    border-left: none;
+  }
+  >li:last-child {
+    position: relative;
+  }
+  span {
+    padding: 1px 2px;
+  }
+  // 自定义时间选择框
+  .date-picker {
+    border: 1px solid #ddd;
+    width: 500px;
+    min-width: 260px;
+    height: 365px;
+    top: 24px;
+    position: absolute;
+    background-color: #fff;
+    z-index: 5;
+    padding: 7px 14px;
+    .sure {
+      position: absolute;
+      bottom: 15px;
+      right: 13px;
+    }
+    .calendar-father {
+      width: 48%;
+      margin-top: 10px;
+    }
+  }
+  .time-show {
+    width: 100%;
+    text-align: center;
+    padding: 5px 3px;
+    border: 1px solid #ccc;
+    display: block;
+    background-color: #CAEACE;
+    margin-bottom: 5px;
+  }
+  .bgc-checked {
+    background-color: #00aa7a;
+    color: #fff;
+  }
+}
+
+.date-list.date-day {
+  .date-picker {
+    width: 260px;
+  }
+}

@@ -1,0 +1,250 @@
+<div class="appService  clearfix primeng-treeTable primeng-dropdown">
+    <div class="title"> <span>服务监控</span> </div>
+    <div class="line"></div>
+    <p-growl [value]="msgs"></p-growl>
+    <div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 timer">
+            <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11 ">
+                <p-dropdown [options]="serviceItem" [(ngModel)]="serviceName" [style]="{'min-width':'150px','padding':'2px','white-space': 'nowrap'}" filter="filter" (onChange)="onServicesChange($event)">
+                    <template let-data pTemplate="item">
+          <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+            <div style="font-size:12px;margin-top:4px">{{data.label}}</div>
+          </div>
+        </template>
+                </p-dropdown>
+                <p-dropdown [options]="methodItem" [(ngModel)]="spanName" [style]="{'min-width':'150px','white-space': 'nowrap','padding':'2px','margin-left':'10px'}" filter="filter">
+                    <template let-data pTemplate="item">
+          <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+            <div style="font-size:12px;margin-top:4px">{{data.label}}</div>
+          </div>
+        </template>
+                </p-dropdown>
+
+                <div class="box-inline">
+                    <span>时间：</span>
+                    <p-calendar [(ngModel)]="startTime" [maxDate]='endTime' [yearNavigator]="true" [style]="{'width':'150px'}" [monthNavigator]="true" yearRange="2000:2030" [locale]="zn" [showTime]="true" dateFormat="yy-mm-dd" [showSeconds]="true"></p-calendar>-
+                    <p-calendar [(ngModel)]="endTime" [minDate]='startTime' [maxDate]='maxDate' [style]="{'width':'150px'}" [yearNavigator]="true" [monthNavigator]="true" yearRange="2000:2030" [locale]="zn" [showTime]="true" dateFormat="yy-mm-dd" [showSeconds]="true"></p-calendar>
+                </div>
+
+                <div class="box-inline">
+                    <span>持续时长(ms) >=</span>
+                    <p-spinner size="10" [(ngModel)]="minDuration" [step]="0.1"></p-spinner>
+                </div>
+
+                <div class="box-inline">
+                    <span style="padding:0 0 0 10px">数量：</span>
+                    <p-spinner size="10" [(ngModel)]="limit" [min]="0" [step]="1"></p-spinner>
+                </div>
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 ">
+                <button pButton type="button" class=" btn-reset" [disabled]="disabled" style="position: absolute;right: 8px;top: 30px;" (click)="searchFor(serviceName,spanName,startTime,endTime,minDuration,limit,selectName)" label="搜索"></button>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="contentain list-order">
+            <div class="context">
+                <p-dataTable [value]="serviceData" [emptyMessage]='emptyMessage' expandableRows="true" (onRowExpand)='onRowExpand($event)' (onRowCollapse)='onRowCollapse($event)' [sortField]="sortF">
+                    <p-column expander="true" [style]="{'width':'0px'}"></p-column>
+                    <p-column field="serviceName" header="服务" [sortable]="true"></p-column>
+                    <p-column field="method" header="方法" [sortable]="true"></p-column>
+                    <p-column field="duration" header="持续时长(ms)" [style]="{'width':'15%'}" [sortable]="true"></p-column>
+                    <p-column field="spanCount" header="跨度" [style]="{'width':'6%'}" [sortable]="true"></p-column>
+                    <p-column field="deepth" header="深度" [style]="{'width':'6%'}" [sortable]="true"></p-column>
+                    <p-column field="servicePercent" header="服务百分比" [style]="{'width':'11%'}" [sortable]="true"></p-column>
+                    <p-column field="timestampFormat" header="开始时间" [style]="{'width':'13%'}" [sortable]="true"></p-column>
+                    <template let-itemObj pTemplate="rowexpansion">
+            <div id="trace-container" class="row">
+              <div class="tit">
+                <span>持续时长详情</span>
+              </div>
+              <div id="timeLabel" class="span">
+                <div class="handle"></div>
+                <div class="duration-container">
+                  <div class="time-marker time-marker-0"></div>
+                  <div class="time-marker time-marker-1">{{itemObj.durations.one}}</div>
+                  <div class="time-marker time-marker-2">{{itemObj.durations.two}}</div>
+                  <div class="time-marker time-marker-3">{{itemObj.durations.three}}</div>
+                  <div class="time-marker time-marker-4">{{itemObj.durations.four}}</div>
+                  <div class="time-marker time-marker-5">{{itemObj.durations.five}}</div>
+                </div>
+              </div>
+
+              <div class="span service-span highlight" style="display:block;" *ngFor="let item of itemObj.children;let i = index" (click)='showServiceDetail(itemObj.timestamp,item,viewModal)'>
+                <div class="handle">
+                  <div   [layout]='item.hierarchy'>
+                    <div class="expander" ></div>
+                  </div>
+                </div>
+                <div class="duration-container">
+                  <div class="time-marker time-marker-0">.</div>
+                  <div class="time-marker time-marker-1">.</div>
+                  <div class="time-marker time-marker-2">.</div>
+                  <div class="time-marker time-marker-3">.</div>
+                  <div class="time-marker time-marker-4">.</div>
+                  <div class="time-marker time-marker-5" >.</div>
+                  <div class="duration" [duration]={item:item,duration:itemObj.children[0],index:i,hierarchy:item.hierarchy}>
+                    <span>{{item.duration/1000+"ms"}}</span>
+                    <span>{{item.name}}</span>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </template>
+                </p-dataTable>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade common-modal" bsModal #viewModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="overflow: auto;">
+                <div class="modal-header">
+
+                    <h5 class="modal-title pull-left modal-title-color">{{topTitle}}.{{topMethod}}:{{topDuration}}ms</h5>
+                    <button type="button" class="close pull-right colorbgc" aria-label="Close" (click)="viewModal.hide()">
+                    <span aria-hidden="true">&times;</span>
+                     </button>
+                </div>
+                <div #modalContent>
+                    <div class=" model" style="border-bottom: 2px solid #e5e5e5;background:rgb(240,240,240);margin-top:15px">
+                        <table class="modelTable">
+                            <tr class="simple-table-row">
+                                <td class="simple-table-cell" width="20%">
+                                    <span class="text-muted text spanTxt">日期</span>
+                                </td>
+                                <td class="simple-table-cell" width="25%">
+                                    <span class="text-muted text">相对时间</span>
+                                </td>
+                                <td class="simple-table-cell" width="25%">
+                                    <span class="text-muted text">备注</span>
+                                </td>
+                                <td class="simple-table-cell" width="30%">
+                                    <span class="text-muted text">地址</span>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                    <div class=" model model-content" *ngFor=" let item of ServiceDetail">
+                        <table class="modelTable">
+                            <tr class="simple-table-row">
+                                <td class="simple-table-cell" width="20%">
+
+                                    <span class="spanTxt">{{item.date}}</span>
+                                </td>
+                                <td class="simple-table-cell" width="25%">
+
+                                    <span>{{item.relativeTime}}</span>
+                                </td>
+                                <td class="simple-table-cell" width="25%">
+
+                                    <span>{{item.value}}</span>
+                                </td>
+                                <td class="simple-table-cell" width='30%'>
+
+                                    <span>{{item.address}}</span>
+                                </td>
+                            </tr>
+                        </table>
+
+
+                    </div>
+
+                    <div class=" model" style="border-bottom:2px solid rgb(221, 221, 221);background:rgb(240,240,240);margin-top:15px">
+                        <table class="modelTable">
+                            <tr class="simple-table-row">
+                                <td class="simple-table-cell" width="20%">
+                                    <span class="text-muted text spanTxt">关键字</span>
+                                </td>
+                                <td class="simple-table-cell text">
+                                    <span class="text-muted text" style="padding: 0 0 0 1px">值</span>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                    <div class=" model model-content" *ngFor=" let item of binaryAnnotation">
+                        <table class="modelTable">
+                            <tr class="simple-table-row">
+                                <td class="simple-table-cell" width="20%">
+                                    <span class="spanTxt">{{item.key}}</span>
+                                </td>
+                                <td class="simple-table-cell" width='80%'>
+                                    <span>{{item.value}}</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div *ngIf="binaryAnnotations" class="model model-content">
+                        <table class="modelTable">
+                            <tr class="simple-table-row">
+                                <td class="simple-table-cell" width="20%">
+                                    <span class="spanTxt">{{binaryItme.localAddress}}</span>
+                                </td>
+                                <td class="simple-table-cell" width='80%'>
+                                    <span>{{binaryItme.service }}</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="selectedItem" *ngIf="selectedItem">
+                        <div style="border:1px solid rgb(221, 221, 221);width: 98.2%;">
+                            <table class="modelTable">
+                                <tr class="simple-table-row">
+                                    <td class="simple-table-cell spanTxt" width='20%'>
+                                        <span class="text-muted text">traceId</span>
+
+                                    </td>
+                                    <td class="simple-table-cell" width='25%'>
+                                        <span class="text-muted text">spanId</span>
+
+                                    </td>
+                                    <td class="simple-table-cell" width='55%'>
+                                        <span class="text-muted text">parentId	</span>
+
+                                    </td>
+                                </tr>
+
+                                <tr class="simple-table-row">
+                                    <td class="simple-table-cell spanTxt">
+
+                                        <span>{{selectedItem.traceId}}</span>
+                                    </td>
+
+
+                                    <td class="simple-table-cell">
+
+                                        <span>{{selectedItem.id}}</span>
+                                    </td>
+
+
+                                    <td class="simple-table-cell">
+
+                                        <span>{{selectedItem.parentId}}</span>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="button clearfix">
+                    <button pButton type="button" class=" btn-reset" (click)="viewModal.hide()" label="关闭"></button>
+                </div>
+                <div style="clear:both"></div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

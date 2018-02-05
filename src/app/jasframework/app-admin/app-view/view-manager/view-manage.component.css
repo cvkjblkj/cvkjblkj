@@ -1,0 +1,299 @@
+    ul,
+    li {
+      padding: 0;
+      list-style: none;
+      cursor: pointer;
+    }
+
+    .header {
+      width: 100%;
+      padding: 20px;
+      border-bottom: 1px solid #eee;
+      overflow: hidden;
+    }
+
+    .addView {
+      float: right;
+      background: #00aa7a;
+      padding: 2px;
+      border-radius: none !important;
+    }
+
+    .main {
+      width: 100%;
+      height: 100%;
+      padding-top: 20px;
+      position: relative;
+      overflow: auto;
+    }
+
+    .view-type {
+      width: 160px;
+      height: 100%;
+      border-radius: 5px;
+      border: 1px solid #eee;
+      overflow: auto;
+      float: left;
+      position: absolute;
+    }
+
+    .type-title {
+      width: 100%;
+      line-height: 30px;
+      padding: 5px;
+      background: #eee;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+
+    .active {
+      background: #f0f0f0;
+    }
+
+    .view-type input {
+      width: 100%;
+      height: 24px;
+      border: 1px solid #eee;
+    }
+
+    .m-list {
+      width: 100%;
+    }
+
+    .m-list li {
+      padding: 5px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .viewName {
+      float: left;
+      width: 120px;
+      font-size: 12px;
+    }
+
+    .viewTypedelete {
+      background: none;
+      border: none;
+      color: #00aa7a;
+      font-size: 12px;
+      position: absolute;
+      top: 5px;
+      left: 120px;
+      width: 40px;
+      /*火狐浏览器需要(试图类型删除按钮看不见了),*/
+    }
+
+    .view-list {
+      width: auto;
+      height: 100%;
+      margin-left: 160px;
+      border: 1px solid #eee;
+      border-radius: 5px;
+      padding: 5px;
+    }
+
+    .view-type .typechange {
+      border: 2px skyblue solid;
+    }
+
+    .view-list button {
+      border: none;
+      background: transparent;
+    }
+
+    /*.viewEdit {*/
+      /*color: #00aa7a;*/
+    /*}*/
+
+    /*.viewRemove {*/
+      /*color: #ff7473;*/
+    /*}*/
+    /*------------------------弹出框样式修改-------------------------*/
+
+    .modal-content {}
+
+    .modal-body {
+      overflow: auto;
+      position: relative;
+    }
+
+    .fn-position {
+      position: absolute;
+      left: 164px;
+      height: 200px;
+      top: 294px;
+      box-shadow: 0 0 8px #ddd;
+      padding: 5px;
+      background: white;
+      border: 1px solid #ccc;
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+      width: 219px;
+    }
+
+    .funcInp {
+      width: 194px;
+      height: 24px;
+    }
+
+    .form-group {
+      padding-bottom: 0;
+    }
+
+    select.form-control:not([size]):not([multiple]) {
+      height: 2rem;
+    }
+
+    .interval {
+      padding-bottom: 0;
+    }
+
+    .modal-footer {
+      text-align: left
+    }
+
+    button.btn.btn-success {
+      background: #00aa7a;
+      border-color: #00aa7a;
+      /* margin-top: 15px; */
+    }
+    /*提示要创建视图类型的弹窗线*/
+
+    div .prompt-line {
+      border-bottom: 1px solid #e5e5e5;
+      position: absolute;
+      bottom: 56px;
+      width: 100%;
+      left: 0px;
+    }
+
+    .typeBtn {
+      border: none;
+      background: transparent;
+      color: #00aa7a;
+      margin-left: 36px;
+    }
+
+    .icon:before {
+      content: "+";
+      color: #00aa7a;
+    }
+
+    .delete-hint {
+      line-height: 40px;
+    }
+
+    .parent-input {
+      width: 100%;
+      line-height: 30px;
+      height: 30px;
+      border: #ccc 1px solid;
+      border-radius: 3px;
+      position: relative;
+    }
+
+    .parent-name {
+      width: 100%;
+      line-height: 30px;
+      height: 30px;
+      font-size: 12px;
+      margin-left: 10px;
+    }
+
+    .parent-position {
+      position: absolute;
+      width: 219px;
+      height: 200px;
+      overflow: auto;
+      left: 164px;
+      top: 144px;
+      box-shadow: 0 0 9px #ddd;
+      background: white;
+      border: 1px solid #ccc;
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+
+    .triangl {
+      width: 0;
+      height: 0;
+      border-top: 5px solid #666;
+      border-right: 5px solid transparent;
+      border-left: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      position: absolute;
+      left: 200px;
+      top: 12px;
+    }
+
+    .btn-cancel-view {
+      background: white;
+      border: 1px solid #ccc;
+      padding: 3px 0;
+      border-radius: 0px;
+      margin-right: 12px;
+      color: #323232;
+    }
+
+    span.error {
+      color: #a94442;
+      font-size: 12px;
+      line-height: 34px;
+    }
+
+    span.error span p {
+      font-size: 12px;
+    }
+
+    span.tip {
+      color: #ccc;
+      line-height: 16px;
+    }
+
+    span.postion-icon {
+      position: absolute;
+      right: 22px;
+      top: 12px;
+    }
+
+    div .dropDown {
+      width: 88%;
+      height: 200px;
+      background: #fff;
+      box-shadow: 0px 3px 7px;
+      position: absolute;
+      z-index: 50;
+      padding: 8px 0 0 10px;
+      overflow: auto;
+    }
+
+    form {
+      font-size: 12px;
+    }
+
+    button.viewTypedelete[disabled] {
+      color: #ddd;
+    }
+
+    button.typeBtn[disabled] {
+      color: #ddd;
+    }
+
+    button.typeBtn[disabled] span.icon:before {
+      color: #ddd;
+    }
+
+    div.content {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+
+    p-footer button.btn-reset:hover {
+      background: rgba(0, 170, 122, .7);
+      transform: scale(1);
+    }
+
+.view-type-selected {
+  background: #ddf1ea;
+}

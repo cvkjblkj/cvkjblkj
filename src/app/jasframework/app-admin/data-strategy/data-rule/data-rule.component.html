@@ -1,0 +1,286 @@
+<div class="component clearfix primeng-treeTable">
+  <!-- [disabled]='!button?.appDataResourceAddBtn' -->
+  <button class="btn btn-reset fr" (click)="modalShow('add')" [disabled]='!button?.appDataRuleAddBtn'>
+        <i class=" fa fa-plus"></i>
+        添加规则
+      </button>
+  <div class="search-textinput fl">
+    <select class="search-select" [(ngModel)]="selectName" #select>
+          <option value="ruleName" class="ruleName" selected="selected">规则名称</option>
+          <option value="description" class="description">规则描述</option>
+          <option value="resourceName" class="resourceName">资源范围</option>
+        </select>
+    <input class="search-input" type="text" [(ngModel)]='searchValue' size="36" placeholder="请输入关键字搜索">
+    <button class="btn btn-reset" (click)='search()'>搜索</button>
+  </div>
+  <div class="list-content fr">
+    <p-dataTable [value]="dataRuleListData" [emptyMessage]='emptyMessage' [(selection)]="selectedDataRule" selectionMode="single" scrollable="true">
+      <p-column field="ruleName" header="规则名称" [style]="{width:'180px','min-width':'100px'}"></p-column>
+      <p-column field="description" header="规则描述" [style]="{width:'180px','min-width':'100px'}"></p-column>
+      <p-column field="num" header="引用次数" [style]="{width:'180px','min-width':'100px'}"></p-column>
+      <p-column field="dataresourceRangeName" header="资源范围"></p-column>
+      <p-column header="操作" styleClass="col-button" [style]="{width:'150px','text-align':'right'}">
+        <template let-row='rowData' pTemplate="body">
+              <span class="operate">
+                <button class="manager" (click)="modalShow('view',row)">查看</button>
+                <span class="secant-line">&nbsp;|&nbsp;</span>
+                  <button class="manager" [disabled]='!button?.appDataRuleEditBtn' (click)="modalShow('edit',row)">编辑</button>
+                  <span class="secant-line">&nbsp;|&nbsp;</span>
+                <!--[disabled]='!button?.appDataRuleAddBtn'-->
+                  <button class="manager" *ngIf="row.num==0" [disabled]="row.num==0 && !button.appDataRuleDelBtn" (click)="delete(row)">删除</button>
+                  <button class="manager" *ngIf="row.num>0" [disabled]="row.num>0">
+                      <a title="已被引用,无法删除" >删除</a>
+                  </button>
+              </span>
+            </template>
+      </p-column>
+    </p-dataTable>
+    <div *ngIf="resourceData?.length !=0">
+      <grid-pagination [totalPages]='totalPages' [totalItems]='totalItems' [size]='size' [pageSize]='rowsPerPageOptions' [maxSize]='maxSize' (sizeChanged)='sizeChanged($event)' (pageChanged)='paginate($event)'></grid-pagination>
+    </div>
+
+  </div>
+
+  <!-- 弹窗 -->
+  <div class="modal fade common-modal" bsModal #Modal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title pull-left modal-title-color">{{modalName}}数据规则</h4>
+          <button type="button" class="close pull-right colorbgc" (click)="modalHide()" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+        </div>
+
+        <div class="modal-body">
+          <form #modalForm="ngForm" class="form-horizontal">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+              <div class="form-group control-body">
+                <label for="ruleName" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">规则名称：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                  <input type="text" class="form-control input-color" required id="ruleName" pattern='^([A-Za-z0-9_\u4E00-\u9FA5]|-)+$' maxlength="20" name="ruleName" [(ngModel)]="ruleFormData.ruleName" #ruleName="ngModel">
+                  <span class="confirm-error">长度1-20个字符或汉字，允许英文字母、数字、”-”、”_”</span>
+                </div>
+                <span *ngIf="ruleName.errors && (ruleName.dirty || ruleName.touched)" class='error'>
+                    <span [hidden]="!ruleName.errors.required">资源名称不能为空</span>
+                <span [hidden]="!ruleName.errors.pattern">格式不正确</span>
+                </span>
+              </div>
+
+
+              <!--添加资源时  资源编码-->
+              <div *ngIf="modalName == '新建'" class="form-group control-body">
+                <label for="ruleCode" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">规则编码：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                  <!-- (blur)="nameIsExist(ruleCode)" -->
+                  <input type="text" class="form-control" name="ruleCode" required id="ruleCode" #ruleCode='ngModel' (blur)="nameIsExist(ruleCode)" [(ngModel)]="ruleFormData.ruleCode" maxlength="50" pattern="^([A-Za-z0-9_]|-)+$" #ruleCode="ngModel">
+                  <span class="confirm-error">长度为1-50个字符，允许英文字母、数字、”-” 、”_”<br/><span style="color:#a94442">规则编码注册后不可修改</span></span>
+                </div>
+                <span *ngIf="ruleCode.errors && (ruleCode.dirty || ruleCode.touched)" class='error'>
+                    <span [hidden]="!ruleCode.errors.required">规则编码不能为空</span>
+                <span [hidden]="!ruleCode.errors.pattern"> 格式不正确</span>
+
+                </span>
+                <span *ngIf="codeExistMes && !ruleCode.errors" class="error">规则编码已经存在 </span>
+              </div>
+              <!--不是添加资源时  资源编码（资源编码添加后不可修改）-->
+              <div *ngIf="modalName != '新建'" class="form-group control-body">
+                <label for="ruleCode" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">规则编码：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                  <input type="text" class="form-control" name="ruleCode" readonly [(ngModel)]="ruleFormData.ruleCode">
+                </div>
+              </div>
+
+              <div class="form-group control-body">
+                <label for="dataresourceRangeName" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">资源范围：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 radio-btn">
+                  <input type="radio" class="first-child" name="dataresourceRangeValue" value="所有资源" [(ngModel)]="ruleFormData.dataresourceRangeValue">
+                  <span>所有资源</span>
+                  <input type="radio" name="dataresourceRangeValue" value="特定资源" [(ngModel)]="ruleFormData.dataresourceRangeValue">
+                  <span>特定资源</span>
+                </div>
+                <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-xs-offset-3 col-lg-5 col-md-5 col-sm-5 col-xs-5" *ngIf="ruleFormData.dataresourceRangeValue=='特定资源'">
+                  <div (click)='drop(dropdowntree)' id="dropdownTree">
+                    <span class='caret-down'></span>
+                    <input type="text" class="form-control" id="dataresourceRangeName" name="dataresourceRangeName" readonly [(ngModel)]="ruleFormData.dataresourceRangeName">
+                  </div>
+                  <div class='dropdowntree' #dropdowntree (click)="stopBublle($event)">
+                    <div class="searchBlock">
+                      <input type="text" id="search" name="search" class="searchText" autofocus [(ngModel)]='searchNodeValue'> <i class="iconfont-jas icon-jas-search node-search" (click)="nodeModalSearch()"></i>
+                    </div>
+                    <p-tree [value]="dropDownTree">
+                      <template let-node pTemplate="default">
+                                    <input style="margin:0" #checkbox type="checkbox" id="{{node.id}}" name="{{node.id}}" [(ngModel)]="node.checked" [checked]="node.checked" *ngIf="(!node.children || (node.children && node.children.length==0)) && !node.isParent" (change)="nodeSelect($event,node)">
+                                    <label for="{{node.id}}" style="margin:0;padding:0;line-height:1.5">{{node.label}}</label>
+                              </template>
+                    </p-tree>
+                  </div>
+                </div>
+                <span class='error'>
+                  <span *ngIf="dataReourceConfirm">资源范围不能为空</span>
+                </span>
+              </div>
+
+
+              <div class="form-group control-body">
+                <label for="description" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">规则描述：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 control-text">
+                  <textarea class="form-control input-color" id="description" name="description" placeholder='最多200个字符' [(ngModel)]="ruleFormData.description" #description="ngModel" maxlength='200' cols="20" rows="10"></textarea>
+                </div>
+              </div>
+
+              <div class="form-group control-body">
+                <label for="content" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">规则内容：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 control-text">
+                  <textarea class="form-control input-color" id="content" name="content" placeholder='请输入SQL语句，最多1000个字符' [(ngModel)]="ruleFormData.content" maxlength='200' cols="20" rows="10" [ngClass]="{'redColor':ruleFormData.contentConfirm && !ruleFormData.content }"></textarea>
+                </div>
+                <span class='error'>
+                  <span *ngIf="ruleFormData.contentConfirm && !ruleFormData.content">规则内容不能为空</span>
+                </span>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-body" style="border-top: 1px solid #e5e5e5;padding-top: 12px;">
+              <button type="button" class="btn btn-default pull-right btn-space" (click)="modalHide()">取消</button>
+              <button type="button" *ngIf="modalName == '新建'" class="btn pull-right btn-space btn-reset" (click)="addSave('add')" [disabled]="!modalForm.form.valid">保存</button>
+              <button type="button" *ngIf="modalName != '新建'" class="btn pull-right btn-space btn-reset" (click)="addSave('edit')" [disabled]="!modalForm.form.valid">保存</button>
+            </div>
+            <div style="clear: both"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" bsModal #childModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">提示</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="childModal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        <p style="color:red;font-weight:500">{{errorMsg}}</p>
+        <button type="button" class="btn pull-right btn-space btn-reset" (click)="childModal.hide()">关闭</button>
+        <div style="clear: both"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--查看弹窗-->
+<div class="modal fade common-modal" bsModal #viewModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left modal-title-color">查看规则信息</h4>
+        <button type="button" class="close pull-right colorbgc" (click)="viewModal.hide()" aria-label="Close"><span
+       aria-hidden="true">&times;</span></button>
+      </div>
+
+      <div class="modal-body">
+        <table style="table-layout:fixed" border class="table-view">
+          <tbody>
+            <tr>
+              <td>
+                <span class="text-muted">规则名称</span>
+              </td>
+              <td colspan='3'>
+                <span class="text-muted">{{ruleFormData?.ruleName}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="text-muted">角色编码</span>
+              </td>
+              <td>
+                <span class="text-muted">{{ruleFormData?.ruleCode}}</span>
+              </td>
+              <td>
+                <span class="text-muted">引用次数</span>
+              </td>
+              <td>
+                <span class="text-muted">{{ruleFormData?.num}}</span>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <span class="text-muted">创建人</span>
+              </td>
+              <td>
+                <span class="text-muted">{{ruleFormData?.createUser}}</span>
+              </td>
+              <td>
+                <span class="text-muted">创建时间</span>
+              </td>
+              <td>
+                <span class="text-muted">{{ruleFormData?.createTime}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="text-muted">资源范围</span>
+              </td>
+              <td colspan=3>
+                <span class="text-muted">{{ruleFormData?.dataresourceRangeName}}</span>
+              </td>
+            </tr>
+
+            <tr>
+              <td rowspan="2" style="min-height:50px;height:70px">
+                <span class="text-muted">规则描述</span>
+              </td>
+              <td rowspan="2" colspan=3>
+                <span class="text-muted">{{ruleFormData?.description}}</span>
+              </td>
+            </tr>
+            <tr></tr>
+
+            <tr>
+              <td rowspan="2" style="min-height:50px;height:100px">
+                <span class="text-muted" style="min-height:50px">规则内容</span>
+              </td>
+              <td rowspan="2" colspan=3>
+                <span class="text-muted">{{ruleFormData?.content}}</span>
+              </td>
+            </tr>
+            <tr></tr>
+
+          </tbody>
+        </table>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-body" style="border-top: 1px solid #e5e5e5;padding-top: 12px;margin-top:24px;padding-right:0">
+          <button type="button" class="btn pull-right btn-reset" (click)="viewModal.hide()">关闭</button>
+        </div>
+        <div style="clear:both;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- 成功提示  -->
+<p-growl [value]="msgs"></p-growl>
+
+<p-dialog [(visible)]="dialogDisplay" modal="modal" width="425" [responsive]="true" draggable='false' [resizable]='false'>
+  <p-header>
+    <span>
+      删除规则
+    </span>
+  </p-header>
+  <div>
+    <p style="font-size:12px">确认要删除规则: <span id="delrulename"></span> 吗？</p>
+    <div *ngIf="overConnect">
+      <input type="checkbox" id="overCorrect" [(ngModel)]="isRelieve" [checked]='isRelieve'>
+      <label for="overCorrect">强制解除关联关系</label>
+      <span style="color:orange">请谨慎操作</span>
+    </div>
+  </div>
+  <p-footer>
+    <button type="button" class="btn btn-default pull-right btn-space" (click)="dialogDisplay=false" style="margin-right: 15px;margin-bottom: 10px;">取消</button>
+    <button type="button" class="btn pull-right btn-space btn-reset" (click)="delAccept()">确认</button>
+    <div style="clear:both"></div>
+  </p-footer>
+</p-dialog>

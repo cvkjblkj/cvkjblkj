@@ -1,0 +1,83 @@
+.clearfix:after {
+    content: " ";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.organization-user {
+    /*height: auto;*/
+    width: 100%;
+    /*min-height: 100%;*/
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+
+.organization-user .title>span {
+    float: none;
+}
+
+.organization-user .line {
+    margin-top: 0px;
+}
+
+.organization-left {
+    width: 280px;
+    height: 100%;
+    float: left;
+    border: 1px solid #ccc;
+    overflow: auto;
+    /*position: absolute;
+    top: 0;
+    bottom: 0;*/
+    /*border-radius: 10px;*/
+}
+
+.organization-user .user-right {
+    height: 100%;
+    overflow: hidden;
+    width: auto;
+    margin-left: 280px;
+}
+
+.node-content-wrapper,
+.tree-children {
+    position: relative;
+}
+
+.node-content-wrapper::before,
+.tree-children::after {
+    content: "";
+    position: absolute;
+}
+
+.node-content-wrapper::before {
+    border-bottom: 1px solid lightgrey;
+    border-left: 1px solid lightgrey;
+    height: 28px;
+    top: -17px;
+    width: 20px;
+    left: -28px;
+}
+
+.tree-node-leaf>.node-wrapper>.node-content-wrapper::before {
+    width: 25px;
+}
+
+.tree-children::after {
+    border-left: 1px solid lightgrey;
+    height: 100%;
+    top: -15px;
+    left: -15px;
+}
+
+treenode:last-child>.tree-node>.tree-children::after {
+    border-left: none;
+}
+
+.toggle-children {
+    z-index: 1;
+}

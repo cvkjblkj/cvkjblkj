@@ -1,0 +1,19 @@
+ @import './../../../theme/sass/vendor/time-switch.scss';
+ .date-list.date-day {
+   .date-picker {
+     width: 260px;
+   }
+   .hour-click {
+     height: 310px;
+   }
+
+ }
+ .date-list{
+   .time-false{
+     height: 310px;
+   }
+ }
+
+ .date-list .date-picker {
+   left: -210px;
+ }

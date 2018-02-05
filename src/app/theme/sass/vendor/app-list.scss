@@ -1,0 +1,44 @@
+// 应用列表的样式
+
+/* // 筛选平铺列表条件 */
+
+// 样例 demo
+// <div class="tiling-filter clearfix">
+// <span class="label-filter fl">应用：</span>
+// <ul class="clearfix app-list">
+//   <li class="list" *ngFor="let appItem of appListData" (click)="getEnterpriseAppItem(appItem)">
+//     <span>  
+//        <a #a [ngClass]='{"selected":appCode==a.id}' id={{appItem.appCode}}  >{{appItem?.appName}}</a>
+//      </span>
+//   </li>
+// </ul>
+// </div>
+.tiling-filter {
+  padding: 5px 0;
+  >ul.app-list {
+    margin-left: 35px;
+  }
+  li {
+    float: left;
+  }
+  >span.label-filter {
+    float: left;
+    line-height: 28px;
+  }
+  li.list a {
+    padding: 0px 15px 0px 15px;
+    box-sizing: border-box;
+    background: #D9DEE4;
+    cursor: pointer;
+    color: #000000;
+    margin-right: 10px;
+    display: inline-block;
+    text-align: center;
+    line-height: 28px;
+    margin-bottom: 6px;
+    &.selected {
+      background: #21B38E;
+      color: #fff;
+    }
+  }
+}

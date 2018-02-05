@@ -1,0 +1,144 @@
+<div class="edit-rule  component journal-info clearfix primeng-treeTable">
+    <div class="content">
+        <div class="header">
+            <span>编辑报警规则</span>
+            <button pButton type="button" icon="fa fa-reply" (click)="goback()" class="btn-default" label="返回规则列表"></button>
+        </div>
+        <div class="correlation">
+            <div>
+                <div class=" correlationIcon"><span class="fa fa-eraser"></span><span>关联对象</span></div>
+                <div class="correlationLine"></div>
+            </div>
+            <div class="monitorCategory">
+
+                <span class="sign">*</span>
+                <span>监控类别：</span>
+                <p-autoComplete [(ngModel)]="monitorKind" [size]='30' [readonly]=true></p-autoComplete>
+            </div>
+            <div class="monitorData ">
+                <span class="sign">*</span>
+
+                <span class="monitor">监控对象：</span>
+                <p-autoComplete [(ngModel)]="monitorObjectData" [size]='30' [readonly]=true></p-autoComplete>
+            </div>
+        </div>
+        <div class="monitorRule">
+            <div>
+                <div class=" correlationIcon"><span class="fa fa-eraser"></span><span>设置规则</span></div>
+                <div class="correlationLine"></div>
+            </div>
+            <div class="ruleName">
+                <span class="sign">*</span>
+                <span>规则名称：</span>
+                <p-autoComplete [(ngModel)]="ruleName" [size]='30'></p-autoComplete>
+            </div>
+            <div class="ruleContent parent">
+                <div style="display:inline-block">
+                    <div class="dropDownContent">
+                        <span class="sign">*</span>
+                        <span>规则内容：</span>
+                        <select #dropDownContent id="dropDownServerContent" style="min-width:206px;height:24px" [(ngModel)]="selectdropDownServerContent" (change)='onChangeSelectServerContent(dropDownContent.value)'>
+                                    <option *ngFor="let manager of  dropDownServerContent"
+                                   value={{manager.value}}  >{{manager.label}}</option>
+                        </select>
+                    </div>
+                    <div class="dropDownMin">
+                        <select #dropDownMin id="dropDownMin" style="min-width:75px;height:24px" [(ngModel)]="selectMinute" (change)='onChangeSelectServerMin(dropDownMin.value)'>
+                                    <option *ngFor="let manager of dropDownServerMin"
+                                   value={{manager.value}}  >{{manager.label}}</option>
+                        </select>
+                    </div>
+                    <div class="dropDownValue">
+                        <select #dropDownValue id="dropDownMin" style="min-width:75px;height:24px" [(ngModel)]="selectAvarageValue" (change)='onChangeSelectServerValue(dropDownValue.value)'>
+                                    <option *ngFor="let manager of dropDownAvarageValue"
+                                   value={{manager.value}}  >{{manager.label}}</option>
+                        </select>
+                    </div>
+                    <div class="dropDownSign">
+                        <select #dropDownSign id="dropDownMin" style="min-width:75px;height:24px" [(ngModel)]="selectServerSign" (change)='onChangeSelectServerSign(dropDownSign.value)'>
+                                    <option *ngFor="let manager of dropDownServerSign"
+                                   value={{manager.value}}  >{{manager.label}}</option>
+                        </select>
+                    </div>
+
+                    <div class="limitPercent">
+                        <p-spinner size="10" [(ngModel)]="limitPercent" [step]="0.1"></p-spinner>
+                        <!--<p-spinner size="10" [(ngModel)]="limitPercent" [style]="{'height':'25px'}" [min]="0" [step]="1"></p-spinner>-->
+                    </div>
+                    <div class="percent">
+                        <p-spinner *ngIf="limitValue" size="10" [style]="{'height':'25px'}" [(ngModel)]="percent" [step]="0.1"></p-spinner>
+                    </div>
+                    <div class="metricUnit">
+                        <span *ngIf=" metricUnit">{{ metricUnit}}</span>
+                    </div>
+                </div>
+
+                  <div class="networkStates" *ngIf="networkStates">
+                    <span class="sign">*</span>
+                    <span>磁盘设备：</span>
+                    <select id="networkDeviceName" style="min-width:206px;height:24px" [(ngModel)]="selectNetworkDevice" (change)='changedownNetworkStates(selectNetworkDevice)'>
+                                    <option *ngFor="let manager of networkDeviceName"
+                                   value={{manager.value}}  >{{manager.label}}</option>
+                         </select>
+                </div>
+                <div class="deviceStates" *ngIf="deviceStates">
+                    <span class="sign">*</span>
+                    <span>网络设备：</span>
+                    <select id="deviceStates" style="min-width:206px;height:24px" [(ngModel)]="selectDevice" (change)='changedownDeviceStates(selectDevice)'>
+                                    <option *ngFor="let manager of selectDeviceData"
+                                   value={{manager.value}}  >{{manager.label}}</option>
+                         </select>
+                </div>
+                <div *ngIf="dropDownServer" class="dropDownServer">
+
+                    <span class="sign">*</span>
+                    <span>端口：</span>
+                    <p-autoComplete [(ngModel)]="selectServerPort" [size]='30' [readonly]=true></p-autoComplete>
+                    <!--<p-dropdown [options]="dropDownServerPort" [(ngModel)]="monitorAttributeContent" placeholder="请选择" (onChange)='OnselectServerPort($event)' [style]="{'min-width':'206px','padding':'1px'}"></p-dropdown>-->
+                </div>
+                <div class="ruleLine"></div>
+            </div>
+        </div>
+        <div class="alarmTime">
+            <span>连续几次超过阈值报警</span>
+            <p-dropdown [options]="dropDownTime" [(ngModel)]="evaluationCount" (onChange)="evaluationChange($event)" [style]="{'min-width':'150px','padding':'1px','display':'inline-block'}"></p-dropdown>
+        </div>
+        <div class="alramInform">
+            <div class=" correlationIcon"><span class="fa fa-eraser"></span><span>通知设置</span></div>
+            <div class="correlationLine"></div>
+            <div class="alramList">
+                <div class="informBox">
+                    <span class="sign">*</span>
+                    <span class="inform">通知人：</span>
+                </div>
+                <span class="selected" *ngIf="targetCars.length">{{targetCars.length}}人</span>
+                <p-pickList [source]="sourceCars " metaKeySelection=true [target]="targetCars " (onMoveToTarget)="onMoveToTarget($event)" (onMoveToSource)="onMoveToSource($event)" sourceHeader="用户列表 " targetHeader="选中" [responsive]="true " [sourceStyle]="{ 'height': '200px','width':'200px'} "
+                    [targetStyle]="{ 'height': '200px','width':'200px'} " [showTargetControls]="false
+                            " [showSourceControls]="false" filterBy="userName" dragdrop="true">
+                    <template let-role pTemplate="item ">
+            <div style="padding: 4px 0;text-align: left;margin-left: 30px;">{{role.userName}}</div>
+          </template>
+                </p-pickList>
+            </div>
+        </div>
+        <div class="informWay">
+            <span class="sign">*</span>
+            <span class="inform">通知方式：</span>
+            <input type="checkbox" class="checkbox" name="opend1" value='1' [(ngModel)]='informEmail'>邮箱
+            <input type="checkbox" class="checkbox" name="opend2" value='0' [(ngModel)]='informMessage'>短信
+        </div>
+        <div class="btn-body col-lg-5 col-md-5 col-sm-5 col-xs-5">
+            <button type="button" class="btn btn-default pull-right btn-space default" (click)="hide()">取消</button>
+            <!--<div *ngIf="!limitValue">
+                <button type="button" class="btn btn-default pull-right btn-space btn-reset" [disabled]='!limitPercent||!ruleName||(!informEmail&&!informMessage)' (click)="ruleSave()"> 保存</button>
+            </div>-->
+            <div>
+                <button type="button" class="btn btn-default pull-right btn-space btn-reset" [disabled]='targetCars.length==0||limitPercent==undefined||(limitValue?percent==undefined:false)||!ruleName||(!informEmail&&!informMessage)' (click)="ruleSave()"> 保存</button>
+            </div>
+
+
+        </div>
+
+    </div>
+    <p-growl [value]="msgs"></p-growl>
+</div>

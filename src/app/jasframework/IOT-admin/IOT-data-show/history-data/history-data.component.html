@@ -1,0 +1,80 @@
+<div class="history-data">
+  <div class="search-filter date-search">
+    <!--时间选择-->
+    <ul class="date-list clearfix" (click)="datePicker($event)">
+      <li><span [ngClass]="{'bgc-checked':isClick=='one'}" id="one">最近1小时</span></li>
+      <li><span [ngClass]="{'bgc-checked':isClick=='three'}" id="three">最近3小时</span></li>
+      <li><span [ngClass]="{'bgc-checked':isClick=='six'}" id="six">最近6小时</span></li>
+      <li class='self-date'>
+
+        <span [ngClass]="{'bgc-checked':isClick=='self'|| isSelectedDate}" id='self'>自定义</span>
+        <span class="show-time" *ngIf="isSelectedDate  && !timeout">{{dateStartShow }} ~ {{dateEndShow }} </span>
+        <span class="show-time" style="color:red" *ngIf="timeout">最大选择区间为10个小时 </span>
+        <div class="date-picker appService clearfix primeng-datePicker" *ngIf="isClick=='self'" (click)='stopBubble($event)'>
+          <div class="fl calendar-father">
+            <p-calendar [(ngModel)]="dateStart" [inline]="true" [showSeconds]='true' [monthNavigator]="true" showTime="showTime" hourFormat="24" [yearNavigator]="true" yearRange="2000:2030" [style]="{'position':'relative','top':'-16px'}" (onSelect)='selectStartDate($event)'
+              [locale]="zn" [maxDate]='dateEnd'></p-calendar>
+          </div>
+          <div class="fr calendar-father">
+            <p-calendar [(ngModel)]="dateEnd" [inline]="true" [showSeconds]='true' [monthNavigator]="true" showTime="showTime" hourFormat="24" [yearNavigator]="true" yearRange="2000:2030" [style]="{'position':'relative','top':'-16px'}" (onSelect)='selectEndDate($event)'
+              [locale]="zn" [minDate]='dateStart' [maxDate]='maxDate'></p-calendar>
+          </div>
+          <div class="button" style="clear:both;clear:both;position: absolute;bottom: -10px;right: 0;">
+            <button class="btn btn-reset sure" (click)='sure($event)'>确定</button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+
+
+  <div class="echarts-effect">
+    <div *ngIf="!empty" style="height:400px">
+      <echarts-ng2 [showLoading]='true' [option]='echartsOption' [loadingTime]='2000'></echarts-ng2>
+    </div>
+    <div *ngIf="empty" style="height:400px;text-align:center;line-height:400px;">
+      <p style="font-size:22px;color:#ccc">未查到相关数据</p>
+    </div>
+  </div>
+
+  <div class="list-data clearfix">
+
+    <table border="1">
+      <tbody>
+        <tr>
+          <td colspan="5">属性基本信息</td>
+        </tr>
+        <tr class="basic-info">
+          <td>属性名称：{{attribute}}</td>
+          <td>单位：{{tagMessage?.unit}}</td>
+          <td>数据类型：{{tagMessage?.dataType}}</td>
+          <td>设备：{{tagMessage?.deviceName}}</td>
+          <td>地址：{{tagMessage?.address}}</td>
+        </tr>
+        <tr>
+          <td colspan="2">描述：{{tagMessage?.description}}</td>
+          <td colspan="3">扩展描述：{{tagMessage?.descriptionEx}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <span style="color:#FFAB81;margin:10px;display:inline-block">(当前仅显示前1000条数据)</span>
+
+    <p-dataTable #dt [value]="historyListData" [emptyMessage]='emptyMessage' scrollable="true">
+      <!-- <p-column field="attribute" header="属性" #dtFrozen frozen='true' [style]="{'width':'150px','height':'45px','padding':'0 15px'}"></p-column> -->
+      <p-column *ngFor="let item of listOption" [field]="item.field" [header]="item.header" [style]="{'height':'45px','padding':'0 15px'}"></p-column>
+    </p-dataTable>
+    <!-- [hidden]="!historyListData ||(historyListData && historyListData.length==0)" -->
+    <!-- [disabled]="!button.microservicesLogDownload" -->
+    <div class="download-position" [hidden]="!historyListData ||(historyListData && historyListData.length==0)">
+      <button class="btn btn-reset button-position" (click)="downloadShow()">
+                      <i class="fa fa-download" aria-hidden="true"></i>
+                      下载
+                    </button>
+      <grid-pagination [totalPages]='totalPages' [totalItems]='totalItems' [size]='size' [pageSize]='rowsPerPageOptions' [maxSize]='maxSize' (sizeChanged)='sizeChanged($event)' (pageChanged)='paginate($event)'></grid-pagination>
+
+    </div>
+  </div>
+
+</div>

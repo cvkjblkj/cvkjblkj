@@ -1,0 +1,101 @@
+.login-journal {
+  .full button span {
+    background-color: limegreen;
+    border-radius: 32px;
+    color: black;
+  }
+  .partially button span {
+    background-color: orange;
+    border-radius: 32px;
+    color: black;
+  }
+  // 图表展示
+  .charts-data {
+    width: 100%;
+    display: flex;
+    display: -webkit-flex;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flex;
+    display: inline-flex;
+    >div {
+      // flex: 1;
+      width: 50%;
+      // -webkit-flex: 1;
+      // -webkit-flex: 1;
+      // -ms-flex: 1;
+      border: 1px solid #EDEDED;
+      border-radius: 5px;
+      height: 300px;
+    }
+    .app-charts {
+      margin-right: 15px;
+    }
+  }
+  .list {
+    .list-download {
+      //  height: 100px;
+      width: 120px;
+      right: 40px;
+      ul {
+        //  padding: 5px 0;
+      }
+      li {
+        width: 100%;
+        text-align: left;
+        //  padding: 5px 10px;
+        cursor: pointer;
+        &:hover {
+          background-color: #00AA7A;
+        }
+      }
+      span {
+        position: static;
+        display: inline-block;
+        padding: 5px 10px;
+        width: 100%;
+      }
+    }
+  }
+}
+
+// 选择项
+.list-select {
+  height: 200px;
+  .line {
+    margin: 0;
+    width: 100%;
+    border: 1px solid #ccc;
+  }
+  ul {
+    padding: 5px;
+  }
+  li {
+    position: relative;
+    padding: 3px 5px;
+    span {
+      position: absolute;
+      top: 3px;
+      left: 30px;
+      font-size: 14px;
+    }
+  }
+}
+
+.list-item {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  width: 200px;
+  background-color: #fff;
+  overflow: auto;
+  border: 1px solid #ccc;
+  z-index: 5;
+}
+
+//查询的数据太多，超过1000条提示风格
+.message-info {
+  float: left;
+  position: relative;
+  left: 20px;
+  top: 20px;
+}

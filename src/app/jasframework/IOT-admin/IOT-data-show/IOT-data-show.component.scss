@@ -1,0 +1,74 @@
+@import './../../../theme/sass/vendor/tab.scss';
+$border:1px solid #EDEDED;
+.content {
+  .router-outlet {
+    clear: both;
+    border: 1px solid #EDEDED;
+    max-height: 1000px;
+    overflow: auto;
+    height: 1000px;
+    // position: absolute;
+    // top: 54px;
+    // bottom: 20px;
+    // right: 10px;
+    // left: 10px;
+    padding: 20px;
+  }
+  .tab-content {
+    padding: 0;
+    // border: 1px solid #EDEDED;
+    border-left: none;
+    // position: absolute;
+    // top: 90px;
+    // bottom: 10px;
+    // left: 195px;
+    // right: 13px;
+    // padding: 5px 20px;
+    margin-left: 180px;
+  }
+}
+
+.tab {
+  padding: 0;
+  border-radius: 0;
+  margin: 0;
+  border: none;
+  height: 40px;
+  li {
+    border-radius: 0;
+    height: 40px;
+    a {
+      border-bottom: 3px solid #F2f2f2;
+      line-height: 38px;
+      border-radius: 0;
+      &:hover {
+        border-bottom: 3px solid #fff;
+      }
+    }
+  }
+}
+
+.data-source {
+  width: 180px;
+  position: absolute;
+  // top: 90px;
+  // bottom: 10px;
+  // border: 1px solid #EDEDED;
+  .title {
+    height: 40px;
+    background-color: #ccc;
+    width: 100%;
+    line-height: 40px;
+    padding-left: 10px;
+  }
+  .data {
+    width: 100%;
+    padding: 6px 0 0 8px;
+    height: 100%;
+    overflow: auto;
+    border: $border;
+    max-height: 1000px;
+    border-top: none;
+    border-right: none;
+  }
+}

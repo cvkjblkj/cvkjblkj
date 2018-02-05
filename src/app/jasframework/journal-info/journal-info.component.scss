@@ -1,0 +1,255 @@
+.content {
+  >div {
+    border: 1px solid #EDEDED;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 10px 15px;
+  }
+  .charts-data {
+    border: none;
+    padding: 0;
+  }
+}
+
+// 搜索框
+.search-filter {
+  .date-list {
+    margin-bottom: 10px;
+    min-height: 25px;
+    position: relative;
+    left: -15px;
+    top: 5px;
+    >li {
+      float: left;
+      padding: 2px 15px;
+      border-left: 1px solid #a2a1a1;
+      cursor: pointer;
+    }
+    >li:first-child {
+      border-left: none;
+    }
+    >li:last-child {
+      position: relative;
+    }
+    span {
+      padding: 1px 2px;
+    }
+    // 自定义时间选择框
+    .date-picker {
+      border: 1px solid #ddd;
+      width: 500px;
+      min-width: 280px;
+      height: 365px;
+      top: 24px;
+      position: absolute;
+      background-color: #fff;
+      z-index: 5;
+      padding: 7px 14px;
+      .sure {
+        position: absolute;
+        bottom: 15px;
+        right: 13px;
+      }
+      .calendar-father {
+        width: 48%;
+        margin-top: 10px;
+      }
+    }
+    .time-show {
+      width: 100%;
+      text-align: center;
+      padding: 5px 3px;
+      border: 1px solid #ccc;
+      display: block;
+      background-color: #CAEACE;
+      margin-bottom: 5px;
+    }
+  }
+  .search-btn {
+    float: right;
+  }
+  .search-btn[disabled] {
+    opacity: 0.35;
+  }
+  span.select-close {
+    color: #cfcfcf;
+    cursor: pointer;
+    font-size: 24px;
+    margin-left: 10px;
+    vertical-align: middle;
+    position: relative;
+    top: -4px;
+  }
+  span.select-close:hover {
+    color: rgba(255, 8, 22, 0.8);
+  }
+  .bgc-checked {
+    background-color: #00aa7a;
+    color: #fff;
+  }
+}
+
+// 搜索输入框
+.select-box {
+  border-top: 1px solid #EDEDED;
+  padding-top: 10px;
+  .dropdown {
+    display: inline-block;
+    box-sizing: border-box;
+    /* position: relative; */
+    font-size: 14px;
+    vertical-align: top;
+    * {
+      box-sizing: border-box;
+      font-family: "PingFang SC", Arial, "Microsoft YaHei", sans-serif;
+    }
+    .input-box,
+    .options {
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+  }
+  .input-box {
+    min-height: 34px;
+    background: #fff;
+    width: auto;
+    height: auto;
+    padding: 5px 11px 0;
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 110px;
+    max-width: 1006px;
+    .chosen {
+      display: inline-block;
+      height: 22px;
+      line-height: normal;
+      background: #E5F5FD;
+      font-size: 12px;
+      color: #333;
+      padding: 3px 6px 7px 6px;
+      margin-right: 6px;
+      margin-bottom: 5px;
+      border-radius: 3px;
+      .text {
+        display: inline-block;
+        font-size: 12px;
+        line-height: normal;
+        max-width: 80px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      .chosen-remove {
+        cursor: pointer;
+        margin-left: 5px;
+        color: #00A0EA;
+        font-size: 8px;
+        position: relative;
+        top: -3px;
+      }
+    }
+    input[type='text'] {
+      border: none;
+      // width: 14px;
+      min-width: 20px;
+      width: 20px;
+      max-width: 120px;
+      height: 22px;
+      outline: none;
+    }
+  }
+  .options {
+    display: none;
+    box-shadow: 0px 6px 15px rgba(0, 1, 1, 0.13);
+    background: #fff;
+    margin: 5px 0 0 0;
+    padding: 0;
+    position: absolute;
+    list-style: none;
+    min-width: 150px;
+    z-index: 999;
+    li {
+      height: 31px;
+      line-height: 31px;
+      padding: 0 11px;
+      cursor: pointer;
+      .text {
+        display: inline-block;
+        vertical-align: middle;
+        white-space: nowrap;
+        max-width: 400px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    }
+  }
+}
+
+
+/**
+ * 隐藏默认的checkbox
+ */
+
+input[type=checkbox] {
+  visibility: hidden;
+}
+
+// 列表区域
+.list {
+  .custom-input {
+    position: relative;
+  }
+  .custom-name {
+    // padding: 5px;
+  }
+  // 自定义CheckBox样式
+  .checkbox-custom {
+    // width: 25px;
+    // margin: 20px 100px;
+    position: relative;
+  }
+  // Create the box for the checkbox
+  .checkbox-custom label {
+    cursor: pointer;
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    top: 3px;
+    left: 3px;
+    background: #eee;
+    border: 1px solid #ddd;
+    // span{
+    //   margin-left: 22px;
+    //   white-space: nowrap;
+    // }
+  }
+  // Display the tick inside the checkbox
+  .checkbox-custom label:after {
+    opacity: 0;
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 6px;
+    background: transparent;
+    top: 2px;
+    left: 2px;
+    border: 3px solid #333;
+    border-top: none;
+    border-right: none;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+  }
+  // Create the hover event of the tick
+  .checkbox-custom label:hover::after {
+    opacity: 0;
+  }
+  // Create the checkbox state for the tick
+  .checkbox-custom input[type=checkbox]:checked+label:after {
+    opacity: 1;
+  }
+  // 自定义CheckBox样式
+  //
+}

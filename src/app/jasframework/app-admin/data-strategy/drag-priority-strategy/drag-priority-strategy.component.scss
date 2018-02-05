@@ -1,0 +1,75 @@
+@import './../rule-strategy/rule-strategy.component.scss';
+$color:rgba(1, 170, 122, 0.8);
+$dragColor:rgba(204, 204, 204, 1);
+$backgroundColor:#f2f2f2;
+// 设置优先级 
+//设置操作按钮 
+.set-handle {
+  border: $border;
+  ul {
+    padding-left: 10px;
+    padding: 20px;
+    padding-top: 10px;
+    padding-bottom: 0px;
+  }
+  .operate ul.clearfix button {
+    margin-right: 15px;
+    font-weight: 400;
+  }
+}
+
+// 列表的设置 拖动位置 
+.list-set {
+  clear: both;
+  // margin: 40px;
+  margin-left: 50px;
+  ul {
+    padding-left: 50px;
+    // padding-bottom: 10px;
+    width: 500px;
+    min-width: 250px;
+    margin-bottom: 40px;
+    li {
+      padding: 8px 0px 4px 8px;
+      border-bottom: 1px solid #ccc;
+      border-bottom: 1px solid $dragColor;
+      margin-bottom: 5px;
+    }
+    .move-nr {
+      cursor: move;
+      padding: 8px 0px 4px 8px;
+    }
+    .drag-li {
+      background-color: $dragColor;
+      border-bottom: 1px solid $dragColor;
+      margin-bottom: 5px;
+      padding: 0;
+    }
+  }
+  .ul-set {
+    border-left: 2px solid $color;
+    margin-bottom: 0;
+    padding-top: 0;
+    span {
+      margin-left: 5px;
+    }
+  }
+  // 提示 字体  高 低 及箭头 
+  .flag-position {
+    position: relative;
+    left: -5.5px;
+    display: block;
+    color: $color;
+  }
+  .text-high {
+    top: -3px;
+  }
+  .text-low {
+    top: -18px;
+  }
+  .text-icon {
+    left: -4.5px;
+    font-size: 20px;
+    top: -15px;
+  }
+}

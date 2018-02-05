@@ -1,0 +1,244 @@
+.detail {
+    margin: 0;
+    padding: 0 0 0 40px;
+}
+
+.detail ul {
+    margin: 0;
+    padding: 0;
+}
+
+.clearfix:after {
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+}
+
+.detail li .bgc-color {
+    padding: 5px;
+    border: 1px solid #ccc;
+    background-color: rgba(3, 3, 3, .1);
+}
+
+.detail .bgc-color .fl {
+    float: left;
+    width: 20%;
+    padding: 5px;
+}
+
+.detail .bgc-color .fl img {
+    width: 100%;
+    height: auto;
+}
+
+
+/*图片放大*/
+
+.detail img.picshow:hover {
+    z-index: 10;
+    margin-left: 50%;
+    transform: scale(3);
+    -webkit-transform: scale(3);
+    /* Safari 和 Chrome */
+    -ms-transform: scale(3);
+    /* IE 9 */
+    -moz-transform: scale(3);
+    /* Firefox */
+    -o-transform: scale(3);
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.detail .title {
+    padding: 10px 0 10px 0px;
+    border-bottom: 1px solid #eaedf1;
+    border-left: 3px solid #00aa7a;
+}
+
+.detail .title span {
+    padding: 10px 10px;
+    font: 700 18px "微软雅黑";
+}
+
+.detail li {
+    list-style: none;
+    width: 100%;
+    /*border-bottom: 1px dashed rgba(0, 0, 0, .1);*/
+    padding: 10px 0 10px;
+    /*overflow: hidden;*/
+}
+
+.detail li>span:first-child {
+    font: 400 12px "微软雅黑";
+    color: black
+}
+
+.detail .companyPic,
+.detail .idcard {
+    display: block
+}
+
+div.logopic {
+    position: absolute;
+    /* float: left; */
+    width: 125px;
+    height: 125px;
+    background-color: green;
+    right: 50px;
+    top: 106px;
+}
+
+.detail ul {
+    margin: 20px 15px 0 0;
+    padding: 20px;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.detail .btn-reset {
+    float: right;
+    margin: 0 50px;
+    padding: 7px 18px;
+    background: #00aa7a;
+    border-radius: 0;
+    /* border: 0; */
+}
+
+
+/*改变ng2-bootstrap 的 头部布局*/
+
+div.modal-header h4 {
+    width: auto;
+}
+
+
+/*企业详细信息页面的标题风格设置*/
+
+div.titleInfo {
+    font-weight: 700;
+    padding: 15px 0 15px 15px;
+    background: #ddd
+}
+
+.titleInfo .titleInfoBackground {
+    font-size: 15px;
+    font-weight: 400;
+    margin: 20px 0 10px;
+    color: #00aa7a;
+}
+
+.table-viewer-header {
+    margin-top: 10px;
+    margin-bottom: -1px;
+    height: 40px;
+    background: #F5f6FA;
+    line-height: 38px;
+    border: 1px solid #eeeeee;
+    position: relative;
+    border-left: 4px solid #00aa7a;
+}
+
+.table-viewer-header .table-viewer-topBar-title {
+    font-size: 14px;
+    color: #333333;
+    display: inline-block;
+    margin-left: 16px;
+}
+
+.table-viewer-header .table-viewer-dropDown {
+    display: inline-block;
+    margin: 10px;
+    font-size: 20px;
+}
+
+.table-default-viewer {
+    width: 100%;
+    /*background-color: #c1ffce;*/
+}
+
+
+/*表格中的一个单元格边距*/
+
+.table-default-viewer td {
+    padding: 11px 20px;
+    border: 1px solid #eeeeee;
+}
+
+.table-default-viewer .text-muted {
+    padding-right: 8px;
+    /*表单字段与值 之间的距离*/
+}
+
+.list-show-view .content {
+    /*margin-right: 60px;*/
+    padding: 1px 25px;
+}
+
+.ng-editor {
+    margin-right: 60px;
+}
+
+
+/*应用列表的风格*/
+
+.dataTable a.set {
+    /*padding: 5px 15px;*/
+    /*background: #a0eca0;*/
+    cursor: pointer;
+    color: #00aa7a;
+    margin-right: 5px;
+}
+
+.dataTable a.set:hover {
+    color: #000000;
+    /*background: #b4adad;*/
+}
+
+.dataTable .set_red {
+    cursor: pointer;
+    color: #ff0a3e;
+    margin-right: 5px;
+    border: none;
+    background: transparent;
+}
+
+
+/*鼠标放上后变色*/
+
+.dataTable .set_red:hover {
+    color: #000000;
+    background: #b4adad;
+}
+
+.table-viewer-topbar-title {
+    font-size: 14px;
+    color: #333333;
+    display: inline-block;
+    margin-left: 16px;
+}
+
+button.btn.btn-reset {
+    background: #00aa7a;
+    border: 1px solid #00aa7a;
+    border-radius: 0;
+    color: #fff;
+    margin-right: 15px;
+}
+
+button.btn.btn-reset[disabled]:hover {
+    background: #00aa7a;
+    color: #fff;
+}
+
+table {
+    font-size: 12px;
+}

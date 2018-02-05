@@ -1,0 +1,73 @@
+/* import the required JSAPI css */
+/*如果没有这个就没有放大缩小按钮等arcgis自带的按钮*/
+/*@import 'http://localhost:3000/library/4.4/esri/css/main.css';*/
+/*@import 'https://js.arcgis.com/4.4/esri/css/main.css';*/
+/*@import 'http://192.168.100.92/api/arcgis_js_v44_api/arcgis_js_api/library/4.4/esri/css/main.css';*/
+
+.arc-gis-map {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.esri-view {
+  height: 100%;
+  width: 100%;
+}
+
+.arcgis-map {
+  position: relative;
+}
+
+.btn-arcgis2D {
+  position: absolute;
+  top: 172px;
+  left: 15px;
+}
+
+.btn-arcgis3D {
+  position: absolute;
+  top: 290px;
+  left: 15px;
+}
+
+.arcgis-map-layer2D {
+  position: absolute;
+  top: 211px;
+  left: 55px;
+}
+
+.arcgis-map-layer3D {
+  position: absolute;
+  top: 329px;
+  left: 55px;
+}
+
+.arcgis-map-btn {
+  background-color: #fff;
+  border: 1px solid #D0D0D0;
+  margin-bottom: 5px;
+  width: 34px;
+  height: 34px;
+  padding: 7px;
+}
+
+.arcgis-map-btn:hover {
+  background-color: #f2f2f2;
+}
+
+#overviewDiv{
+  position: absolute;
+  bottom: 30px;
+  right: 15px;
+  width: 300px;
+  height: 200px;
+  border: 1px solid #d0d0d0;
+  z-index: 1;
+}
+
+#extentDiv {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  z-index: 2;
+}

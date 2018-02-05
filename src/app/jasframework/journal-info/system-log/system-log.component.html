@@ -1,0 +1,35 @@
+<div class="system-log component journal-info clearfix primeng-treeTable">
+    <div class="title">
+        <span>系统日志</span>
+    </div>
+    <div class="line"></div>
+    <div class="content">
+        <!--tab页-->
+        <div class="tab">
+            <ul class="clearfix">
+                <li>
+
+                    <a (click)="masterClick()" [ngClass]='{"active":routeStatesMaster  && routeStatesMaster != -1}'>主机</a>
+                </li>
+                <li>
+
+                    <a (click)="dockerClick()" [ngClass]='{"active":routeStatesDocker  && routeStatesDocker != -1}'>Docker引擎</a>
+                </li>
+                <li>
+
+                    <a (click)="tomcatClick()" [ngClass]='{"active":routeStatesTomcat  && routeStatesTomcat != -1}'>Tomcat应用容器</a>
+                </li>
+                <li>
+                    <a (click)="nginxClick()" [ngClass]='{"active":routeStatesNginx  && routeStatesNginx != -1}'>Nginx容器</a>
+                </li>
+                <li>
+                    <a (click)="microservicesClick()" [ngClass]='{"active":routeStatesMicroservices  && routeStatesMicroservices != -1}'>微服务</a>
+                </li>
+                <!--<li>
+                    <button class="route-link" [routerLink]="['./OSS']" routerLinkActive='active' disabled>OSS</button>
+                </li>-->
+            </ul>
+        </div>
+        <router-outlet></router-outlet>
+
+    </div>

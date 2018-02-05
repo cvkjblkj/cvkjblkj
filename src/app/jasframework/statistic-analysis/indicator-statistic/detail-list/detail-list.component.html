@@ -1,0 +1,37 @@
+<div class="detail-list fixed-dataTable-height component primeng-treeTable clearfix">
+  <!--页面标题  -->
+  <!-- <div class="title">
+    <span>指标</span>
+  </div>
+  <div class="line"></div> -->
+  <div class="content">
+    <span class="breadcrumb-trail">
+        <span class="back" (click)="goBack()"> << 返回</span> &nbsp;&nbsp;
+    <span class="span">{{indexName}}</span>/<span>企业列表</span>
+    </span>
+
+
+
+    <div class="listShow">
+      <!-- <div class="border-set" *ngIf="listShowData && listShowData.length>0"> -->
+      <p-dataTable #dt [value]="listShowData" scrollable="true" frozenWidth="200px" [style]="{'margin-top':'20px'}" [emptyMessage]='emptyMessage'>
+        <p-column field="enterpriseName" header="企业名称" [frozen]='true' [style]="{'width':'250px'}"></p-column>Î
+        <p-column *ngFor="let col of options " [field]="col.field" [header]="col.header" [style]="{'width':'200px'}">
+          <template let-col let-row='rowData' pTemplate="body">
+              <a [routerLink]='routePath'>{{row[col.field]}}</a>
+            </template>
+        </p-column>
+      </p-dataTable>
+
+      <!--  [disabled]="!button.businessLogDownload" -->
+      <div class="download-position" [hidden]="!listShowData ||(listShowData && listShowData.length==0)">
+        <button class="btn btn-reset button-position" (click)="downloadData()">
+          <i class="fa fa-download" aria-hidden="true"></i>
+          下载
+        </button>
+
+        <grid-pagination [totalPages]="totalPages" [totalItems]='totalItems' [size]='size' [pageSize]='rowsPerPageOptions' [maxSize]='maxSize' (sizeChanged)='sizeChanged($event)' (pageChanged)='paginate($event)'></grid-pagination>
+      </div>
+    </div>
+  </div>
+</div>

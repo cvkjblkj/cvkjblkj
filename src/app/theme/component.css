@@ -1,0 +1,2688 @@
+/*自定义的primeNG的样式*/
+
+
+/*菜单组件*/
+
+@import './../home/menuItem/menuItem.component.css';
+
+/*navBar 组件 ng2-bootstrap*/
+
+@import './components/navBar/navBar.component.css';
+
+/*treeTable 样式修改*/
+
+.primeng-treeTable th.ui-state-default.ui-unselectable-text {
+    padding: 20px .5em;
+    /*font-size: 12px*/
+    text-align: left;
+    border: none;
+    border-bottom: 1px solid #ccc;
+}
+
+.primeng-treeTable .ui-treetable tbody .ui-treetable-row td.undefined {
+    /* border: 0 none; */
+    border: inherit;
+    border-bottom: 1px solid #d9d9d9;
+    /*border-left: 1px solid #d9d9d9;*/
+    padding: 10px .5em;
+    /*font-size: 12px*/
+    vertical-align: middle;
+    word-break: break-all;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+.primeng-treeTable .ui-widget-content .ui-state-highlight,
+.ui-state-highlight {
+    /*border-color: none;*/
+    background: #ddf1ea;
+    color: #323232;
+}
+
+
+/* treeTable 加按钮之后的操作边框线 */
+
+.primeng-treeTable .ui-treetable tbody .ui-treetable-row td.col-button {
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+    word-break: break-all;
+    word-wrap: break-word;
+    word-break: normal;
+    white-space: normal;
+    /*border-left: 1px solid #ccc;*/
+}
+
+
+/*dataTable  冻结与不冻结列固定高度*/
+
+
+/*td  */
+
+.fixed-dataTable-height .ui-datatable .ui-datatable-data>.ui-widget-content>td {
+    height: 44px;
+    padding: 0;
+    padding-left: 15px;
+}
+
+
+/*tr  */
+
+.fixed-dataTable-height .ui-datatable .ui-datatable-thead>tr>.ui-unselectable-text {
+    height: 58px;
+}
+
+
+/*不冻结列的边框线  */
+
+.login-journal .ui-datatable-unfrozen-view {
+    border-right: 1px solid #eeeeee;
+}
+
+
+/*分页 ng2-bootstrap 选中页码时的背景色*/
+
+.grid-pagination .pagination>.active>a,
+.grid-pagination .pagination>.active>span,
+.grid-pagination .pagination>.active>a:hover,
+.grid-pagination .pagination>.active>span:hover,
+.grid-pagination .pagination>.active>a:focus,
+.grid-pagination .pagination>.active>span:focus {
+    background-color: rgb(0, 170, 122) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+
+/*-----------------------------------------------系统管理样式--------------------------------------------*/
+
+
+/*表格边框*/
+
+.ui-datatable-tablewrapper table {
+    border: 1px solid #eee;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+
+/*表格头样式*/
+
+.ui-datatable .ui-datatable-thead>tr>.ui-unselectable-text {
+    color: #999;
+    border: 0;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    /*font-size: 12px*/
+}
+
+
+/*改变有冻结列的dataTable的表头*/
+
+.border-set .ui-widget-header .ui-state-default {
+    border: 1px solid #eeeeee;
+}
+
+
+/*表格内容行的样式*/
+
+body .ui-datatable-tablewrapper .ui-widget-content {
+    border: 0;
+    border-bottom: 1px solid #eee;
+    /*font-size: 12px*/
+}
+
+
+/*表格内容行的样式*/
+
+.ui-datatable .ui-datatable-data>.ui-widget-content {
+    border: 0;
+    color: #323232;
+    border-bottom: 1px solid #eee;
+    /*font-size: 12px*/
+}
+
+body .ui-datatable .ui-datatable-data>.ui-widget-content:hover {
+    background: #ddf1ea;
+}
+
+body .ui-datatable .ui-datatable-data .ui-widget-content.ui-datatable-even {
+    background: #fff;
+}
+
+
+/*datatable 选中色*/
+
+body .ui-datatable .ui-datatable-data .ui-widget-content.ui-datatable-even.ui-state-highlight {
+    background-color: #ddf1ea;
+    color: #323232;
+    border-color: #f9f9f9;
+}
+
+body .ui-datatable .ui-datatable-data .ui-widget-content.ui-datatable-odd.ui-state-highlight {
+    background-color: #f9f9f9;
+    color: #323232;
+    border-color: #f9f9f9;
+}
+
+
+/*表格内容列的样式*/
+
+.ui-datatable .ui-datatable-data>.ui-widget-content>td {
+    border: 0;
+}
+
+
+/*表格按钮样式*/
+
+body .ui-button.reset {
+    padding: 0;
+    margin-right: 1em
+}
+
+body .ui-button.edit {
+    background: #ffc952;
+}
+
+body .ui-button.delete {
+    background: #ff7473;
+}
+
+
+/******************按钮样式***************/
+
+body button {
+    border-radius: 0 !important;
+}
+
+button.ui-button.btn-reset,
+button.btn.btn-reset {
+    border: 1px solid #00aa7a !important;
+    background: #00aa7a !important;
+    color: #fff;
+    font-size: 12px;
+}
+
+button.ui-button.btn-reset:hover,
+button.btn.btn-reset:hover {
+    border: 1px solid #019b80 !important;
+    background-color: #019b80 !important;
+    color: #fff;
+}
+
+.btn-reset:hover {
+    border: 1px solid #019b80 !important;
+    background-color: #019b80 !important;
+    color: #fff;
+}
+
+
+/*自定义按钮的禁用样式  */
+
+button.btn.btn-reset[disabled] {
+    /* background-color: #019b80 !important; */
+    opacity: 0.35;
+    /* color: #fff; */
+}
+
+
+/*针对primeng*/
+
+button.ui-button.btn-reset {
+    padding: 3px 0;
+}
+
+button.btn-reset[disabled]:hover {
+    background: #00aa7a;
+    color: #fff;
+}
+
+button.ui-button.btn-cancle,
+button.btn-cancle {
+    background: rgba(234, 237, 241, 0.5);
+    border-color: rgba(235, 237, 240, 0.5);
+}
+
+button.ui-button.btn-cancle:hover,
+button.btn-cancle:hover {
+    background: rgba(234, 237, 241, 0.9);
+    border-color: rgba(235, 237, 240, 0.9);
+}
+
+body .ui-button.btn-refresh {
+    background: rgba(235, 237, 240, 0.5);
+    border: 1px solid #ccc;
+    color: #333;
+}
+
+
+/******************按钮样式******************/
+
+
+/*-----------------------------------------企业信息管理--------------------------------------------------*/
+
+
+/*搜索按钮*/
+
+button.btn.btn-info.btn-reset {
+    background: #00aa7a;
+    border: 1px solid #00aa7a;
+    border-radius: 0;
+    color: #fff;
+}
+
+body button.btn.btn-info.btn-reset：hover {
+    border: 1px solid #019b80 !important;
+    background: #019b80 !important;
+}
+
+
+/*表单表头样式*/
+
+.ui-datatable-scrollable-header-box {
+    margin-right: 0 !important;
+}
+
+.ui-datatable-scrollable-header-box table {
+    border: 1px solid #eee;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+
+/*表单行样式*/
+
+body .ui-datatable-scrollable-body .ui-widget-content {
+    border: 1px solid #eee;
+}
+
+
+/* 修改按钮样式 */
+
+.ui-widget-header .ui-button:enabled:hover,
+.ui-button:enabled:hover {
+    border: 1px solid #019b80;
+    background: #019b80;
+    outline: 0 none;
+    color: #ffffff;
+}
+
+.ui-widget-header .ui-button,
+.ui-button {
+    border: 1px solid #019b80;
+}
+
+button.btn.btn-default.pull-right.btn-space {
+    margin-left: 10px;
+}
+
+
+/* 列表选中色 */
+
+
+/*.ui-state-highlight */
+
+.ui-widget-header .ui-state-highlight,
+.ui-widget-content .ui-state-highlight {
+    background-color: #ddf1ea;
+    color: #323232;
+    border-color: #f9f9f9;
+}
+
+.ui-widget-header .ui-state-highlight a,
+.ui-widget-content .ui-state-highlight a,
+.ui-state-highlight a {
+    color: #222222
+}
+
+body .ui-datatable .ui-datatable-data .ui-widget-content.ui-datatable-odd.ui-state-highlight {
+    background-color: #ddf1ea;
+    color: #323232;
+    border-color: #f9f9f9;
+}
+
+
+/*表单 :read-only*/
+
+body .form-control[readonly] {
+    border: 1px solid #ccc;
+    opacity: 1;
+    color: #484848;
+    background: #eee;
+}
+
+
+/*primgNg toobar 样式修改*/
+
+.ui-widget-header {
+    /*border: 1px solid #d9d9d9;*/
+    /* background: #f6f7f9; */
+    color: #1b1d1f;
+    font-weight: normal;
+    /*padding: 12px;*/
+    border: 1px solid #ffffff;
+    /*background: #ffffff;*/
+    background: linear-gradient(to bottom, #ffffff 0%, #ffffff 100%);
+    color: #1b1d1f;
+    font-weight: normal;
+    /*padding: 12px;*/
+}
+
+
+/*primgNg dataTable td 样式修改*/
+
+.ui-datatable .ui-datatable-data>.ui-widget-content>td {
+    border: 0;
+    /*增加行距*/
+    padding: 15px;
+}
+
+.ui-datatable .ui-datatable-thead>tr>.ui-unselectable-text {
+    color: #999;
+    border: 0;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    /*增加行距*/
+    padding: 20px;
+    white-space: normal
+}
+
+
+/*dataTable thead样式修改*/
+
+.dataTable .ui-widget-header {
+    padding: 0;
+}
+
+.dataTable .ui-widget-header .ui-state-default,
+.dataTable .ui-state-default {
+    border: none;
+}
+
+
+/*tree样式*/
+
+.checkbox-tree tree-root {
+    color: black;
+    /*font-size: 12px*/
+    ;
+    font-family: '微软雅黑';
+}
+
+.checkbox-tree input[type="checkbox"] {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    display: none;
+}
+
+.checkbox-tree input[type=checkbox]:checked+label:after {
+    display: inline-block;
+    top: 5px;
+    left: 11px;
+}
+
+.checkbox-tree input[type=checkbox]:checked+label:before {
+    background: #0094d2;
+}
+
+.checkbox-tree label.checkbox-lable {
+    position: relative;
+    display: inline-block;
+    min-height: 24px;
+    padding-left: 22px;
+    cursor: pointer;
+    margin: 0;
+    top: 3px;
+}
+
+.checkbox-tree label.checkbox-lable:before {
+    position: absolute;
+    top: 4px;
+    left: 0;
+    content: "";
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    border: 1px solid #9a9a9a;
+    border-radius: 3px;
+    top: 4px;
+    left: 7px;
+}
+
+.checkbox-tree label.checkbox-lable:after {
+    position: absolute;
+    content: "";
+    display: none;
+    height: 5px;
+    width: 8px;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    top: 4px;
+    left: 4px;
+    -webkit-transform: translateY(4px) rotate(-45deg);
+    transform: translateY(4px) rotate(-45deg);
+}
+
+.checkbox-tree span.tree-content {
+    display: inline-block;
+    margin-left: 4px;
+    position: relative;
+    top: -4px;
+    padding-right: 8px;
+}
+
+.toggle-children {
+    border: 5px solid #333;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-top: none;
+    display: inline-block;
+    position: relative;
+    top: 2px!important;
+}
+
+.checkbox-tree .toggle-children {
+    top: 9px!important;
+}
+
+.checkbox-tree .node-content-wrapper {
+    padding: 2px 0 !important;
+}
+
+.toggle-children-wrapper {
+    padding: 2px 0 5px 1px !important;
+}
+
+.toggle-children-wrapper-expanded .toggle-children {
+    transform: rotate(180deg) !important;
+    background-image: none;
+}
+
+.toggle-children-wrapper-collapsed .toggle-children {
+    transform: rotate(90deg) !important;
+    background-image: none;
+}
+
+
+/* primeng  tree中 边框消失 */
+
+.dropdowntree .ui-widget-content {
+    border: none;
+    width: 100%;
+    height: 100%;
+}
+
+.dropdowntree .ui-widget-content .ui-state-highlight,
+.ui-state-highlight {
+    /*border-color: none;*/
+    background: #00aa7a;
+    color: #fff;
+}
+
+
+/* 操作按钮-------- 颜色-start--------------------*/
+
+
+/*删除*/
+
+.component span.operate {
+    color: #DADADA;
+}
+
+.component span.operate .secant-line {
+    margin: 0 3px;
+}
+
+.component span.operate button:hover {
+    text-decoration: underline;
+    background-color: transparent;
+}
+
+.component span.operate button.delete {
+    color: #ff7473;
+}
+
+.component span.operate button.delete:hover {
+    /* border-bottom: 1px solid #ff7473; */
+}
+
+.component span.operate button[disabled]:hover {
+    border: none;
+}
+
+
+/*冻结*/
+
+.component span.operate button.frozen {
+    color: #ff7473;
+}
+
+.component span.operate button.frozen:hover {
+    border-bottom: 1px solid #ff7473;
+}
+
+.component span.operate button.frozen[disabled]:hover {
+    text-decoration: none;
+}
+
+
+/*授权*/
+
+.component span.operate button.authority {
+    color: #ffc952;
+}
+
+.component span.operate button.authority:hover {
+    /* border-bottom: 1px solid #ffc952; */
+}
+
+.component span.operate button.authority[disabled]:hover {
+    text-decoration: none;
+}
+
+
+/*修改*/
+
+.component span.operate button.editor {
+    color: #00aa7a;
+}
+
+.component span.operate button.editor:hover {
+    /* border-bottom: 1px solid #00aa7a; */
+}
+
+.component span.operate button.editor[disabled]:hover {
+    text-decoration: none;
+}
+
+
+/*管理*/
+
+.component span.operate button.manager {
+    color: #00aa7a;
+}
+
+.component span.operate button.manager[disabled]:hover {
+    text-decoration: none;
+}
+
+
+/* .operate  操作*/
+
+.component span.operate button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+
+.component span.operate button:focus {
+    outline: none;
+}
+
+.component span.operate button[disabled] {
+    /* margin-right: 10px; */
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    /*cursor: pointer;*/
+    color: #ddd;
+}
+
+
+/*按钮-------- 颜色--end-------------------*/
+
+
+/*   btn-defaul样式 */
+
+button.btn.btn-default {
+    /* border-color: rgb(204, 204, 204); */
+    background-color: rgb(204, 204, 204)
+}
+
+
+/*提示保存成功、刷新成功*/
+
+.ui-growl-item-container.ui-state-highlight.ui-growl-message-success {
+    background-color: rgba(76, 175, 80, 0.8);
+    border-color: rgba(76, 175, 80, 0.4);
+}
+
+
+/*应用下的角色管理   tab标题样式*/
+
+.define-nav .nav.nav-tabs {
+    background: none;
+    border-bottom: 1px solid #ddd;
+}
+
+.define-nav .nav.nav-tabs>li.active>a {
+    border: 1px solid #ccc;
+    border-bottom: none;
+    background-color: #fff;
+    color: #00aa7a;
+}
+
+.define-nav .nav.nav-tabs>li.active>a:hover {
+    background-color: #00aa7a;
+    color: #fff;
+}
+
+.define-nav .nav.nav-tabs>li>a:hover {
+    background-color: #00aa7a;
+    color: #fff;
+}
+
+
+/*改变ng2-bootstrap的header*/
+
+.modal-dialog div.modal-header {
+    padding: 14px;
+}
+
+div.modal-header h4.modal-title {
+    width: auto;
+    font-size: 14px;
+}
+
+
+/*growl  位置*/
+
+.ui-growl {
+    position: fixed;
+    top: 50px;
+    right: 20px;
+    width: 18em;
+}
+
+.modal-body .ui-treetable .ui-treetable-row>td {
+    border: 1px solid #ededed;
+    border-top: none;
+    border-left: none;
+}
+
+.modal-body .ui-treetable .ui-treetable-row>td:last-child {
+    border-right: none;
+}
+
+.modal-body .ui-treetable thead th,
+.modal-body .ui-treetable tbody td:not(.ui-treetable-child-table-container),
+.modal-body .ui-treetable tfoot td {
+    padding: 1em .5em;
+}
+
+
+/*------------------视图管理------------------*/
+
+.modal-body .ui-dropdown {
+    width: 206px !important;
+    line-height: 22px
+}
+
+.main th.ui-state-default.ui-unselectable-text {
+    padding: 20px .5em;
+    font-size: 14px;
+    text-align: left;
+    border: none;
+    border-bottom: 1px solid #ccc;
+}
+
+.main .ui-treetable tbody .ui-treetable-row td.undefined {
+    /* border: 0 none; */
+    border: inherit;
+    border-bottom: 1px solid #d9d9d9;
+    /*border-left: 1px solid #d9d9d9;*/
+    padding: 18px .5em;
+    /*font-size: 14px;*/
+}
+
+.main .ui-widget-content .ui-state-highlight,
+.ui-state-highlight {
+    /*border-color: none;*/
+    background: #ddf1ea;
+    color: #323232;
+}
+
+
+/* treeTable 加按钮之后的操作边框线 */
+
+.main .ui-treetable tbody .ui-treetable-row td.col-button {
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+    /*border-left: 1px solid #ccc;*/
+}
+
+
+/*.main .ui-widget-content .ui-state-highlight,*/
+
+
+/*.ui-state-highlight {*/
+
+
+/*background: #ddf1ea;*/
+
+
+/*color: #323232;*/
+
+
+/*}*/
+
+.ui-growl-image,
+.ui-growl-title,
+.ui-growl-message,
+.ui-growl-icon-close {
+    color: #fff;
+}
+
+.ui-tree {
+    width: 14.8em;
+}
+
+
+/*应用管理功能定义下拉的样式*/
+
+
+/*下拉框内容间距*/
+
+.ui-tree .ui-treenode-label {
+    display: inline-block;
+    padding: 0.1em .25em;
+    vertical-align: middle;
+}
+
+body .ui-button .btn-ret {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #484848;
+}
+
+
+/*强制换行 treeTable*/
+
+.ui-treetable thead th,
+.ui-treetable tbody td,
+.ui-treetable tfoot td {
+    word-break: break-all;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+
+/*强制换行 dataTable*/
+
+.ui-datatable .ui-datatable-data>tr>td {
+    word-break: break-all;
+    white-space: normal
+}
+
+.ui-datatable .ui-datatable-thead>tr>.ui-unselectable-text {
+    white-space: normal;
+    word-break: break-all;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+
+/*form表单字体验式*/
+
+.table-default-viewer {
+    font-size: 12px;
+    word-break: break-all
+}
+
+
+/*form表单自动换行*/
+
+
+/**************bootstrap modal  ********************/
+
+
+/*提示信息  */
+
+div.modal.fade.common-modal .modal-body .confirm-error {
+    /*提示用户正确格式*/
+    display: block;
+    color: #ada7a7;
+    margin-top: 5px;
+}
+
+
+/*错误信息*/
+
+div.modal.fade.common-modal .modal-body .error,
+div.modal.fade.common-modal .modal-body .error>span {
+    /*提示用户错误信息*/
+    color: #a94442;
+    line-height: 34px;
+}
+
+
+/*按钮*/
+
+div.modal-body div.handle button {
+    margin-right: 15px;
+}
+
+
+/*必填项 边框提示*/
+
+.ng-valid[required],
+.ng-valid.required {
+    border-left: 5px solid #42A948;
+    /* green */
+}
+
+.ng-invalid[required]:not(form) {
+    border-left: 5px solid #a94442;
+    /* red */
+}
+
+
+/**************bootstrap modal ********************/
+
+
+/* primeNg expand dataTable */
+
+
+/*删除展开之后的边框线*/
+
+.ui-datatable .ui-datatable-thead>tr>th,
+.ui-datatable .ui-datatable-tfoot>tr>td,
+.ui-datatable .ui-datatable-data>tr>td {
+    border-color: inherit;
+    box-sizing: border-box;
+    padding: .25em .5em;
+    overflow: hidden;
+    border-width: 1px;
+    /*删除展开之后的边框线*/
+    border-style: none;
+}
+
+
+/*删除展开之后的边框线*/
+
+
+/*奇数行hover状态*/
+
+body .ui-datatable .ui-datatable-data .ui-widget-content.ui-datatable-even:hover {
+    background-color: #ddf1ea;
+}
+
+
+/*奇数行hover状态*/
+
+
+/* primeNg expand dataTable */
+
+
+/*primeng dropdown 边框线*/
+
+.primeng-dropdown .ui-corner-all {
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    font-weight: 400;
+}
+
+.primeng-dropdown .ui-dropdown .ui-dropdown-trigger {
+    border: none;
+}
+
+
+/*label的字体不加粗*/
+
+.primeng-dropdown .ui-multiselect-panel .ui-multiselect-item label {
+    font-weight: 400;
+}
+
+
+/*primeng dropdown 边框线*/
+
+
+/*服务监控的样式*/
+
+.contentain .ui-row-toggler {
+    position: absolute;
+    width: 100%;
+    /*padding: 22px 0 0 0;*/
+    width: 100%;
+    margin: -22px 0 0 0;
+    font-size: 21px;
+    height: 44px;
+}
+
+.appService .fa-chevron-circle-right {
+    opacity: 0;
+}
+
+.appService .fa-chevron-circle-down {
+    color: rgba(128, 213, 189, 0);
+}
+
+.appService .ui-datatable .ui-datatable-data>.ui-widget-content>td {
+    border: 0;
+    padding: 0;
+}
+
+.appService .ui-datatable .ui-datatable-data>.ui-widget-content {
+    border: 0;
+    color: #323232;
+    border-bottom: 1px solid #eee;
+    /* font-size: 12px; */
+    height: 44px;
+}
+
+.appService .ui-column-title {
+    margin-left: -17px;
+}
+
+
+/*primeng chips  输入框高度*/
+
+.primeng-chips .ui-chips>ul.ui-inputtext {
+    padding: 1px .5em;
+}
+
+
+/*primeng chips  输入框边框线*/
+
+.primeng-chips .ui-inputtext:focus {
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+
+/*日历样式*/
+
+
+/*日历样式*/
+
+.function button.ui-button.btn-reset:hover,
+button.btn.btn-reset:hover {
+    border: 1px solid #019b80;
+    background-color: #019b80 !important;
+    color: #fff;
+}
+
+.appService .ui-datepicker {
+    width: 19em;
+    padding: .2em;
+    display: none;
+    position: absolute;
+}
+
+.appService .ui-fluid .ui-calendar.ui-calendar-w-btn .ui-inputtext {
+    width: calc(100% - 2em);
+}
+
+.appService .col-icon .ui-state-default .ui-unselectable-text {
+    padding: 0;
+    width: 1px
+}
+
+.appService .ui-dropdown-panel .ui-dropdown-filter-container {
+    position: relative;
+    margin: 0;
+    padding: 0.4em;
+    display: inline-block;
+    width: 100%;
+}
+
+.appService .ui-spinner-button {
+    background: #ffffff;
+    color: #555555;
+    border: #d6d6d6 1px solid;
+}
+
+.appService .ui-spinner:not(.ui-state-disabled) .ui-spinner-button:enabled:active {
+    background: rgb(0, 170, 122);
+    border: 1px solid rgb(0, 170, 122)
+}
+
+.appService .ui-spinner:not(.ui-state-disabled) .ui-spinner-button:enabled:hover {
+    background: rgb(0, 170, 122);
+    border: 1px solid rgb(0, 170, 122)
+}
+
+.appService .ui-datatable th.ui-state-active {
+    background: rgb(235, 237, 240);
+}
+
+.appService .modal-header .modal-title {
+    color: rgb(0, 0, 0);
+}
+
+.appService .modal-header .close {
+    margin-top: -23px;
+}
+
+
+/*日志 p-multiSelect */
+
+.primeng-multiSelect label {
+    margin-bottom: 0px !important;
+}
+
+
+/*.appService .date .ui-inputtext {
+        width: 19em
+    }*/
+
+.appService .ui-datatable th.ui-sortable-column:not(.ui-state-active):hover {
+    background: rgb(235, 237, 240);
+    border-color: rgb(235, 237, 240);
+    /*color: rgb(235, 237, 240);*/
+}
+
+.appService .ui-datatable .ui-sortable-column:not(.ui-state-active):hover {
+    background: rgb(235, 237, 240);
+    border-color: rgb(235, 237, 240);
+    /*color: rgb(235, 237, 240);*/
+}
+
+.appService .ui-state-active .ui-sortable-column-icon {
+    color: rgb(0, 170, 132)
+}
+
+.appService .timer .ui-corner-all {
+    border-radius: 0
+}
+
+.appService .timer .ui-helper-clearfix {
+    white-space: nowrap;
+    word-break: normal
+}
+
+
+/*.appService .timer .ui-datatable-data {
+        height: 44px;
+        white-space: normal
+    }*/
+
+.appService .timer .ui-datatable .ui-datatable-data>.ui-widget-content {
+    border: 0;
+    color: #323232;
+    border-bottom: 1px solid #eee;
+    /* font-size: 12px; */
+    height: 44px;
+    white-space: normal;
+    word-break: normal;
+}
+
+
+/* 数据库监控页面 tabset样式修改 加上边框*/
+
+.appService .timer .date .ui-state-filled {
+    padding: 4px 0;
+    width: 150px;
+}
+
+.appService .context {
+    border: 1px solid #EEF1F7;
+}
+
+.appService .ui-datatable tbody>tr.ui-widget-content {
+    background: #fff
+}
+
+.appService .ui-datatable-tablewrapper table {
+    border: none;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.database-show-list .tab-content {
+    border: 1px solid #DDDDDD;
+    border-top: none;
+}
+
+
+/*数据库监控页面 p-dataTable 插件 标题格式固定 用于首列固定时格式不统一而修改*/
+
+.database-show-list .ui-datatable .ui-datatable-thead>tr>.ui-unselectable-text {
+    height: 50px;
+    padding: 0px;
+    /*text-align: center;*/
+}
+
+
+/*数据库监控页面 p-dataTable 插件 内容格式固定 用于首列固定时格式不统一而修改*/
+
+.database-show-list .ui-datatable .ui-datatable-data>.ui-widget-content>td {
+    height: 44px;
+    padding: 0;
+    /*text-align: center;*/
+}
+
+
+/*右上角提示框的字体大小*/
+
+.ui-growl-message p {
+    font-weight: normal;
+    font-size: 12px;
+}
+
+
+/*datePicker 时间控件的样式修改  */
+
+.primeng-datePicker .ui-datepicker .ui-datepicker-title {
+    height: 20px;
+    position: relative;
+}
+
+.primeng-datePicker .ui-datepicker select.ui-datepicker-month {
+    position: absolute;
+    left: 0;
+}
+
+.primeng-datePicker .ui-datepicker select.ui-datepicker-year {
+    position: absolute;
+    right: 0;
+}
+
+body .ruleContent .ui-spinner-button {
+    background: #ffffff;
+    color: #555555;
+    border: #d6d6d6 1px solid;
+}
+
+body .ruleContent .ui-spinner:not(.ui-state-disabled) .ui-spinner-button:enabled:active {
+    background: rgb(0, 170, 122);
+    border: 1px solid rgb(0, 170, 122)
+}
+
+body .ruleContent .ui-spinner:not(.ui-state-disabled) .ui-spinner-button:enabled:hover {
+    background: rgb(0, 170, 122);
+    border: 1px solid rgb(0, 170, 122)
+}
+
+
+/*
+    *日志系统
+    */
+
+.nginx .ui-datatable .ui-datatable-thead>tr>.ui-unselectable-text {
+    padding: 20px 0
+}
+
+.tomcat .ui-datatable .ui-datatable-thead>tr>.ui-unselectable-text {
+    /*color: #999;*/
+    border: 0;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    padding: 19px 10px;
+    white-space: normal;
+}
+
+
+/* 物联网管理   数据展示 */
+
+.real-time .primeng-dropdown .ui-dropdown label.ui-dropdown-label {
+    height: 34px;
+    padding: 1rem;
+    margin: 0;
+    border-radius: 5px;
+}
+
+.real-time .primeng-dropdown .ui-corner-all {
+    width: 100% !important;
+}
+
+.real-time .primeng-dropdown .ui-dropdown .ui-dropdown-trigger .fa {
+    line-height: 34px;
+    margin-top: 0;
+    margin-left: 0;
+}
+
+.real-time .primeng-dropdown .ui-dropdown-panel .ui-dropdown-filter-container {
+    width: 100%;
+}
+
+
+/* 统计分析的数据统计列表固定列的边框 */
+
+.statistic-analysis .ui-datatable-scrollable-body .ui-widget-content {
+    border: 1px solid #eee;
+    border-left: none;
+    border-right: none;
+}
+
+
+/*自定义的primeNG的样式*/
+
+
+/*菜单组件*/
+
+@import './../home/menuItem/menuItem.component.css';
+
+/*navBar 组件 ng2-bootstrap*/
+
+@import './components/navBar/navBar.component.css';
+
+/*treeTable 样式修改*/
+
+.primeng-treeTable th.ui-state-default.ui-unselectable-text {
+    padding: 20px .5em;
+    /*font-size: 12px*/
+    text-align: left;
+    border: none;
+    border-bottom: 1px solid #ccc;
+}
+
+.primeng-treeTable .ui-treetable tbody .ui-treetable-row td.undefined {
+    /* border: 0 none; */
+    border: inherit;
+    border-bottom: 1px solid #d9d9d9;
+    /*border-left: 1px solid #d9d9d9;*/
+    padding: 10px .5em;
+    /*font-size: 12px*/
+    vertical-align: middle;
+    word-break: break-all;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+.primeng-treeTable .ui-widget-content .ui-state-highlight,
+.ui-state-highlight {
+    /*border-color: none;*/
+    background: #ddf1ea;
+    color: #323232;
+}
+
+
+/* treeTable 加按钮之后的操作边框线 */
+
+.primeng-treeTable .ui-treetable tbody .ui-treetable-row td.col-button {
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+    word-break: break-all;
+    word-wrap: break-word;
+    word-break: normal;
+    white-space: normal;
+    /*border-left: 1px solid #ccc;*/
+}
+
+
+/*dataTable  冻结与不冻结列固定高度*/
+
+
+/*td  */
+
+.fixed-dataTable-height .ui-datatable .ui-datatable-data>.ui-widget-content>td {
+    height: 44px;
+    padding: 0;
+    padding-left: 15px;
+}
+
+
+/*tr  */
+
+.fixed-dataTable-height .ui-datatable .ui-datatable-thead>tr>.ui-unselectable-text {
+    height: 58px;
+}
+
+
+/*不冻结列的边框线  */
+
+.login-journal .ui-datatable-unfrozen-view {
+    border-right: 1px solid #eeeeee;
+}
+
+
+/*分页 ng2-bootstrap 选中页码时的背景色*/
+
+.grid-pagination .pagination>.active>a,
+.grid-pagination .pagination>.active>span,
+.grid-pagination .pagination>.active>a:hover,
+.grid-pagination .pagination>.active>span:hover,
+.grid-pagination .pagination>.active>a:focus,
+.grid-pagination .pagination>.active>span:focus {
+    background-color: rgb(0, 170, 122) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+
+/*-----------------------------------------------系统管理样式--------------------------------------------*/
+
+
+/*表格边框*/
+
+.ui-datatable-tablewrapper table {
+    border: 1px solid #eee;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+
+/*表格头样式*/
+
+.ui-datatable .ui-datatable-thead>tr>.ui-unselectable-text {
+    color: #999;
+    border: 0;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    /*font-size: 12px*/
+}
+
+
+/*改变有冻结列的dataTable的表头*/
+
+.border-set .ui-widget-header .ui-state-default {
+    border: 1px solid #eeeeee;
+}
+
+
+/*表格内容行的样式*/
+
+body .ui-datatable-tablewrapper .ui-widget-content {
+    border: 0;
+    border-bottom: 1px solid #eee;
+    /*font-size: 12px*/
+}
+
+
+/*表格内容行的样式*/
+
+.ui-datatable .ui-datatable-data>.ui-widget-content {
+    border: 0;
+    color: #323232;
+    border-bottom: 1px solid #eee;
+    /*font-size: 12px*/
+}
+
+body .ui-datatable .ui-datatable-data>.ui-widget-content:hover {
+    background: #ddf1ea;
+}
+
+body .ui-datatable .ui-datatable-data .ui-widget-content.ui-datatable-even {
+    background: #fff;
+}
+
+
+/*datatable 选中色*/
+
+body .ui-datatable .ui-datatable-data .ui-widget-content.ui-datatable-even.ui-state-highlight {
+    background-color: #ddf1ea;
+    color: #323232;
+    border-color: #f9f9f9;
+}
+
+body .ui-datatable .ui-datatable-data .ui-widget-content.ui-datatable-odd.ui-state-highlight {
+    background-color: #f9f9f9;
+    color: #323232;
+    border-color: #f9f9f9;
+}
+
+
+/*表格内容列的样式*/
+
+.ui-datatable .ui-datatable-data>.ui-widget-content>td {
+    border: 0;
+}
+
+
+/*表格按钮样式*/
+
+body .ui-button.reset {
+    padding: 0;
+    margin-right: 1em
+}
+
+body .ui-button.edit {
+    background: #ffc952;
+}
+
+body .ui-button.delete {
+    background: #ff7473;
+}
+
+
+/******************按钮样式***************/
+
+body button {
+    border-radius: 0 !important;
+}
+
+button.ui-button.btn-reset,
+button.btn.btn-reset {
+    border: 1px solid #00aa7a !important;
+    background: #00aa7a !important;
+    color: #fff;
+    font-size: 12px;
+}
+
+button.ui-button.btn-reset:hover,
+button.btn.btn-reset:hover {
+    border: 1px solid #019b80 !important;
+    background-color: #019b80 !important;
+    color: #fff;
+}
+
+.btn-reset:hover {
+    border: 1px solid #019b80 !important;
+    background-color: #019b80 !important;
+    color: #fff;
+}
+
+
+/*自定义按钮的禁用样式  */
+
+button.btn.btn-reset[disabled] {
+    /* background-color: #019b80 !important; */
+    opacity: 0.35;
+    /* color: #fff; */
+}
+
+
+/*针对primeng*/
+
+button.ui-button.btn-reset {
+    padding: 3px 0;
+}
+
+button.btn-reset[disabled]:hover {
+    background: #00aa7a;
+    color: #fff;
+}
+
+button.ui-button.btn-cancle,
+button.btn-cancle {
+    background: #bbbbbb;
+    border: 1px solid #bbbbbb;
+    padding: 3px 0;
+}
+
+.ui-widget-content button.ui-button.btn-cancle:hover,
+button.btn-cancle:hover {
+    background: rgba(164, 165, 167, 0.9);
+    border-color: rgba(164, 165, 167, 0.9);
+}
+
+body .ui-button.btn-refresh {
+    background: rgba(235, 237, 240, 0.5);
+    border: 1px solid #ccc;
+    color: #333;
+}
+
+
+/******************按钮样式******************/
+
+
+/*-----------------------------------------企业信息管理--------------------------------------------------*/
+
+
+/*搜索按钮*/
+
+button.btn.btn-info.btn-reset {
+    background: #00aa7a;
+    border: 1px solid #00aa7a;
+    border-radius: 0;
+    color: #fff;
+}
+
+body button.btn.btn-info.btn-reset：hover {
+    border: 1px solid #019b80 !important;
+    background: #019b80 !important;
+}
+
+
+/*表单表头样式*/
+
+.ui-datatable-scrollable-header-box {
+    margin-right: 0 !important;
+}
+
+.ui-datatable-scrollable-header-box table {
+    border: 1px solid #eee;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+
+/*表单行样式*/
+
+body .ui-datatable-scrollable-body .ui-widget-content {
+    border: 1px solid #eee;
+}
+
+
+/* 修改按钮样式 */
+
+.ui-widget-header .ui-button:enabled:hover,
+.ui-button:enabled:hover {
+    border: 1px solid #019b80;
+    background: #019b80;
+    outline: 0 none;
+    color: #ffffff;
+}
+
+.ui-widget-header .ui-button,
+.ui-button {
+    border: 1px solid #019b80;
+}
+
+button.btn.btn-default.pull-right.btn-space {
+    margin-left: 10px;
+}
+
+
+/* 列表选中色 */
+
+
+/*.ui-state-highlight */
+
+.ui-widget-header .ui-state-highlight,
+.ui-widget-content .ui-state-highlight {
+    background-color: #ddf1ea;
+    color: #323232;
+    border-color: #f9f9f9;
+}
+
+.ui-widget-header .ui-state-highlight a,
+.ui-widget-content .ui-state-highlight a,
+.ui-state-highlight a {
+    color: #222222
+}
+
+body .ui-datatable .ui-datatable-data .ui-widget-content.ui-datatable-odd.ui-state-highlight {
+    background-color: #ddf1ea;
+    color: #323232;
+    border-color: #f9f9f9;
+}
+
+
+/*表单 :read-only*/
+
+body .form-control[readonly] {
+    border: 1px solid #ccc;
+    opacity: 1;
+    color: #484848;
+    background: #eee;
+}
+
+
+/*primgNg toobar 样式修改*/
+
+.ui-widget-header {
+    /*border: 1px solid #d9d9d9;*/
+    /* background: #f6f7f9; */
+    color: #1b1d1f;
+    font-weight: normal;
+    /*padding: 12px;*/
+    border: 1px solid #ffffff;
+    /*background: #ffffff;*/
+    background: linear-gradient(to bottom, #ffffff 0%, #ffffff 100%);
+    color: #1b1d1f;
+    font-weight: normal;
+    /*padding: 12px;*/
+}
+
+
+/*primgNg dataTable td 样式修改*/
+
+.ui-datatable .ui-datatable-data>.ui-widget-content>td {
+    border: 0;
+    /*增加行距*/
+    padding: 15px;
+}
+
+.ui-datatable .ui-datatable-thead>tr>.ui-unselectable-text {
+    color: #999;
+    border: 0;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    /*增加行距*/
+    padding: 20px;
+    white-space: normal
+}
+
+
+/*dataTable thead样式修改*/
+
+.dataTable .ui-widget-header {
+    padding: 0;
+}
+
+.dataTable .ui-widget-header .ui-state-default,
+.dataTable .ui-state-default {
+    border: none;
+}
+
+
+/*tree样式*/
+
+.checkbox-tree tree-root {
+    color: black;
+    /*font-size: 12px*/
+    ;
+    font-family: '微软雅黑';
+}
+
+.checkbox-tree input[type="checkbox"] {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    display: none;
+}
+
+.checkbox-tree input[type=checkbox]:checked+label:after {
+    display: inline-block;
+    top: 5px;
+    left: 11px;
+}
+
+.checkbox-tree input[type=checkbox]:checked+label:before {
+    background: #0094d2;
+}
+
+.checkbox-tree label.checkbox-lable {
+    position: relative;
+    display: inline-block;
+    min-height: 24px;
+    padding-left: 22px;
+    cursor: pointer;
+    margin: 0;
+    top: 3px;
+}
+
+.checkbox-tree label.checkbox-lable:before {
+    position: absolute;
+    top: 4px;
+    left: 0;
+    content: "";
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    border: 1px solid #9a9a9a;
+    border-radius: 3px;
+    top: 4px;
+    left: 7px;
+}
+
+.checkbox-tree label.checkbox-lable:after {
+    position: absolute;
+    content: "";
+    display: none;
+    height: 5px;
+    width: 8px;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    top: 4px;
+    left: 4px;
+    -webkit-transform: translateY(4px) rotate(-45deg);
+    transform: translateY(4px) rotate(-45deg);
+}
+
+.checkbox-tree span.tree-content {
+    display: inline-block;
+    margin-left: 4px;
+    position: relative;
+    top: -4px;
+    padding-right: 8px;
+}
+
+.toggle-children {
+    border: 5px solid #333;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-top: none;
+    display: inline-block;
+    position: relative;
+    top: 2px !important;
+}
+
+.checkbox-tree .toggle-children {
+    top: 9px !important;
+}
+
+.checkbox-tree .node-content-wrapper {
+    padding: 2px 0 !important;
+}
+
+.toggle-children-wrapper {
+    padding: 2px 0 5px 1px !important;
+}
+
+.toggle-children-wrapper-expanded .toggle-children {
+    transform: rotate(180deg) !important;
+    background-image: none;
+}
+
+.toggle-children-wrapper-collapsed .toggle-children {
+    transform: rotate(90deg) !important;
+    background-image: none;
+}
+
+
+/* primeng  tree中 边框消失 */
+
+.dropdowntree .ui-widget-content {
+    border: none;
+    width: 100%;
+    height: 100%;
+}
+
+.dropdowntree .ui-widget-content .ui-state-highlight,
+.ui-state-highlight {
+    /*border-color: none;*/
+    background: #00aa7a;
+    color: #fff;
+}
+
+
+/* 操作按钮-------- 颜色-start--------------------*/
+
+
+/*删除*/
+
+.component span.operate {
+    color: #DADADA;
+}
+
+.component span.operate .secant-line {
+    margin: 0 3px;
+}
+
+.component span.operate button:hover {
+    text-decoration: underline;
+    background-color: transparent;
+}
+
+.component span.operate button.delete {
+    color: #ff7473;
+}
+
+.component span.operate button.delete:hover {
+    /* border-bottom: 1px solid #ff7473; */
+}
+
+.component span.operate button[disabled]:hover {
+    border: none;
+}
+
+
+/*冻结*/
+
+.component span.operate button.frozen {
+    color: #ff7473;
+}
+
+.component span.operate button.frozen:hover {
+    border-bottom: 1px solid #ff7473;
+}
+
+.component span.operate button.frozen[disabled]:hover {
+    text-decoration: none;
+}
+
+
+/*授权*/
+
+.component span.operate button.authority {
+    color: #ffc952;
+}
+
+.component span.operate button.authority:hover {
+    /* border-bottom: 1px solid #ffc952; */
+}
+
+.component span.operate button.authority[disabled]:hover {
+    text-decoration: none;
+}
+
+
+/*修改*/
+
+.component span.operate button.editor {
+    color: #00aa7a;
+}
+
+.component span.operate button.editor:hover {
+    /* border-bottom: 1px solid #00aa7a; */
+}
+
+.component span.operate button.editor[disabled]:hover {
+    text-decoration: none;
+}
+
+
+/*管理*/
+
+.component span.operate button.manager {
+    color: #00aa7a;
+}
+
+.component span.operate button.manager[disabled]:hover {
+    text-decoration: none;
+}
+
+
+/* .operate  操作*/
+
+.component span.operate button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    /*font-size: 12px*/
+    ;
+}
+
+.component span.operate button[disabled] {
+    /* margin-right: 10px; */
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    /*cursor: pointer;*/
+    color: #ddd;
+}
+
+
+/*按钮-------- 颜色--end-------------------*/
+
+
+/*   btn-defaul样式 */
+
+button.btn.btn-default {
+    /* border-color: rgb(204, 204, 204); */
+    background-color: rgb(204, 204, 204)
+}
+
+
+/*提示保存成功、刷新成功*/
+
+.ui-growl-item-container.ui-state-highlight.ui-growl-message-success {
+    background-color: rgba(76, 175, 80, 0.8);
+    border-color: rgba(76, 175, 80, 0.4);
+}
+
+
+/*应用下的角色管理   tab标题样式*/
+
+.define-nav .nav.nav-tabs {
+    background: none;
+    border-bottom: 1px solid #ddd;
+}
+
+.define-nav .nav.nav-tabs>li.active>a {
+    border: 1px solid #ccc;
+    border-bottom: none;
+    background-color: #fff;
+    color: #00aa7a;
+}
+
+.define-nav .nav.nav-tabs>li.active>a:hover {
+    background-color: #00aa7a;
+    color: #fff;
+}
+
+.define-nav .nav.nav-tabs>li>a:hover {
+    background-color: #00aa7a;
+    color: #fff;
+}
+
+
+/*改变ng2-bootstrap的header*/
+
+.modal-dialog div.modal-header {
+    padding: 14px;
+}
+
+div.modal-header h4.modal-title {
+    width: auto;
+    font-size: 14px;
+}
+
+
+/*growl  位置*/
+
+.ui-growl {
+    position: fixed;
+    top: 50px;
+    right: 20px;
+    width: 18em;
+}
+
+.modal-body .ui-treetable .ui-treetable-row>td {
+    border: 1px solid #ededed;
+    border-top: none;
+    border-left: none;
+}
+
+.modal-body .ui-treetable .ui-treetable-row>td:last-child {
+    border-right: none;
+}
+
+.modal-body .ui-treetable thead th,
+.modal-body .ui-treetable tbody td:not(.ui-treetable-child-table-container),
+.modal-body .ui-treetable tfoot td {
+    padding: 1em .5em;
+}
+
+
+/*------------------视图管理------------------*/
+
+.modal-body .ui-dropdown {
+    width: 206px !important;
+    line-height: 22px
+}
+
+.main th.ui-state-default.ui-unselectable-text {
+    padding: 20px .5em;
+    font-size: 14px;
+    text-align: left;
+    border: none;
+    border-bottom: 1px solid #ccc;
+}
+
+.main .ui-treetable tbody .ui-treetable-row td.undefined {
+    /* border: 0 none; */
+    border: inherit;
+    border-bottom: 1px solid #d9d9d9;
+    /*border-left: 1px solid #d9d9d9;*/
+    padding: 18px .5em;
+    /*font-size: 14px;*/
+}
+
+.main .ui-widget-content .ui-state-highlight,
+.ui-state-highlight {
+    /*border-color: none;*/
+    background: #ddf1ea;
+    color: #323232;
+}
+
+
+/* treeTable 加按钮之后的操作边框线 */
+
+.main .ui-treetable tbody .ui-treetable-row td.col-button {
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+    /*border-left: 1px solid #ccc;*/
+}
+
+
+/*.main .ui-widget-content .ui-state-highlight,*/
+
+
+/*.ui-state-highlight {*/
+
+
+/*background: #ddf1ea;*/
+
+
+/*color: #323232;*/
+
+
+/*}*/
+
+.ui-growl-image,
+.ui-growl-title,
+.ui-growl-message,
+.ui-growl-icon-close {
+    color: #fff;
+}
+
+.ui-tree {
+    width: 14.8em;
+}
+
+
+/*应用管理功能定义下拉的样式*/
+
+
+/*下拉框内容间距*/
+
+.ui-tree .ui-treenode-label {
+    display: inline-block;
+    padding: 0.1em .25em;
+    vertical-align: middle;
+}
+
+body .ui-button .btn-ret {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #484848;
+}
+
+
+/*强制换行 treeTable*/
+
+.ui-treetable thead th,
+.ui-treetable tbody td,
+.ui-treetable tfoot td {
+    word-break: break-all;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+
+/*强制换行 dataTable*/
+
+.ui-datatable .ui-datatable-data>tr>td {
+    word-break: break-all;
+    white-space: normal
+}
+
+.ui-datatable .ui-datatable-thead>tr>.ui-unselectable-text {
+    white-space: normal;
+    word-break: break-all;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+
+/*form表单字体验式*/
+
+.table-default-viewer {
+    font-size: 12px;
+    word-break: break-all
+}
+
+
+/*form表单自动换行*/
+
+
+/**************bootstrap modal  ********************/
+
+
+/*提示信息  */
+
+div.modal.fade.common-modal .modal-body .confirm-error {
+    /*提示用户正确格式*/
+    display: block;
+    color: #ada7a7;
+    margin-top: 5px;
+}
+
+
+/*错误信息*/
+
+div.modal.fade.common-modal .modal-body .error,
+div.modal.fade.common-modal .modal-body .error>span {
+    /*提示用户错误信息*/
+    color: #a94442;
+    line-height: 34px;
+}
+
+
+/*按钮*/
+
+div.modal-body div.handle button {
+    margin-right: 15px;
+}
+
+
+/*必填项 边框提示*/
+
+.ng-valid[required],
+.ng-valid.required {
+    border-left: 5px solid #42A948;
+    /* green */
+}
+
+.ng-invalid[required]:not(form) {
+    border-left: 5px solid #a94442;
+    /* red */
+}
+
+
+/**************bootstrap modal ********************/
+
+
+/* primeNg expand dataTable */
+
+
+/*删除展开之后的边框线*/
+
+.ui-datatable .ui-datatable-thead>tr>th,
+.ui-datatable .ui-datatable-tfoot>tr>td,
+.ui-datatable .ui-datatable-data>tr>td {
+    border-color: inherit;
+    box-sizing: border-box;
+    padding: .25em .5em;
+    overflow: hidden;
+    border-width: 1px;
+    /*删除展开之后的边框线*/
+    border-style: none;
+}
+
+
+/*删除展开之后的边框线*/
+
+
+/*奇数行hover状态*/
+
+body .ui-datatable .ui-datatable-data .ui-widget-content.ui-datatable-even:hover {
+    background-color: #ddf1ea;
+}
+
+
+/*奇数行hover状态*/
+
+
+/* primeNg expand dataTable */
+
+
+/*primeng dropdown 边框线*/
+
+.primeng-dropdown .ui-corner-all {
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    font-weight: 400;
+}
+
+.primeng-dropdown .ui-dropdown .ui-dropdown-trigger {
+    border: none;
+}
+
+
+/*label的字体不加粗*/
+
+.primeng-dropdown .ui-multiselect-panel .ui-multiselect-item label {
+    font-weight: 400;
+}
+
+
+/*primeng dropdown 边框线*/
+
+
+/*服务监控的样式*/
+
+.contentain .ui-row-toggler {
+    position: absolute;
+    width: 100%;
+    /*padding: 22px 0 0 0;*/
+    width: 100%;
+    margin: -22px 0 0 0;
+    font-size: 21px;
+    height: 44px;
+}
+
+.appService .fa-chevron-circle-right {
+    opacity: 0;
+}
+
+.appService .fa-chevron-circle-down {
+    color: rgba(128, 213, 189, 0);
+}
+
+.appService .ui-datatable .ui-datatable-data>.ui-widget-content>td {
+    border: 0;
+    padding: 0;
+}
+
+.appService .ui-datatable .ui-datatable-data>.ui-widget-content {
+    border: 0;
+    color: #323232;
+    border-bottom: 1px solid #eee;
+    /* font-size: 12px; */
+    height: 44px;
+}
+
+.appService .ui-column-title {
+    margin-left: -17px;
+}
+
+
+/*primeng chips  输入框高度*/
+
+.primeng-chips .ui-chips>ul.ui-inputtext {
+    padding: 1px .5em;
+}
+
+
+/*primeng chips  输入框边框线*/
+
+.primeng-chips .ui-inputtext:focus {
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+
+/*日历样式*/
+
+
+/*日历样式*/
+
+.function button.ui-button.btn-reset:hover,
+button.btn.btn-reset:hover {
+    border: 1px solid #019b80;
+    background-color: #019b80 !important;
+    color: #fff;
+}
+
+.appService .ui-datepicker {
+    width: 19em;
+    padding: .2em;
+    display: none;
+    position: absolute;
+}
+
+.appService .ui-fluid .ui-calendar.ui-calendar-w-btn .ui-inputtext {
+    width: calc(100% - 2em);
+}
+
+.appService .col-icon .ui-state-default .ui-unselectable-text {
+    padding: 0;
+    width: 1px
+}
+
+.appService .ui-dropdown-panel .ui-dropdown-filter-container {
+    position: relative;
+    margin: 0;
+    padding: 0.4em;
+    display: inline-block;
+    width: 100%;
+}
+
+.appService .ui-spinner-button {
+    background: #ffffff;
+    color: #555555;
+    border: #d6d6d6 1px solid;
+}
+
+.appService .ui-spinner:not(.ui-state-disabled) .ui-spinner-button:enabled:active {
+    background: rgb(0, 170, 122);
+    border: 1px solid rgb(0, 170, 122)
+}
+
+.appService .ui-spinner:not(.ui-state-disabled) .ui-spinner-button:enabled:hover {
+    background: rgb(0, 170, 122);
+    border: 1px solid rgb(0, 170, 122)
+}
+
+.appService .ui-datatable th.ui-state-active {
+    background: rgb(235, 237, 240);
+}
+
+.appService .modal-header .modal-title {
+    color: rgb(0, 0, 0);
+}
+
+.appService .modal-header .close {
+    margin-top: -23px;
+}
+
+
+/*日志 p-multiSelect */
+
+.primeng-multiSelect label {
+    margin-bottom: 0px !important;
+}
+
+
+/* 登录日志的排序颜色 */
+
+.list-order .ui-datatable th.ui-state-active {
+    background: #ebedf0;
+    color: #01aa79;
+}
+
+
+/*.appService .date .ui-inputtext {
+    width: 19em
+}*/
+
+.appService .ui-datatable th.ui-sortable-column:not(.ui-state-active):hover {
+    background: rgb(235, 237, 240);
+    border-color: rgb(235, 237, 240);
+    /*color: rgb(235, 237, 240);*/
+}
+
+.appService .ui-datatable .ui-sortable-column:not(.ui-state-active):hover {
+    background: rgb(235, 237, 240);
+    border-color: rgb(235, 237, 240);
+    /*color: rgb(235, 237, 240);*/
+}
+
+.appService .ui-state-active .ui-sortable-column-icon {
+    color: rgb(0, 170, 132)
+}
+
+.appService .timer .ui-corner-all {
+    border-radius: 0
+}
+
+.appService .timer .ui-helper-clearfix {
+    white-space: nowrap;
+    word-break: normal
+}
+
+
+/*.appService .timer .ui-datatable-data {
+    height: 44px;
+    white-space: normal
+}*/
+
+.appService .timer .ui-datatable .ui-datatable-data>.ui-widget-content {
+    border: 0;
+    color: #323232;
+    border-bottom: 1px solid #eee;
+    /* font-size: 12px; */
+    height: 44px;
+    white-space: normal;
+    word-break: normal;
+}
+
+
+/* 数据库监控页面 tabset样式修改 加上边框*/
+
+.appService .timer .date .ui-state-filled {
+    padding: 4px 0;
+    width: 150px;
+}
+
+.appService .context {
+    border: 1px solid #EEF1F7;
+}
+
+.appService .ui-datatable tbody>tr.ui-widget-content {
+    background: #fff
+}
+
+.appService .ui-datatable-tablewrapper table {
+    border: none;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.database-show-list .tab-content {
+    border: 1px solid #DDDDDD;
+    border-top: none;
+}
+
+
+/*数据库监控页面 p-dataTable 插件 标题格式固定 用于首列固定时格式不统一而修改*/
+
+.database-show-list .ui-datatable .ui-datatable-thead>tr>.ui-unselectable-text {
+    height: 50px;
+    padding: 0px;
+    /*text-align: center;*/
+}
+
+
+/*数据库监控页面 p-dataTable 插件 内容格式固定 用于首列固定时格式不统一而修改*/
+
+.database-show-list .ui-datatable .ui-datatable-data>.ui-widget-content>td {
+    height: 44px;
+    padding: 0;
+    /*text-align: center;*/
+}
+
+
+/*右上角提示框的字体大小*/
+
+.ui-growl-message p {
+    font-weight: normal;
+    font-size: 12px;
+}
+
+
+/*datePicker 时间控件的样式修改  */
+
+.primeng-datePicker .ui-datepicker .ui-datepicker-title {
+    height: 20px;
+    position: relative;
+}
+
+.primeng-datePicker .ui-datepicker select.ui-datepicker-month {
+    position: absolute;
+    left: 0;
+}
+
+.primeng-datePicker .ui-datepicker select.ui-datepicker-year {
+    position: absolute;
+    right: 0;
+}
+
+
+/*报警管理*/
+
+.create-rule .content .alramInform .ui-picklist-caption {
+    background: #e5e5e5;
+    border: 1px solid #e5e5e5;
+}
+
+.edit-rule .content .alramInform .ui-picklist-caption {
+    background: #e5e5e5;
+    border: 1px solid #e5e5e5;
+}
+
+.edit-rule .correlation .ui-autocomplete-input {
+    background: rgba(204, 204, 204, 1);
+    width: 205px
+}
+
+.edit-rule .monitorRule .ruleName .ui-autocomplete-input {
+    width: 205px
+}
+
+.edit-rule .content .monitorRule .deviceStates .ui-autocomplete-input {
+    background: rgba(204, 204, 204, 1);
+    width: 205px
+}
+
+.edit-rule .content .monitorRule .networkStates .ui-autocomplete-input {
+    background: rgba(204, 204, 204, 1);
+    width: 205px
+}
+
+.edit-rule .content .monitorRule .dropDownServer .ui-autocomplete-input {
+    background: rgba(204, 204, 204, 1);
+    width: 205px
+}
+
+.create-rule .monitorRule .ruleName .ui-autocomplete-input {
+    width: 205px;
+    /*background: rgba(204, 204, 204, 1);*/
+}
+
+.create-rule .content .alramInform .ui-picklist .ui-button {
+    background: #e5e5e5;
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.edit-rule .content .alramInform .ui-picklist .ui-button {
+    background: #e5e5e5;
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+body .ruleContent .ui-spinner-button {
+    background: #ffffff;
+    color: #555555;
+    border: #d6d6d6 1px solid;
+}
+
+body .ruleContent .ui-spinner:not(.ui-state-disabled) .ui-spinner-button:enabled:active {
+    background: rgb(0, 170, 122);
+    border: 1px solid rgb(0, 170, 122)
+}
+
+body .ruleContent .ui-spinner:not(.ui-state-disabled) .ui-spinner-button:enabled:hover {
+    background: rgb(0, 170, 122);
+    border: 1px solid rgb(0, 170, 122)
+}
+
+
+/*
+*日志系统
+*/
+
+.nginx .ui-datatable .ui-datatable-data>.ui-widget-content>td {
+    border: 0;
+    /*padding: 0 20px 0 0;*/
+    height: 49px;
+    white-space: normal;
+    /*text-align: center*/
+}
+
+.nginx .ui-datatable .ui-datatable-data>.ui-widget-content>td {
+    border: 0;
+    padding: 0 20px 0 0;
+}
+
+
+/* 物联网管理   数据展示 */
+
+.real-time .primeng-dropdown .ui-dropdown label.ui-dropdown-label {
+    height: 34px;
+    padding: 1rem;
+    margin: 0;
+    border-radius: 5px;
+}
+
+.real-time .primeng-dropdown .ui-corner-all {
+    width: 100% !important;
+}
+
+.real-time .primeng-dropdown .ui-dropdown .ui-dropdown-trigger .fa {
+    line-height: 34px;
+    margin-top: 0;
+    margin-left: 0;
+}
+
+.real-time .primeng-dropdown .ui-dropdown-panel .ui-dropdown-filter-container {
+    width: 100%;
+}
+
+
+/* 统计分析的数据统计列表固定列的边框 */
+
+.statistic-analysis .ui-datatable-scrollable-body .ui-widget-content {
+    border: 1px solid #eee;
+    border-left: none;
+    border-right: none;
+}
+
+
+/*报警管理*/
+
+.create-rule .ui-multiselect .ui-multiselect-label-container {
+    height: 22px
+}
+
+.create-rule .ui-multiselect .ui-multiselect-trigger {
+    border-left: none
+}
+
+.create-rule .ui-dropdown .ui-dropdown-trigger {
+    border-left: none
+}
+
+.create-rule .ui-picklist.ui-picklist-responsive .ui-picklist-buttons button {
+    width: 40px
+}
+
+.edit-rule .ui-picklist.ui-picklist-responsive .ui-picklist-buttons button {
+    width: 40px
+}
+
+.edit-rule .ui-dropdown .ui-dropdown-trigger {
+    border-left: none
+}
+
+.alarm-history .contentain .ui-row-toggler {
+    position: absolute;
+    width: 100%;
+    /*padding: 22px 0 0 0;*/
+    width: 100%;
+    margin: -22px 0 0 0;
+    font-size: 21px;
+    height: 44px;
+}
+
+.alarm-history .ui-datatable .ui-datatable-data>.ui-widget-content>td {
+    border: 0;
+    padding: 0 5px;
+}
+
+.alarm-history .ui-datatable .ui-datatable-data>.ui-widget-content {
+    border: 0;
+    color: #323232;
+    border-bottom: 1px solid #eee;
+    /* font-size: 12px; */
+    height: 44px;
+}
+
+.alarm-history .fa-chevron-circle-right {
+    opacity: 0;
+}
+
+.alarm-history .fa-chevron-circle-down {
+    color: rgba(128, 213, 189, 0);
+}
+
+.alarm-history .ui-column-title {
+    margin-left: -17px;
+    height: 22px
+}
+
+.alarm-history .ui-datatable tbody.ui-datatable-hoverable-rows>tr.ui-widget-content:not(.ui-state-highlight):hover {
+    cursor: pointer;
+    background: #ddf1ea !important;
+    color: #212121;
+}
+
+.alarm-history .ui-datatable tbody>tr.ui-widget-content.ui-datatable-odd {
+    background-color: #fafafb !important;
+}
+
+.alarm-rule .iconfont-jas {
+    font-family: "iconfont-jas" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    padding: 0px 10px 0 25px;
+    color: #FF6B00;
+    position: relative;
+    top: -5px;
+}
+
+.alarm-rule .ui-dialog .ui-confirmdialog-message {
+    display: inline-block;
+    width: 161px;
+    line-height: 18px
+}
+
+.alarm-rule .ui-dialog .ui-dialog-titlebar {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+
+/* 规则策略中 资源树的宽度设置 */
+
+.rule-strategy .ui-tree .ui-treenode-label.ui-state-highlight {
+    width: 90%;
+    /*background-color: #fafafb !important;*/
+}
+
+
+/*日志tomcat的tooplink的样式*/
+
+.tomcat .list a:not([href]):not([tabindex]):hover {
+    color: #222222
+}
+
+.tomcat .list a:not([href]):not([tabindex]) {
+    color: #222222
+}
+
+.nginx .list a:not([href]):not([tabindex]):hover {
+    color: #222222
+}
+
+.nginx .list a:not([href]):not([tabindex]) {
+    color: #222222
+}
+
+
+/*arcgis 组件3.18版本中在地图中画线时 提示语句出现：覆盖掉bootstrap中的样式才能出现。如果以后不用arcgis了，可以删除这个样式*/
+
+.arcgis-version-three-map .tooltip {
+    opacity: 1;
+    /*透明度*/
+}

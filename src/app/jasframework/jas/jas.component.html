@@ -1,0 +1,58 @@
+<div class="jas viewFramework-product" [ngClass]="{'product-collapse':isCollapse}" #routerOutlet>
+  <div class="viewFramework-leftMenu">
+    <navBar [menu]='navBar'>
+
+        </navBar>
+  </div>
+
+  <div class="product-navbar-collapse" (click)='collapseProductNavbar()'>
+    <span class="fa fa-outdent icon-dent"></span>
+  </div>
+  <div class="viewFramework-middle-content">
+    <router-outlet>
+    </router-outlet>
+  </div>
+
+  <!--弹窗-->
+
+  <div class="modal fade" bsModal #confirmModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title pull-left modal-title-color">提示</h4>
+          <button type="button" class="close pull-right colorbgc" aria-label="Close" (click)="confirmModal.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+        <div class="modal-body">
+          <div class="content">
+            <span>
+                            {{contentMsg}}
+                        </span>
+
+          </div>
+          <button class="btn btn-default">重新登录</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--<div class="platform-admin viewFramework-product" [ngClass]="{'product-collapse':isCollapse}" #routerOutlet>
+
+    <div class="viewFramework-leftMenu">
+        <navBar [menu]='navBar'>
+
+        </navBar>
+    </div>
+
+    <div class="product-navbar-collapse" (click)='collapseProductNavbar()'>
+        <span>123</span>
+    </div>
+    <div class="viewFramework-middle-content">
+        <router-outlet>
+        </router-outlet>
+
+    </div>
+</div>-->

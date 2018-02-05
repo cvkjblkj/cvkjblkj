@@ -1,0 +1,167 @@
+.searchbar select,
+.searchbar input {
+  height: 30px;
+  width: 150px;
+  color: black;
+}
+
+.searchbar span.info {
+  padding: 5px;
+}
+
+
+/*改变ng2-bootstrap的header*/
+
+div.modal-header h4 {
+  width: auto;
+}
+
+
+/*弹出框背景颜色*/
+
+
+/*div.modal-dialog div.contentbgc {
+        background-color: rgba(0, 0, 0, 0.55);
+    }*/
+
+
+/*改变ng2-bootstrap的 取消的颜色*/
+
+.colorbgc {
+  color: #989697;
+  opacity: 1;
+}
+
+
+/*添加弹框标题字体颜色*/
+
+.modal-title-color {
+  color: #323232;
+}
+
+
+/*表单副标题颜色*/
+
+.laber-color {
+  color: #323232;
+}
+
+
+/*输入框字体颜色*/
+
+.input-color {
+  color: #555555;
+}
+
+
+/*表单按钮样式*/
+
+.modal-body button.btn.btn-default {
+  border-width: 1px;
+  color: #ffffff;
+  background: #00aa7a;
+  border-color: #00aa7a;
+}
+
+.modal-body button.btn.btn-default.cancel {
+  border-width: 1px;
+  color: #323232;
+  background: rgba(254, 254, 254, 1);
+  border-color: #eee;
+}
+
+
+/* 组件标题*/
+
+
+/*.component .title>span {
+        font-size: 16px;
+        color: #323232;
+        margin: 20px 25px;
+        padding: 6px 10px;
+        border-left: 3px solid #00aa7a;
+        font-family: '微软雅黑';
+    }
+
+    .title>.line {
+        border-bottom: 1px solid #EEF1F7;
+        margin-left: 22px;
+    }*/
+
+div.init {
+  margin-bottom: 25px;
+}
+
+.init a.status {
+  /*width:100px;*/
+  padding: 0px 15px 0px 15px;
+  box-sizing: border-box;
+  background: #00cb95;
+  cursor: pointer;
+  color: #000000;
+  margin-right: 5px;
+  display: inline-block;
+  text-align: center;
+  line-height: 30px;
+  margin-bottom: 6px;
+}
+
+.appname {
+  display: inline-block;
+  float: left;
+}
+
+.appleft {
+  display: inline-block;
+  width: 80%;
+  margin-left: 3px;
+}
+
+.init a.status:hover {
+  color: #000000;
+  background: #e5e9ed;
+}
+
+.dataTable a.set {
+  /*padding: 5px 15px;*/
+  /*background: #a0eca0;*/
+  cursor: pointer;
+  color: #00aa7a;
+  margin-right: 5px;
+}
+
+.dataTable a.set:hover {
+  color: #000000;
+  /*background: #b4adad;*/
+}
+
+.dataTable .set_red {
+  /*padding: 5px 15px;*/
+  /*background: #a0eca0;*/
+  cursor: pointer;
+  color: #ff0a3e;
+  margin-right: 5px;
+  border: none;
+  background: transparent;
+}
+
+
+/*鼠标放上后变色*/
+
+.dataTable .set_red:hover {
+  color: #000000;
+  background: #b4adad;
+}
+
+.init a.bacColor {
+  background: #44eaff;
+}
+
+ba-card {
+  font-size: 12px;
+}
+
+.enterprise-list-search-btn {
+  height: 27px;
+  width: 200px;
+}

@@ -1,0 +1,73 @@
+/*@import 'https://js.arcgis.com/3.18/esri/css/esri.css';*/
+/*@import 'https://js.arcgis.com/3.18/dijit/themes/claro/claro.css'; !*地图插件需要的样式*!*/
+
+/*@import 'http://localhost:3000/library/3.18/esri/css/esri.css';*/
+/*@import 'http://localhost:3000/library/3.18/dijit/themes/claro/claro.css';*/
+
+.arcgis-version-three-map {
+  position: absolute;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+.map-view {
+  position: absolute;
+  top: 35px;
+  bottom: 0;
+  width: 100%;
+}
+
+/*页面上功能按钮样式*/
+.map-widget-toolbars {
+  position: absolute;
+  left: 40%;
+  width: auto;
+  height: 40px;
+  padding: 5px;
+  z-index: 10;
+}
+
+.map-widget-toolbars ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+}
+
+.map-widget-toolbars ul li {
+  padding: 2px;
+  margin: 1px 2px;
+  float: left;
+}
+
+.map-widget-toolbars ul li:hover {
+  cursor: pointer;
+  background: #6c8add;
+}
+
+.map-widget-toolbars ul li.selected {
+  background: #6c8add;
+}
+
+.map-widget-toolbars ul li img {
+  width: 30px;
+  height: 30px;
+}
+
+/*页面上 地图标绘按钮样式*/
+.map-widget-DrawBox {
+  position: absolute;
+  top: 60px;
+  right: 5px;
+  z-index: 10;
+}
+
+.map-widget-DrawBox ul {
+  list-style: none;
+}
+
+.map-widget-DrawBox ul li img {
+  cursor: pointer;
+}
+
+

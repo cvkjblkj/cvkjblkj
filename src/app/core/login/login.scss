@@ -1,0 +1,74 @@
+@import '../../theme/sass/auth';
+.message-error {
+    padding: 5px;
+    text-align: center;
+    background-color: #e74c3c;
+    color: #fff;
+    margin-top: 2px;
+    margin-bottom: 5px;
+}
+
+.message-error .fadeout {
+    transition: opacity;
+    transition-timing-function: ease-out;
+    transition-duration: 250ms;
+}
+
+.theme{
+  position: absolute;
+  top: 0;
+  padding: 20px;
+  width: 100%;
+  box-shadow: 0 0 3px #ccc;
+}
+
+.auth-block{
+  border: 1px solid #ccc;
+  background-color: #fff;
+  button.btn-auth{
+    width: 100%;
+    padding: 8px 0;
+    background-color: #00AA7A;
+  }
+  .title{
+    text-align: center;
+    padding: 20px;
+    span{
+      color:#333;
+      text-align: center;
+      font-size: 16px;
+    }
+
+  }
+}
+.auth-main {
+  .footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    border-top: 1px solid #ccc;
+    padding: 25px;
+    background: #fff;
+    color: #333;
+    left: 0;
+    span{
+
+    }
+  }
+  .icon-font{
+    font-size: 24px;
+    color: #ccc;
+    position: absolute;
+    width: 36px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    border-right: 1px solid #ccc;
+  }
+  input.content-area{
+    padding-left: 42px;
+    height: 40px;
+  }
+
+}

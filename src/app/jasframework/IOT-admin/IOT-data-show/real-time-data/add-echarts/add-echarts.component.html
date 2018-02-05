@@ -1,0 +1,22 @@
+<div class="add-echarts">
+  <!-- <echarts-ng2 [showLoading]='showLoading' [echartsData]='options' [loadingTime]='2000'></echarts-ng2> -->
+
+  <div class="content-data">
+    <span class="sampling-frequency">
+      <span>采样频率：</span>
+    <span *ngIf="!sampling">{{frequency}}</span>
+    <span *ngIf="sampling">
+        <input *ngIf="sampling" type="number" [(ngModel)]="samplingFrequency">
+        <span>秒</span>
+    <span class="btn" (click)='saveSampling()'>保存</span>
+    <span class="btn cancle-btn" (click)='cancle()'>取消</span>
+    </span>
+
+    <span *ngIf="!sampling" class="btn" (click)='update($event)'>修改</span>
+    </span>
+
+
+    <span *ngFor="let params of addEchartsParams">属性值：{{attributeValue}} ({{params.deviceName}}--{{params.attribute}})</span>
+    <span #currentDate></span>
+  </div>
+</div>

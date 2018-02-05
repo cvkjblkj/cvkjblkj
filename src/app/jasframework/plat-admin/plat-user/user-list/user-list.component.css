@@ -1,0 +1,189 @@
+.user-list {}
+
+.user-list .content {
+  margin-top: 20px;
+  padding: 28px 10px 0 10px;
+  position: absolute;
+  top: 50px;
+  bottom: 0;
+  width: 100%;
+}
+
+.user-list .content .organiziton {
+  width: 180px;
+  min-width: 168px;
+  min-height: 400px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border: 1px solid #e3e4e6;
+  margin-right: 12px;
+  margin-top: 28px;
+  overflow: auto;
+}
+
+.user-list .organiziton .organiziton-title {
+  padding: 21px;
+  background-color: #ebedf0;
+}
+
+.user-list .content .user {
+  width: auto;
+  min-height: 400px;
+  height: 100%;
+  border: 1px solid #e3e4e6;
+  overflow: auto;
+  margin-left: 192px;
+}
+
+.user-list .organiziton .organiziton-tree {
+  position: absolute;
+  top: 68px;
+  bottom: 0;
+  width: 100%;
+  font-size: 12px;
+  padding-left: 10px;
+}
+
+.user-list div.handle {
+  border-top: 1px solid #ccc;
+  padding-top: 14px;
+}
+
+.user-list div.handle>button.btn-reset {
+  background: #00aa7a;
+}
+
+
+/*弹出框  布局*/
+
+div.modal-dialog div.modal-header h4 {
+  width: auto;
+}
+
+
+/*下拉树*/
+
+
+/*弹框  下拉树  angular-component-tree */
+
+div.dropdown {
+  width: 88%;
+  height: 200px;
+  background: #fff;
+  box-shadow: 0px 3px 7px;
+  position: absolute;
+  z-index: 50;
+  padding: 8px 0 0 10px;
+}
+
+
+/*下拉小图标*/
+
+span.user-list {
+  position: absolute;
+  right: 20px;
+  top: 14px;
+}
+
+
+/*授权 侧边栏*/
+
+.empower {
+  width: 380px;
+  min-height: 560px;
+  position: absolute;
+  top: 55px;
+  bottom: 0px;
+  /*right: 0;*/
+  -moz-transition: all .5s linear;
+  /* Firefox 4 */
+  -webkit-transition: all .5s linear;
+  /* Safari 和 Chrome */
+  -o-transition: all .5s linear;
+  /* Opera */
+  transition: all .5s linear;
+  overflow: hidden;
+  box-shadow: 0px 0px 15px;
+  z-index: 100;
+  border-radius: 15px 0 0 15px;
+  background: rgb(255, 255, 255);
+  /*min-width: 400px;*/
+  overflow: hidden;
+}
+
+.role-empower {
+  right: -380px;
+  -moz-transition: all .5s linear;
+  /* Firefox 4 */
+  -webkit-transition: all .5s linear;
+  /* Safari 和 Chrome */
+  -o-transition: all .5s linear;
+  /* Opera */
+  transition: all .5s linear;
+}
+
+.empower-show {
+  right: 0;
+  -moz-transition: all .5s linear;
+  /* Firefox 4 */
+  -webkit-transition: all .5s linear;
+  /* Safari 和 Chrome */
+  -o-transition: all .5s linear;
+  /* Opera */
+  transition: all .5s linear;
+}
+
+.empower .empower-head {
+  border-bottom: 1px solid #ccc;
+  font-size: 16px;
+  padding: 14px;
+}
+
+.empower-head .roleName {
+  color: #42A948;
+}
+
+.empower-content {
+  padding: 10px;
+  min-height: 400px;
+  position: relative;
+  overflow: auto;
+  height: 100%;
+}
+
+.empower-content .orgtree.checkbox-tree {
+  min-height: 400px;
+  height: 100%;
+  margin-bottom: 120px;
+}
+
+.empower-footer {
+  position: absolute;
+  bottom: 0px;
+  border-radius: 0 0 0 15px;
+  /*box-shadow: 0px 10px 15px;*/
+  height: 60px;
+  width: 100%;
+  line-height: 60px;
+  background-color: #fff;
+}
+
+.empower-footer>button {
+  margin-left: 15px;
+}
+
+.empower-footer>button.btn-reset {
+  background: #00aa7a;
+}
+
+label.description {
+  position: relative;
+  top: -82px;
+}
+
+/*添加用户按钮右边垂直居中*/
+.add-app-btn {
+  margin-top: 18px;
+  margin-right: 18px
+}

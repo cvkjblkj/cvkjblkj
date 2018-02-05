@@ -1,0 +1,30 @@
+.grid-pagination {
+    height: auto;
+    color: #999;
+    background: #ebedf0;
+    // border: 1px #dadada solid;
+    // display: -webkit-box;
+    // display: -moz-box;
+    // display: -ms-box;
+    // display: -o-box;
+    .pageshowmodle select {
+        width: 46px;
+        height: 34px;
+        line-height: 34px;
+        background: #fff;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    .pageshowmodle {
+        -webkit-box-flex: 1;
+        line-height: 57px;
+        text-align: right;
+        margin-right: 20px;
+    }
+    .pagefen {
+        height: 57px;
+        line-height: 26px;
+        margin-right: 20px;
+    }
+}

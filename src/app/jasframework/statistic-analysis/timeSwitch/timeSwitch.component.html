@@ -1,0 +1,65 @@
+<!--时间选择-->
+<ul class="date-list fl clearfix" *ngIf="timeType=='day'" (click)="datePicker($event)">
+  <li><span [ngClass]="{'bgc-checked':isClick=='seven'}" id="seven">最近7天</span></li>
+  <li><span [ngClass]="{'bgc-checked':isClick=='fifteen'}" id="fifteen">最近15天</span></li>
+  <li><span [ngClass]="{'bgc-checked':isClick=='thirty'}" id="thirty">最近30天</span></li>
+  <li class='self-date'>
+    <span [ngClass]="{'bgc-checked':isClick=='self'|| isSelectedDate}" id="self">自定义</span>
+    <span class="show-time" *ngIf="isSelectedDate && timeType=='day'" (click)='stopBubble($event)'>{{dateStartShow}} ~ {{dateEndShow}} </span>
+    <div class="date-picker appService clearfix primeng-datePicker time-false" *ngIf="isClick=='self'" (click)='stopBubble($event)'>
+      <div class="fl calendar-father">
+        <!-- <p-calendar [(ngModel)]="dateStart" [inline]="true" [monthNavigator]="true" [showSeconds]='true' showTime="showTime" hourFormat="24" [maxDate]='dateEnd' [yearNavigator]="true" yearRange="2000:2030" [locale]="zn" [style]="{'position':'relative','top':'-16px'}"
+          (onSelect)='selectStartDate($event)'></p-calendar> -->
+        <p-calendar [(ngModel)]="dateStart" [inline]="true" [monthNavigator]="true" [maxDate]='dateEnd' [yearNavigator]="true" yearRange="2000:2030" [locale]="zn" [style]="{'position':'relative','top':'-16px'}" (onSelect)='selectStartDate($event)'></p-calendar>
+      </div>
+      <div class="fr calendar-father">
+        <p-calendar [(ngModel)]="dateEnd" [inline]="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" [locale]="zn" [style]="{'position':'relative','top':'-16px'}" (onSelect)='selectEndDate($event)' [minDate]='dateStart' [maxDate]='maxDate'></p-calendar>
+      </div>
+      <div class="button" style="clear:both;position: absolute;bottom: -10px;right: 0;">
+        <button class="btn btn-reset sure" (click)='sure($event)'>确定</button>
+      </div>
+    </div>
+
+  </li>
+</ul>
+<ul class="date-list fl clearfix" *ngIf="timeType=='hour'" (click)="datePicker($event)">
+  <li><span [ngClass]="{'bgc-checked':isClick=='today'}" id="today">今天</span></li>
+  <li><span [ngClass]="{'bgc-checked':isClick=='yesterday'}" id="yesterday">昨天</span></li>
+  <li class='self-date'>
+    <span [ngClass]="{'bgc-checked':isClick=='self'|| isSelectedDate}" id="self">自定义</span>
+    <span class="show-time" *ngIf="isSelectedDate && timeType=='hour'" (click)='stopBubble($event)'>{{dateStartShow}} ~ {{dateEndShow}}</span>
+    <div class="date-picker appService clearfix primeng-datePicker" *ngIf="isClick=='self'" (click)='stopBubble($event)'>
+      <div class="fl calendar-father">
+        <p-calendar [(ngModel)]="dateStart" [inline]="true" [monthNavigator]="true" hourFormat="24" showTime="true" [minDate]='minHourStartDate' [maxDate]='dateEnd' [yearNavigator]="true" yearRange="2000:2030" [locale]="zn" [style]="{'position':'relative','top':'-16px'}" (onSelect)='selectStartDate($event)'></p-calendar>
+      </div>
+      <div class="fr calendar-father">
+        <p-calendar [(ngModel)]="dateEnd" [inline]="true" [monthNavigator]="true" hourFormat="24" showTime="true" [minDate]='dateStart' [maxDate]='dateEnd' [yearNavigator]="true" yearRange="2000:2030" [locale]="zn" [style]="{'position':'relative','top':'-16px'}"
+          (onSelect)='selectEndDate($event)'></p-calendar>
+      </div>
+      <div class="button" style="clear:both;position: absolute;bottom: -10px;right: 0;">
+        <button class="btn btn-reset sure" (click)='sure($event)'>确定</button>
+      </div>
+    </div>
+
+  </li>
+</ul>
+<ul class="date-list fl clearfix" *ngIf="timeType=='month'" (click)="datePicker($event)">
+  <li><span [ngClass]="{'bgc-checked':isClick=='threeMonth'}" id="threeMonth">最近3个月</span></li>
+  <li><span [ngClass]="{'bgc-checked':isClick=='sixMonth'}" id="sixMonth">最近6个月</span></li>
+  <li class='self-date'>
+    <span [ngClass]="{'bgc-checked':isClick=='self'|| isSelectedDate}" id="self">自定义</span>
+    <span class="show-time" *ngIf="isSelectedDate && timeType=='month'" (click)='stopBubble($event)'>{{dateStartShow}} ~ {{dateEndShow}} </span>
+    <div class="date-picker appService clearfix primeng-datePicker time-false" *ngIf="isClick=='self'" (click)='stopBubble($event)'>
+      <div class="fl calendar-father">
+        <p-calendar [(ngModel)]="dateStart" [inline]="true" [monthNavigator]="true" [maxDate]='maxDateStartMonth' [yearNavigator]="true" yearRange="2000:2030" [locale]="zn" [style]="{'position':'relative','top':'-16px'}" (onSelect)='selectStartDate($event)'></p-calendar>
+      </div>
+      <div class="fr calendar-father">
+        <p-calendar [(ngModel)]="dateEnd" [inline]="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" [locale]="zn" [style]="{'position':'relative','top':'-16px'}" (onSelect)='selectEndDate($event)' [minDate]='minDateEndMonth' [maxDate]='maxDate'></p-calendar>
+      </div>
+      <div class="button" style="clear:both;position: absolute;bottom: -10px;right: 0;">
+        <button class="btn btn-reset sure" (click)='sure($event)'>确定</button>
+      </div>
+    </div>
+
+  </li>
+</ul>

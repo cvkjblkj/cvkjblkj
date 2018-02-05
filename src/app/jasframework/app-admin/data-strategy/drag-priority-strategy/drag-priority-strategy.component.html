@@ -1,0 +1,29 @@
+<div class="set-handle clearfix component" #dragDiv>
+  <span class="operate">
+      <ul class="clearfix">
+          <li class="fl" *ngIf="fontConirmIsShow" [ngStyle]="{'padding': fontConirmIsShow?'5px 0':'0'}"><span >暂未设置优先级</span></li>
+  <li class="fr" *ngIf="!fontConirmIsShow && !cancelBtnIsShow"><button class="authority" (click)="cancelSetPriority()">取消设置</button></li>
+  <li class="fr" *ngIf="!cancelBtnIsShow && priorityList && priorityList.length>0"><button class="manager" (click)="setPriority()" [disabled]='!button?.appRuleStrategySetPriority'>设置优先级</button></li>
+  <li class="fr" *ngIf="cancelBtnIsShow"><button class="manager" (click)="cancelSavePriority()">取消</button></li>
+  <li class="fr" *ngIf="cancelBtnIsShow"><button class="manager" (click)="setPriority('save')">保存</button></li>
+  </ul>
+  </span>
+
+  <div class="list-set">
+    <span class="flag-position text-high" *ngIf="!fontConirmIsShow">高</span>
+    <ul [ngClass]="{'ul-set': !fontConirmIsShow}" style="position:relative">
+      <li *ngFor="let item of priorityList;let i = index" [ngClass]="{'drag-li': !fontConirmIsShow && cancelBtnIsShow}" id="m{{i}}">
+        <div *ngIf="!fontConirmIsShow && cancelBtnIsShow" [ngClass]="{'move-nr': !fontConirmIsShow && cancelBtnIsShow}" (mousedown)="mouseDown($event,i)">
+          <i class="iconfont-jas icon-jas-tuodong3" style="color:#808080"></i>
+          <span>{{item.ruleName}}</span>
+        </div>
+        <div *ngIf="fontConirmIsShow || !cancelBtnIsShow">
+          <span>{{item.ruleName}}</span>
+        </div>
+      </li>
+    </ul>
+    <i class="fa fa-caret-down flag-position text-icon" aria-hidden="true" *ngIf="!fontConirmIsShow"></i>
+    <span class="flag-position text-low" *ngIf="!fontConirmIsShow">低</span>
+  </div>
+
+</div>

@@ -1,0 +1,299 @@
+.platform-role {}
+
+
+/*按钮 颜色*/
+
+
+/*.platform-role a.delete {
+    color: #00aa7a;
+}
+
+.platform-role a.editor {
+    color: orange;
+}
+
+.platform-role a.authority {
+    color: #00aa7a;
+}
+
+.platform-role span.operate a {
+    margin-right: 10px;
+}*/
+
+
+/*弹出框  布局*/
+
+
+/*
+div.modal-dialog div.modal-header h4 {
+    width: auto;
+}
+
+.platform-role .modal-body .form-group {
+    text-align: left;
+    padding-left: 15%;
+}
+
+.platform-role .form-group label {
+    width: 15%
+}
+
+.platform-role .modal-body .form-control {
+    display: inline-block;
+    border-radius: 0;
+    width: 55%;
+}
+
+.platform-role div.button {
+    border-top: 1px solid #ccc;
+    padding: 15px;
+    padding-bottom: 0;
+    text-align: right;
+}
+
+.platform-role div.button>button {
+    margin-left: 15px;
+    border: 1px solid #ccc;
+}*/
+
+
+/*提示信息*/
+
+.platform-role span.tip {
+    margin-left: 10px;
+    color: #a94442;
+}
+
+
+/*必填表单颜色*/
+
+
+/*授权 侧边栏*/
+
+.platform-role .empower {
+    width: 580px;
+    min-height: 560px;
+    position: absolute;
+    top: 55px;
+    bottom: 50px;
+    /*right: 0;*/
+    -moz-transition: all .5s linear;
+    /* Firefox 4 */
+    -webkit-transition: all .5s linear;
+    /* Safari 和 Chrome */
+    -o-transition: all .5s linear;
+    /* Opera */
+    transition: all .5s linear;
+    overflow: hidden;
+    box-shadow: 0px 0px 15px;
+    z-index: 100;
+    border-radius: 15px 0 0 15px;
+    background: rgb(255, 255, 255);
+    /*min-width: 400px;*/
+}
+
+.role-empower {
+    right: -580px;
+    -moz-transition: all .5s linear;
+    /* Firefox 4 */
+    -webkit-transition: all .5s linear;
+    /* Safari 和 Chrome */
+    -o-transition: all .5s linear;
+    /* Opera */
+    transition: all .5s linear;
+}
+
+.empower-show {
+    right: 0;
+    -moz-transition: all .5s linear;
+    /* Firefox 4 */
+    -webkit-transition: all .5s linear;
+    /* Safari 和 Chrome */
+    -o-transition: all .5s linear;
+    /* Opera */
+    transition: all .5s linear;
+}
+
+.platform-role .empower .empower-head {
+    border-bottom: 1px solid #ccc;
+    font-size: 16px;
+    padding: 14px;
+}
+
+.platform-role .empower-head .roleName {
+    color: #42A948;
+}
+
+.platform-role .empower-content {
+    padding: 10px;
+    min-height: 300px;
+    position: relative;
+    overflow: hidden;
+}
+
+.platform-role .empower-content .left {
+    float: left;
+    width: 70%;
+}
+
+.platform-role .empower-content .right {
+    float: right;
+    width: 30%;
+}
+
+.platform-role .empower-content .sliderBar {
+    /*width: 50%;*/
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.empower-content .slideBar-head {
+    padding: 10px 20px;
+    background: #eaedf1;
+    border-radius: 5px 5px 0 0;
+}
+
+.empower-content .slideBar-content {
+    height: 100%;
+    width: 100%;
+    height: 500px;
+    min-height: 400px;
+    overflow: auto;
+}
+
+.platform-role .empower-content .right .slideBar-content ul {
+    padding-left: 10px;
+}
+
+.platform-role .empower-footer {
+    position: absolute;
+    bottom: 0;
+    padding: 10px;
+    margin: 0 auto;
+    width: 100%;
+    background: #fff;
+    text-align: center;
+}
+
+.platform-role .empower-footer>button {
+    margin-left: 15px;
+}
+
+.platform-role .empower-footer>button.btn-reset {
+    background: #00aa7a;
+}
+
+.platform-role label.description {
+    position: relative;
+    top: -82px;
+}
+
+
+/*弹框  下拉树*/
+
+div.dropdown-tree {
+    width: 36%;
+    height: 200px;
+    background: #fff;
+    box-shadow: 0px 3px 7px;
+    position: absolute;
+    left: 28%;
+    top: 228px;
+    z-index: 50;
+}
+
+div.dropdown-tree.add {
+    top: 228px;
+}
+
+div.dropdown-tree.edit {
+    top: 174px;
+}
+
+
+/*下拉图标*/
+
+.platform-role span.role-info {
+    position: absolute;
+    right: 20px;
+    top: 14px;
+}
+
+
+/*错误的提示信息*/
+
+span.error>span {
+    color: #a94442;
+    font-size: 12px;
+    line-height: 34px;
+}
+
+
+/*按钮样式*/
+
+button.btn.btn-reset {
+    background: #00aa7a;
+    border: 1px solid #00aa7a;
+    border-radius: 0;
+    color: #fff;
+    margin-right: 15px;
+}
+
+button.btn.btn-reset[disabled]:hover {
+    background: #00aa7a;
+    color: #fff;
+}
+
+button.btn.btn-default {
+    border-radius: 0;
+}
+
+div.handle {
+    padding-top: 16px;
+    border-top: 1px solid #ccc;
+}
+
+div.slideBar-content ul {
+    list-style: none;
+}
+
+div.slideBar-content ul label {
+    font-weight: 400;
+}
+
+li.treeList label.checkbox-lable {
+    top: 6px;
+    margin-right: 5px;
+}
+
+
+/*当没有功能树的数据时，出现的提示*/
+
+.slideBar-content.checkbox-tree span.tip {
+    color: #a94442;
+    margin: 32px;
+    font-size: 12px;
+    position: absolute;
+}
+
+.slideBar-content ul.checkbox-tree {
+    margin-bottom: 90px;
+}
+
+
+/*tree 给footer留位置*/
+
+div.treeNodePositon {
+    margin-bottom: 90px;
+}
+
+div.middleCenter {
+    line-height: 34px;
+}
+
+/*添加角色按钮右边垂直居中*/
+.add-app-btn {
+  margin-top: 18px;
+  margin-right: 18px
+}

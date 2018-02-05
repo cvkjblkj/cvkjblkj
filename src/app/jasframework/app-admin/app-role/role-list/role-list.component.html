@@ -1,0 +1,438 @@
+<div class="role-list component primeng-treeTable clearfix">
+  <div class="title">
+    <span>{{appName}}-角色管理</span>
+  </div>
+  <div class="line"></div>
+  <div class="content">
+    <tabset #staticTabs class="define-nav">
+      <tab heading="应用角色">
+        <div class="head clearfix">
+          <div class="name-search">
+            <input type="text" #input class="search" [(ngModel)]="searchValue" placeholder="请输入角色名称">
+            <button class="btn btn-reset font-color" (click)="search()">搜索</button>
+          </div>
+          <div class="fr">
+            <!--<span class="icon icon-close">  </span>
+                        <button class="btn btn-default btn-reset font-color" [disabled]='!button.appRoleAddBtn' (click)="addRole(addModal)">
+                            <span class="fa fa-plus"></span>
+                            <span class="text">添加角色</span>
+                            </button>-->
+            <button pButton type="button" icon="fa-plus" (click)="addRole(addModal)" class="btn-reset" [disabled]='!button.appRoleAddBtn' label="添加角色"></button>
+
+          </div>
+          <!--<p-toolbar class="fr">
+                        <div class="ui-toolbar-group-left">
+                            <button pButton type="button" label="添加角色" icon="fa-plus" (click)="addRole(addModal)"></button>
+                        </div>
+                    </p-toolbar>-->
+
+        </div>
+        <p-treeTable [value]="roleTable" selectionMode="single" [(selection)]="selectedFile" [style]="{'margin-top':'30px'}">
+          <p-column field="roleName" [style]="{'width':'25%'}" header="角色名称"></p-column>
+          <p-column field="roleCode" header="角色编码"></p-column>
+          <p-column field="allowAssign" header="是否可分配"></p-column>
+          <p-column field="description" header="描述"></p-column>
+          <p-column [style]="{'width':'150px','text-align':'right'}" header="操作">
+            <template let-car="rowData" pTemplate="body">
+              <span class="operate">
+                <button class="editor" (click)="viewRole(viewModal,car)"> 查看</button>
+                <span class="secant-line">&nbsp;|&nbsp;</span>
+                <button class="editor" (click)="editRole(editModal,car)" [disabled]='!button.appRoleEditBtn'> 编辑</button>
+                <span class="secant-line" *ngIf="rootId!=car.data.id">&nbsp;|&nbsp;</span>
+                <button class="editor" (click)="delete(car)" *ngIf="rootId!=car.data.id" [disabled]='!button.appRoleDelBtn'> 删除</button>
+                <!-- <span class="secant-line" *ngIf="rootId!=car.data.id" >&nbsp;|&nbsp;</span> -->
+                <!-- <button class="editor" *ngIf="rootId!=car.data.id"  (click)="authority(car)" [disabled]='!button.appRoleAssignBtn'> 授权</button> -->
+                <button class="editor" *ngIf="rootId!=car.data.id"  (click)="authorityRole(authorityModal,car)" [disabled]='!button.appRoleAssignBtn'> 授权</button>
+              </span>
+            </template>
+          </p-column>
+        </p-treeTable>
+      </tab>
+      <tab heading="企业自定义角色" [disabled]="true">
+        <!--<p-treeTable [value]="data" selectionMode="single" [(selection)]="selectedFile" (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)" [style]="{'margin-top':'50px'}">
+                    <p-column field="size" header="Size"></p-column>
+                    <p-column field="type" header="Type"></p-column>
+                    <p-column styleClass="col-button">
+                        <template pTemplate="header">
+                          操作
+                        </template>
+                        <template let-col let-car="rowData" pTemplate="body">
+                        <span *ngFor="let item of car[col.control]" >
+                          <a href="#"> {{item}}</a>
+                        </span>
+                        <span>
+                          {{col.data}}
+                        </span>
+                        </template>
+                    </p-column>
+                </p-treeTable>-->
+      </tab>
+    </tabset>
+  </div>
+  <!--提示成功信息-->
+  <p-growl [value]="msgs"></p-growl>
+
+  <!--添加  弹窗-->
+  <div class="modal fade common-modal" bsModal #addModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">添加角色</h4>
+          <button type="button" class="close pull-right colorbgc" aria-label="Close" (click)="formReset(addModal)">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" #roleForm="ngForm">
+            <div class="form-group">
+              <label for="roleName" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">角色名称：</label>
+              <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                <input [(ngModel)]="role.roleName" type="text" name="roleName" class="form-control" id="roleName" #roleName='ngModel' required pattern='^([A-Za-z0-9_\u4E00-\u9FA5]|-)+$' maxlength="20">
+                <span class="confirm-error"> 长度1-20个字符或汉字，允许英文字母、数字、”-”、”_” </span>
+              </div>
+              <span class="error" *ngIf="roleName.errors && (roleName.dirty || roleName.touched)">
+                  <span [hidden]='!roleName.errors.required'>  角色名称不能为空 </span>
+              <span [hidden]="!roleName.errors.pattern"> 格式不正确</span>
+              </span>
+            </div>
+            <div class="form-group">
+              <label for="roleCode" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">角色编码：</label>
+              <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                <input [(ngModel)]="role.roleCode" name="roleCode" type="text" class="form-control input-color" required id="active" #roleCode="ngModel" maxlength="50" pattern="^([A-Za-z0-9_]|-)+$" (blur)="checkExit(roleCode.errors,roleCode.value)">
+                <span class="confirm-error">长度为1-50个字符，允许英文字母、数字、”-” 、”_”</span>
+                <span style="color:#a94442;margin-top:10px;font-size: 12px"> 必须唯一，不能被修改</span>
+              </div>
+              <span *ngIf="roleCode.errors && (roleCode.dirty || roleCode.touched)" class="error">
+                                <span [hidden]="!roleCode.errors.required">
+                                    角色编码不能为空
+                                </span>
+              <span [hidden]='!roleCode.errors.pattern' style="line-height: 1">
+                                    格式不正确
+                                </span>
+              </span>
+              <span *ngIf="IsSame" class="error" style="color:#a94442">
+                                    角色编码已经存在
+                            </span>
+            </div>
+            <div class="form-group">
+              <label for="parentName" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">父级角色：</label>
+              <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                <span class='caret-down dropdown-icon'></span>
+                <input [(ngModel)]="role.parentName" name="parentName" type="text" class="form-control" (click)='dropdown()' #parentName='ngModel' required readonly>
+                <div class='dropdown' *ngIf="AddDropdrowIsShow">
+                  <tree-root #tree [nodes]="nodeTree" [options]="treeOptions" (onActivate)="AddSelectNode($event)">
+                  </tree-root>
+                </div>
+              </div>
+              <span *ngIf="parentName.errors && (parentName.dirty || parentName.touched)" class="error">
+                                        <span [hidden]="!parentName.errors.required">
+                                            父级角色不能为空
+                                        </span>
+              </span>
+            </div>
+            <div class="form-group">
+              <label for="description" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">角色描述：</label>
+              <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                <textarea [(ngModel)]="role.description" name="description" type="text" class="form-control input-color" id="description" rows="3" cols="20" maxlength="200" placeholder='最多200个字符'></textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="remark" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">备注：</label>
+              <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                <textarea [(ngModel)]="role.remark" name="remark" class="form-control input-color" id="remark" rows="3" cols="20" maxlength="200" placeholder='最多200个字符'></textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="allowAssign" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">是否可分配：</label>
+              <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 middleCenter">
+                <input type="radio" name="allowAssign" [(ngModel)]='role.allowAssign' value="1">是
+                <input type="radio" name="allowAssign" [(ngModel)]='role.allowAssign' value="0">否
+                <span class="modal-rule">&nbsp;&nbsp;(是否允许分配给企业用户)</span>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 handle">
+              <button type="button" class="btn btn-default  pull-right btn-space" (click)='formReset(addModal)'> 取消</button>
+              <button type="submit" class="btn pull-right btn-space btn-reset" (click)='onSubmit(roleForm.value,addModal)' [disabled]="!roleForm.form.valid || IsSame">保存</button>
+
+            </div>
+            <div style="clear:both;"></div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--编辑  弹窗-->
+  <div class="modal fade common-modal" bsModal #editModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">编辑角色</h4>
+          <button type="button" class="close pull-right colorbgc" aria-label="Close" (click)="editModal.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" #editform="ngForm" *ngIf="roleList">
+            <div class="form-group">
+              <label for="roleName" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">角色名称：</label>
+              <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                <input [(ngModel)]="roleList.roleName" type="text" name="roleName" class="form-control" id="roleName" required #roleName='ngModel' maxlength="20" pattern="^([A-Za-z]|[\u4E00-\u9FA5])+$">
+                <span class="confirm-error">
+                                        <!--角色名称可为字母和中文字符；且不能超过25个字符-->
+                                        长度为1-20个字符，中英文皆可
+                                </span>
+              </div>
+              <span *ngIf="roleName.errors && (roleName.dirty || roleName.touched)" class='error'>
+                                <span [hidden]="!roleName.errors.required">
+                                    角色名称不能为空
+                                </span>
+              <span [hidden]="!roleName.errors.pattern">
+                                    格式不正确
+                                </span>
+              </span>
+            </div>
+            <div class="form-group">
+              <label for="roleCode" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">角色编码：</label>
+              <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                <input [(ngModel)]="roleList.roleCode" name="roleCode" type="text" class="form-control input-color" readonly required id="active" #roleCode="ngModel">
+              </div>
+
+
+            </div>
+            <div class="form-group" *ngIf="parentIdIsExit">
+              <label for="parentName" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">父级角色：</label>
+              <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                <span class='caret-down dropdown-icon'></span>
+                <input [(ngModel)]="roleList.parentName" name="parentName" type="text" class="form-control" (click)='dropdown()' #parentName='ngModel' required readonly>
+                <div class='dropdown' *ngIf="AddDropdrowIsShow">
+                  <tree-root #tree [nodes]="nodeTree" [options]="treeOptions" (onActivate)="editSelectNode($event)">
+                  </tree-root>
+                </div>
+              </div>
+              <span *ngIf="parentName.errors && (parentName.dirty || parentName.touched)" class="error">
+                                        <span [hidden]="!parentName.errors.required">
+                                            父级角色不能为空
+                                        </span>
+              </span>
+            </div>
+            <div class="form-group">
+              <label for="description" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">角色描述：</label>
+              <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+
+                <textarea [(ngModel)]="roleList.description" name="description" type="text" class="form-control input-color" id="description" rows="3" cols="20" maxlength="200" placeholder='最多200个字符'></textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="remark" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">备注：</label>
+              <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                <textarea [(ngModel)]="roleList.remark" name="remark" class="form-control input-color" id="remark" rows="3" cols="20" maxlength="200" placeholder='最多200个字符'></textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="allowAssign" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">是否可分配：</label>
+              <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 middleCenter">
+                <input type="radio" name="allowAssign" [(ngModel)]='roleList.allowAssign' value='1'>是
+                <input type="radio" name="allowAssign" [(ngModel)]='roleList.allowAssign' value="0">否
+                <span class="modal-rule">&nbsp;&nbsp;(是否允许分配给企业用户)</span>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 handle">
+
+              <button type="button" class="btn btn-default pull-right btn-space" (click)="editModal.hide()">取消</button>
+              <button type="button" class="btn pull-right btn-space btn-reset" (click)="onEditSubmit(editModal,editform.value)" [disabled]="!editform.form.valid">保存</button>
+            </div>
+            <div style="clear:both;"></div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--角色分配-->
+  <!-- <div class="empower" [ngClass]="{'role-empower': !isleft,'empower-show':isleft }">
+    <div class="empower-head">
+      <span>角色授权-<span class="roleName">{{name}}</span></span>
+    </div>
+    <div class="empower-content">
+      <span class="tip" *ngIf="treeDataIsTrue"> 请先给该角色的父级角色授权</span>
+      <div class="orgtree checkbox-tree">
+        <tree-root #tree [nodes]="nodeTree" [options]="treeOptions">
+          <template #treeNodeTemplate let-node="node" let-index="index">
+            <input(change)="checkedNode(node, $event)" type="checkbox" [checked]="node.data.checked" id='myCheck-{{node.data.id}}'>
+            <label for="myCheck-{{node.data.id}}" class="checkbox-lable"></label>
+            <span class="tree-content"> {{ node.data.text }} </span>
+          </template>
+        </tree-root>
+      </div>
+    </div>
+    <div class="empower-footer">
+      <button class="btn btn-reset" (click)='saveAssign()'>保存</button>
+      <button class="btn btn-default" (click)='empowerCancle()'>取消</button>
+    </div>
+  </div> -->
+
+  <!--成功提示-->
+  <p-growl [value]='msgs'></p-growl>
+
+  <!--删除提示信息-->
+  <p-confirmDialog header="提示" icon="fa fa-question-circle" width="425" #cd>
+    <p-footer>
+      <button type="button" pButton icon="fa-close" label="取消" (click)="cd.reject()" class="btn-cancle"></button>
+      <button type="button" pButton icon="fa-check" label="确认" (click)="cd.accept()" class="btn-reset"></button>
+    </p-footer>
+  </p-confirmDialog>
+  <!--删除提示信息-->
+</div>
+<!--  -->
+
+
+<!-- 查看弹窗  table -->
+
+<div class="modal fade common-modal" bsModal #viewModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">查看角色信息</h4>
+        <button type="button" class="close pull-right colorbgc" aria-label="Close" (click)="viewModal.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table style="table-layout:fixed" border class="table-view">
+          <tbody>
+            <tr>
+              <td>
+                <span class="text-muted">角色名称</span>
+              </td>
+              <td>
+                <span class="text-muted">{{roleList?.roleName}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="text-muted">角色标识</span>
+              </td>
+              <td>
+                <span class="text-muted">{{roleList?.roleCode}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="text-muted">是否可分配</span>
+              </td>
+              <td>
+                <span class="text-muted">{{roleList?.allowAssign}}</span>
+              </td>
+            </tr>
+            <!-- <tr>
+              <td>
+                <span class="text-muted">创建人</span>
+              </td>
+              <td>
+                <span class="text-muted">{{roleList?.createUser}}</span>
+              </td>
+            </tr> -->
+            <tr>
+              <td>
+                <span class="text-muted">创建时间</span>
+              </td>
+              <td>
+                <span class="text-muted">{{roleList?.createTime}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td rowspan="2" style="min-height:50px;height:70px">
+                <span class="text-muted" style="min-height:50px">角色描述</span>
+              </td>
+              <td rowspan="2">
+                <span class="text-muted">{{roleList?.description}}</span>
+              </td>
+            </tr>
+            <tr></tr>
+            <tr>
+              <td rowspan="2" style="min-height:50px;height:70px">
+                <span class="text-muted" style="min-height:50px">备注</span>
+              </td>
+              <td rowspan="2">
+                <span class="text-muted">{{roleList?.remark}}</span>
+              </td>
+            </tr>
+            <tr></tr>
+          </tbody>
+        </table>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-body" style="border-top: 1px solid #e5e5e5;padding-top: 12px;margin-top:24px;padding-right: 0;">
+          <button type="button" class="btn pull-right btn-reset" (click)="viewModal.hide()">关闭</button>
+        </div>
+        <div style="clear:both;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 授权弹窗 -->
+<div class="modal fade common-modal" bsModal #authorityModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md modal-authority">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left"> <span>角色授权-<span class="roleName">{{name}}</span></span>
+        </h4>
+        <button type="button" class="close pull-right colorbgc" aria-label="Close" (click)="authorityModal.hide()">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        <div style="min-height:400px">
+          <p-treeTable [value]="checkboxListData">
+            <p-column header="可使用的功能" [style]="{'width':'30%'}">
+              <template let-node="rowData" pTemplate="body">
+                <div style="display:inline">
+                    <input (change)="checkedFuncNode(node, $event)" type="checkbox" [(ngModel)]="node.data.checked" [checked]="node.data.checked" class='myCheck-{{node.data.funcId}}'>
+                    <label for="myCheck-{{node.data.funcId}}" class="checkbox-lable"></label>
+                    <span class="tree-content"> {{ node.data.funcName }} </span>
+                </div>
+                </template>
+            </p-column>
+            <p-column header="可访问的数据范围">
+              <template let-node="rowData" pTemplate="body">
+                <ul *ngIf="node.ruleList && node.ruleList.length>0">
+                  <li class="data-rule" *ngFor="let ruleItem of node.ruleList;let i = index">
+                    <input type="radio" id="{{ruleItem.objectId}}" name="ruleName-{{node.data.funcId}}"
+                    value="{{ruleItem.objectId}}" [(ngModel)]="radioValue[node.data.funcId]"  [disabled]="!node.data.checked" >
+                    <label for="{{ruleItem.objectId}}">{{ruleItem.ruleName}}</label>
+                  </li>
+                </ul>
+              </template>
+            </p-column>
+          </p-treeTable>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 handle">
+          <button type="button" class="btn btn-default pull-right btn-space" (click)="authorityModal.hide()">取消</button>
+          <button type="button" class="btn pull-right btn-space btn-reset" (click)="saveAssign(authorityModal)">保存</button>
+        </div>
+        <div style="clear:both; "></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade common-modal" bsModal #congfigModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">提示</h4>
+        <button type="button" class="close pull-right colorbgc" aria-label="Close" (click)="congfigModal.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+      </div>
+      <div class="modal-body">
+        <span class="tip">{{assignErrorMsg}}</span>
+
+        <button type="button" class="btn pull-right btn-reset" (click)="congfigModal.hide()">关闭</button>
+
+        <div style="clear:both;"></div>
+      </div>
+    </div>
+  </div>
+</div>

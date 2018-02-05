@@ -1,0 +1,240 @@
+<div class="rule-strategy clearfix">
+  <div class="fl menu-enter">
+    <p-tree [value]="resourceTreeData" selectionMode="single" [(selection)]="selectedResourceFile" [style]="{'text-align':'left','border':'none','width':'199px','margin':'0','padding-left':'10px'}" (onNodeSelect)="resouceSelect()">
+      <template let-node pTemplate="default">
+        <!-- 父节点 -->
+        <span  *ngIf="node.children && node.children.length>0" class="node-resource-tree node-resource-children" >{{node.label}}</span>
+        <!-- 子节点 -->
+        <span *ngIf="(node.children && node.children.length==0) || !node.children" class="node-resource-children" id="{{node.id}}">{{node.label}}</span>
+      </template>
+    </p-tree>
+  </div>
+  <div class="content-navigation">
+    <!-- 设置优先级 -->
+    <div class="priority">
+      <div class="clearfix title-fusion">
+        <span class="name-title">优先级策略</span>
+      </div>
+      <!-- 设置优先级组件 -->
+      <drag-priority-strategy [button]="button" [priorityList]='priorityList' [dataresourceId]='fusionParams.dataresourceId'></drag-priority-strategy>
+    </div>
+    <!-- 策略融合 -->
+    <div class="fusion">
+      <div class="clearfix title-fusion">
+        <span class="name-title">融合策略</span>
+        <button class="btn btn-reset fr" [disabled]="!button?.appRuleStrategyAddFusionBtn" (click)="modalShow('add')">
+            <i class=" fa fa-plus"></i>
+            添加策略
+          </button>
+      </div>
+
+      <p-dataTable [value]="fusionListData" [emptyMessage]='emptyMessage' selectionMode="single" scrollable="true" class="">
+        <p-column field="fusionName" header="策略名称" [style]="{width:'180px','min-width':'100px'}"></p-column>
+        <p-column field="ruleNames" header="规则名称" [style]="{width:'180px','min-width':'100px'}"></p-column>
+        <p-column header="操作" styleClass="col-button" [style]="{width:'150px','text-align':'right'}">
+          <template let-row='rowData' pTemplate="body">
+                <span class="operate">
+                  <button class="manager" (click)="modalShow('view',row)">查看</button>
+                  <span class="secant-line">&nbsp;|&nbsp;</span>
+                    <button class="manager" (click)="modalShow('edit',row)" [disabled]='!button?.appRuleStrategyEditFusionBtn'>编辑</button>
+                    <span class="secant-line">&nbsp;|&nbsp;</span>
+                    <button class="manager" (click)="delete(row)" [disabled]='!button?.appRuleStrategyDelFusionBtn'>删除</button>
+                </span>
+              </template>
+        </p-column>
+      </p-dataTable>
+    </div>
+  </div>
+</div>
+
+
+<!--查看弹窗-->
+<div class="modal fade common-modal" bsModal #viewModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left modal-title-color">查看策略信息</h4>
+        <button type="button" class="close pull-right colorbgc" (click)="viewModal.hide()" aria-label="Close"><span
+         aria-hidden="true">&times;</span></button>
+      </div>
+
+      <div class="modal-body">
+        <table style="table-layout:fixed" border class="table-view">
+          <tbody>
+            <tr>
+              <td>
+                <span class="text-muted">策略名称</span>
+              </td>
+              <td colspan='3'>
+                <span class="text-muted">{{strategyFormData?.fusionName}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="text-muted">规则名称</span>
+              </td>
+              <td colspan='3'>
+                <span class="text-muted">{{strategyFormData?.ruleNames}}</span>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <span class="text-muted">创建人</span>
+              </td>
+              <td colspan='3'>
+                <span class="text-muted">{{strategyFormData?.createUser}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="text-muted">创建时间</span>
+              </td>
+              <td colspan='3'>
+                <span class="text-muted">{{strategyFormData?.createTime}}</span>
+              </td>
+            </tr>
+
+            <tr>
+              <td rowspan="2" style="min-height:70px;height:100px">
+                <span class="text-muted" style="min-height:50px">策略内容</span>
+              </td>
+              <td rowspan="2" colspan=3>
+                <span class="text-muted">{{strategyFormData?.content}}</span>
+              </td>
+            </tr>
+            <tr></tr>
+
+          </tbody>
+        </table>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-body" style="border-top: 1px solid #e5e5e5;padding-top: 12px;margin-top:24px;padding-right:0;">
+          <button type="button" class="btn pull-right btn-reset" (click)="viewModal.hide()">关闭</button>
+        </div>
+        <div style="clear:both;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- 弹窗 -->
+<div class="modal fade common-modal" bsModal #Modal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="z-index:999">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left modal-title-color">{{modalName}}融合策略</h4>
+        <button type="button" class="close pull-right colorbgc" (click)="modalHide()" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+      </div>
+
+      <div class="modal-body">
+        <form #modalForm="ngForm" class="form-horizontal">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+            <div class="form-group control-body">
+              <label for="fusionName" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">策略名称：</label>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <input type="text" class="form-control input-color" required id="fusionName" pattern='^([A-Za-z0-9_\u4E00-\u9FA5]|-)+$' maxlength="20" name="fusionName" [(ngModel)]="strategyFormData.fusionName" #fusionName="ngModel">
+                <span class="confirm-error">长度1-20个字符或汉字，允许英文字母、数字、”-”、”_”</span>
+              </div>
+              <span *ngIf="fusionName.errors && (fusionName.dirty || fusionName.touched)" class='error'>
+                    <span [hidden]="!fusionName.errors.required">策略名称不能为空</span>
+              <span [hidden]="!fusionName.errors.pattern">格式不正确</span>
+              </span>
+            </div>
+
+            <div class="form-group control-body">
+              <label for="resourceCategory" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">规则名称：</label>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <ul>
+                  <li *ngFor="let item of ruleModalList;let i = index" class="rule-name-checkbox clearfix" #liRule>
+                    <input type="checkbox" [checked]="item.checked" [(ngModel)]="item.checked" [ngModelOptions]="{standalone: true}">
+                    <label>{{item.ruleName}}</label>
+                    <span class="operate rule-icon rule-{{i}}">
+                      <i class="fa fa-info-circle info-circle"></i>
+                      <div class="rule-content" *ngIf="i==indexRule">
+                        <button class="fr editor" (click)="copyContent(textarea)">复制</button>
+                        <!-- style="clear:both;resize:none;" -->
+                        <textarea readonly #textarea class="ruleContent"> {{item.content}}</textarea>
+                        <span class="copy-success" *ngIf="copyConfirm"> <i lass="fa fa-check" aria-hidden="true"></i>复制成功</span>
+
+              </div>
+              </span>
+              </li>
+              </ul>
+            </div>
+          </div>
+          <div class="form-group control-body">
+            <label for="logicalRelation" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">逻辑关系：</label>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-text">
+              <input type="radio" name="or" id="or" class="logic-or" value="or" [(ngModel)]="strategyFormData.logicValue">
+              <label for="or" style="margin-right:10px">或</label>
+              <input type="radio" name="and" id="and" value="and" [(ngModel)]="strategyFormData.logicValue">
+              <label for="and">且</label>
+              <span class="operate">
+                  <button class="editor" (click)="createStrategy()">生成策略内容</button>
+                </span>
+              <span class="error" [hidden]='ruleConfim'>请选择两个及以上规则</span>
+              <span class="error" [hidden]='logicValueConfirm'>请选择逻辑关系</span>
+            </div>
+
+          </div>
+
+          <div class="form-group control-body">
+            <label for="content" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">策略内容：</label>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 control-text">
+              <textarea class="form-control input-color" id="content" name="content" [ngClass]="{'redColor':strategyFormData.contentConfirm && !strategyFormData.content }" [(ngModel)]="strategyFormData.content" #content="ngModel" cols="20" rows="10" style="min-height:200px;"></textarea>
+            </div>
+            <span class='error'>
+                <span *ngIf="strategyFormData.contentConfirm && !strategyFormData.content">策略内容不能为空</span>
+            </span>
+          </div>
+      </div>
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-body" style="border-top: 1px solid #e5e5e5;padding-top: 12px;">
+        <button type="button" class="btn btn-default pull-right btn-space" (click)="modalHide()">取消</button>
+        <button type="button" *ngIf="modalName==='添加'" class="btn pull-right btn-space btn-reset" (click)="addSave('add')" [disabled]="!modalForm.form.valid ">保存</button>
+        <button type="button" *ngIf="modalName!='添加'" class="btn pull-right btn-space btn-reset" (click)="addSave()" [disabled]="!modalForm.form.valid ">保存</button>
+      </div>
+      <div style="clear: both"></div>
+      </form>
+
+
+    </div>
+  </div>
+</div>
+</div>
+
+
+<div class="modal fade common-modal" bsModal #childModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="z-index:999">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left modal-title-color">提示</h4>
+        <button type="button" class="close pull-right colorbgc" (click)="childModal.hide()" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+      </div>
+
+      <div class="modal-body">
+        <p style="font-weight:200;font-size:12px">{{errorMsg}}</p>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-body" style="border-top: 1px solid #e5e5e5;padding-top: 12px;margin-top:24px;padding-right:0">
+          <button type="button" class="btn pull-right btn-reset" (click)="childModal.hide()">确定</button>
+        </div>
+        <div style="clear:both;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- 成功提示  -->
+<p-growl [value]="msgs"></p-growl>
+
+<p-confirmDialog header="提示" icon="fa fa-question-circle" width="425" #cd>
+  <p-footer>
+    <button *ngIf="confirmFooterBtn" type="button" pButton label="取消" (click)="cd.reject()" class="btn btn-default btn-confirm"></button>
+    <button type="button" pButton label="确认" (click)="cd.accept()" class="btn btn-default pull-right btn-space btn-reset"></button>
+  </p-footer>
+</p-confirmDialog>

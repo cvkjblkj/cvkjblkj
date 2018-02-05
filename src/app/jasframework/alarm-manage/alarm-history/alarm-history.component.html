@@ -1,0 +1,98 @@
+<div class="alarm-history component journal-info clearfix primeng-treeTable">
+    <div class="search-filter filter-condition">
+        <div class="date-search">
+            <!--时间选择-->
+            <ul class="date-list clearfix" (click)="datePicker($event)">
+                <li><span [ngClass]="{'bgc-checked':isClick=='one'}" id="one">最近1小时</span></li>
+                <li><span [ngClass]="{'bgc-checked':isClick=='three'}" id="three">最近3小时</span></li>
+                <li><span [ngClass]="{'bgc-checked':isClick=='six'}" id="six">最近6小时</span></li>
+                <li class='self-date'>
+
+                    <span [ngClass]="{'bgc-checked':isClick=='self'|| isSelectedDate}" id='self'>自定义</span>
+                    <span class="show-time" *ngIf="isSelectedDate">{{dateStartShow }} ~ {{dateEndShow }} </span>
+                    <div class="date-picker appService clearfix primeng-datePicker" *ngIf="isClick=='self'" (click)='stopBubble($event)'>
+                        <div class="fl calendar-father">
+                            <p-calendar [(ngModel)]="dateStart" [inline]="true" [showSeconds]='true' [monthNavigator]="true" showTime="showTime" hourFormat="24" [yearNavigator]="true" yearRange="2000:2030" [style]="{'position':'relative','top':'-16px'}" (onSelect)='selectStartDate($event)'
+                                [locale]="zn" [maxDate]='dateEnd'></p-calendar>
+                        </div>
+
+                        <div class="fr calendar-father">
+
+                            <p-calendar [(ngModel)]="dateEnd" [inline]="true" [showSeconds]='true' [monthNavigator]="true" showTime="showTime" hourFormat="24" [yearNavigator]="true" yearRange="2000:2030" [style]="{'position':'relative','top':'-16px'}" (onSelect)='selectEndDate($event)'
+                                [locale]="zn" [minDate]='dateStart' [maxDate]='maxDate'></p-calendar>
+                        </div>
+                        <div class="button" style="clear:both;clear:both;position: absolute;bottom: -10px;right: 0;">
+                            <button class="btn btn-reset sure" (click)='sure($event)'>确定</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <!--搜索框条件-->
+            <div class="select-box clearfix primeng-dropdown">
+                <div class="filter-box clearfix">
+                    <div class="fl">
+                        <span style='line-height:24px'>筛选：</span>
+                    </div>
+                    <div class="fl">
+                        <div class="filter-item clearfix" *ngFor="let i of loop">
+                            <span style="display:inline-block;margin-right:10px;float:left">
+                <p-dropdown *ngIf="filterSearchData[i][0] || i==row" [options]="alarmHistoryData" [(ngModel)]="filterSearchData[i][0]"
+                  (onChange)='changeSelectData($event,i)' placeholder="请选择---" [style]="{'width':'150px','float':'left'}" filter="filter">
+                </p-dropdown>
+              </span>
+                            <span *ngIf="filterSearchData[i][0]" class="primeng-chips primeng-multiSelect" style="display:inline-block;margin-left:10px">
+                <p-chips *ngIf="!filterSearchData[i][2]"  [(ngModel)]="filterSearchData[i][1]" (onAdd)="addValue($event,i)" (onRemove)="removeValue($event)" [max]='20' [style]="{'float':'left'}"></p-chips>
+                <p-multiSelect *ngIf="filterSearchData[i][2]" [style]="{'width':'130px','float':'left'}" [options]="dropdownData[filterSearchData[i][2]]" (onChange)="addValue($event,i)" [(ngModel)]="filterSearchData[i][1]" [defaultLabel]="defaultLabel"></p-multiSelect>
+                <span *ngIf="filterSearchData[i][0]" class="select-close" (click)="reset(i)">&times;</span>
+                            </span>
+
+                        </div>
+                    </div>
+
+                </div>
+                <!--<div *ngIf="Property" class="Property">-->
+                <!--<span>当前仅显示前1000条数据，改进筛选条件以查看其他数据</span>-->
+                <!--</div>-->
+                <!--<query-data-overloaded *ngIf="totalItems > 1000" class="message-info"
+                                     [total]="totalItems"></query-data-overloaded>-->
+                <button class="btn btn-reset search-btn" [disabled]='isSearched' (click)="search()">搜索</button>
+            </div>
+
+        </div>
+    </div>
+    <p-growl [value]="msgs"></p-growl>
+    <div class="contentain list-order">
+        <div class="context">
+            <p-dataTable [value]="selectListData" [emptyMessage]='emptyMessage' selectionMode="single" rowExpandMode='single' [sortField]="sortF" [sortOrder]="sortO" expandableRows="true" (onSort)="changeSort($event)" (onRowExpand)='onRowExpand($event)' (onRowCollapse)='onRowCollapse($event)'>
+                <p-column expander="true" [style]="{'width':'0px'}"></p-column>
+                <p-column field="monitorType" [sortable]="true" [style]="{'width':'10%'}" header="监控类别"></p-column>
+                <p-column field="monitorObject" [sortable]="true" header="监控对象"></p-column>
+                <p-column field="alarmHappenTime" [sortable]="true" header="报警发生时间"></p-column>
+                <p-column field="createTime" [sortable]="true" header="创建时间"></p-column>
+                <p-column field="ruleName" [sortable]="true" header="规则名称"></p-column>
+                <p-column field="alarmHistoryStates" [sortable]="true" [style]="{'width':'10%'}" header="状态"></p-column>
+                <p-column field="notifyUser" [sortable]="true" [style]="{'width':'11%'}" header="通知人"></p-column>
+                <p-column field="notifyType" [sortable]="true" [style]="{'width':'10%'}" [style]="{'width':'140px'}" header="通知方式"></p-column>
+                <template let-itemObj pTemplate="rowexpansion">
+                  <div style="height:300px; border-bottom: 1px solid #e5e5e5">
+
+                    <div  *ngIf="this.exchartsData.length == 0">
+                     <!--<div class="titleName" >{{itemObj.describe}}</div>-->
+                    <p class="default-empty">未查到相关数据</p>
+
+                    </div>
+                   <div class="echartsChild" *ngFor="let item of exchartsData" >
+
+                    <monitor #monitor [legendData]='item.data' [xAxisData]=' item.xAxis.data ' [num]='item.num' [seriesData]='item.series '></monitor>
+                </div>
+                  </div>
+          </template>
+            </p-dataTable>
+            <div *ngIf="rows?.length != 0">
+                <grid-pagination [totalPages]='totalPages' [totalItems]='totalItems' [size]='size' [pageSize]='rowsPerPageOptions' [maxSize]='maxSize' (sizeChanged)='sizeChanged($event)' (pageChanged)='paginate($event)'></grid-pagination>
+            </div>
+        </div>
+    </div>
+
+</div>

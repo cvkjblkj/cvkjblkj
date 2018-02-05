@@ -1,0 +1,33 @@
+<div class="add-device" *ngIf="deleteDevice">
+
+  <div class="form-group">
+    <label for="deviceName" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">设备：</label>
+    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+      <p-dropdown [options]="deviceNameList" [(ngModel)]="addDeviceData.deviceName" [style]="{'width':'150px'}" filter="filter" (onChange)='onChangeDevice($event)'>
+      </p-dropdown>
+    </div>
+    <span class="custom-btn modal-span-btn" (click)='addItemDevive($event)' *ngIf='addBtn'>
+        <i class="fa fa-fw fa-plus"></i>
+        添加
+      </span>
+  </div>
+  <div class="form-group">
+    <label for="attribute" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">属性：</label>
+    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+      <p-dropdown [options]="attributesList" [(ngModel)]="addDeviceData.attribute" [style]="{'width':'150px'}" filter="filter" (onChange)='onChangeAttribute($event)'>
+      </p-dropdown>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="unit" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">单位：</label>
+    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+      <input type="text" class="form-control" readOnly name="unit" [(ngModel)]="addDeviceData.unit">
+    </div>
+    <span class="custom-btn modal-span-btn" (click)='delItemDevice($event)'>
+        <i class="fa fa-fw fa-trash"></i>
+        删除
+      </span>
+  </div>
+
+</div>

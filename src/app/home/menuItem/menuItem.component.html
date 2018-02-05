@@ -1,0 +1,23 @@
+<div class='menuItem' (click)="stopBubble($event)">
+  <p-accordion>
+    <div *ngFor='let item of menu'>
+      <div>
+        <span class='fa {{item.attributes.icon}} icon menuicon'></span>
+        <p-accordionTab *ngIf='item.children.length == 0' class='menuIcon' header="{{item.text}}" routerLink="{{item.attributes.url}}" routerLinkActive='active'>
+        </p-accordionTab>
+      </div>
+
+      <p-accordionTab *ngIf='item.children.length !== 0' header="{{item.text}}">
+        <ul class='menuItemUl' *ngFor='let menuItem of item.children let i= index'>
+          <li>
+            <a routerLink="{{menuItem.attributes.url}}" [queryParams]="{id: menuItem.id,selfId:menuItem.children && menuItem.children.length>0?menuItem.children[0].id:'',IsRequest:true}" routerLinkActive='active'>
+
+              <i class='icon fa {{menuItem.attributes.icon}}'></i><span>{{menuItem.text}}</span></a>
+          </li>
+        </ul>
+      </p-accordionTab>
+    </div>
+  </p-accordion>
+
+
+</div>

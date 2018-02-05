@@ -1,0 +1,128 @@
+@import './../../../../theme/sass/vendor/table-view.scss';
+$border:1px solid #e5e5e5;
+.menu-enter {
+  width: 200px;
+  border-right: 1px solid #e5e5e5;
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  padding: 10px;
+  padding-left: 0;
+  padding-right: 0;
+  text-align: center;
+}
+
+.content-navigation {
+  margin-left: 200px;
+  padding: 15px;
+  .title-fusion {
+    height: 35px;
+    .name-title {
+      line-height: 35px;
+      margin-left: 10px;
+    }
+  }
+}
+
+// 弹窗 
+.rule-name-checkbox {
+  position: relative;
+  li {
+    padding: 7px;
+    padding-left: 0;
+  }
+  .rule-icon {
+    position: relative;
+  }
+  .info-circle {
+    color: orange;
+    font-style: italic;
+    font-size: 12px;
+    position: absolute;
+    // top: -4px;
+    // margin-left: 4px;
+    // width: 50px;
+    // height: 34px;
+    // top: -12px;
+    /* margin-right: 24px; */
+    width: 20px;
+    height: 34px;
+    padding: 5px;
+  }
+  // 规则内容的info 提示框里
+  .rule-content {
+    border: 1px solid #cccccc;
+    position: absolute;
+    left: 20px;
+    top: -15px;
+    background-color: #fff;
+    min-width: 280px;
+    min-height: 50px;
+    z-index: 2;
+    padding: 10px;
+    // 规则内容
+    .ruleContent {
+      resize: none;
+      border: none;
+      clear: both;
+      color: #333;
+      font-size: 12px;
+      &:focus {
+        outline: none;
+      }
+    }
+    // 提示复制成功
+    .copy-success {
+      display: inline-block;
+      padding: 5px;
+      color: #00aa7a;
+      position: absolute;
+      top: 8px;
+      right: 0;
+      background: #fff;
+    }
+  }
+}
+
+input[type=checkbox],
+input[type=radio] {
+  margin: 0;
+}
+
+span.btn {
+  color: #01aa7a;
+}
+
+span.btn-cancle {
+  color: orange;
+}
+
+// 设置弹窗的宽度
+@media (min-width: 544px) {
+  .modal-md {
+    max-width: 700px;
+  }
+}
+
+// 设置提示框的按钮颜色 
+button.btn.btn-confirm.btn-default {
+  border: 1px solid rgba(204, 204, 204, 0.5);
+  background: rgba(204, 204, 204, 0.5);
+  color: #333;
+  font-size: 12px;
+  padding: 3px 0;
+  &:hover {
+    border: 1px solid rgba(204, 204, 204, 0.9);
+    background: rgba(204, 204, 204, 0.9);
+  }
+}
+
+// 设置优先级
+.priority {
+  margin-bottom: 30px;
+}
+
+// 策略内容必填的提示
+.redColor {
+  border: 1px solid #a94442;
+}

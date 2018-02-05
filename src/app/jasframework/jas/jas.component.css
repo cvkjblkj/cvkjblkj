@@ -1,0 +1,10 @@
+.jas .viewFramework-leftMenu navBar {
+  height: 100%;
+  /*position: absolute;*/
+  /*left: 0px;*/
+  /*transition: all 0.2s ease;*/
+}
+
+.jas .product-navbar-collapse {
+  cursor: pointer;
+}

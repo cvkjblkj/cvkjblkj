@@ -1,0 +1,14 @@
+<div class="filter-item clearfix" *ngIf="resetClean == index">
+  <span style="display:inline-block;margin-right:10px;float:left">
+    <p-dropdown [options]="statisticData" [(ngModel)]="filterSearchData[0]"
+    (onChange)='changeSelectData($event)' placeholder="请选择---" [style]="{'width':'150px','float':'left'}" filter="filter">
+    </p-dropdown>
+  </span>
+  <span #filterValueParent class="primeng-chips primeng-multiSelect fl">
+     <p-chips *ngIf="filterSearchData[0] &&filterSearchData[0].name&& !dropdownData[filterSearchData[0].name]"  [(ngModel)]="filterSearchData[1]" (onAdd)="addValue($event)" (onRemove)="removeValue($event)" [style]="{'float':'left'}"></p-chips>
+     <p-multiSelect *ngIf="filterSearchData[0] && dropdownData[filterSearchData[0].name]" [style]="{'float':'left','min-height':'25px','min-width':'130px'}" [options]="dropdownData[filterSearchData[0].name]" (onChange)="addValue($event)" [(ngModel)]="filterSearchData[1]" [defaultLabel]="defaultLabel"></p-multiSelect>
+  </span>
+  <span *ngIf="filterSearchData[0] &&filterSearchData[0].name" class="select-close" (click)="reset($event)">&times;</span>
+
+</div>
+<!-- *ngIf="filterSearchData[i][0]" -->

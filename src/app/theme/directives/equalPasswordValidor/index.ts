@@ -1,0 +1,1 @@
+export * from './equal-validato.directive';

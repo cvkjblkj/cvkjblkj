@@ -1,0 +1,236 @@
+.role-list .content {
+  margin: 20px 15px 0;
+  padding: 20px 10px 0 10px;
+  position: absolute;
+  top: 70px;
+  bottom: 0;
+  border: 1px solid #e3e4e6;
+  border-radius: 10px;
+  overflow: auto;
+}
+
+.role-list .name-search {
+  float: left;
+}
+
+.role-list .name-search input.search {
+  line-height: 24px;
+  margin: 0;
+}
+
+.role-list button.btn-reset.font-color {
+  background: #00aa7a;
+  /*border: 1px solid #00aa7a;*/
+  border-radius: 0px;
+  color: #fff;
+  margin-left: 10px;
+}
+
+.role-list button.btn-reset.font-color>span:first-child {
+  margin-right: 5px;
+}
+
+.role-list button.btn-reset.font-color>span.text {
+  padding: .25em 0 .25em;
+  display: inline-block;
+  line-height: normal;
+}
+
+.role-list button.btn-reset:hover {
+  background: rgba(0, 170, 122, .7);
+  transform: scale(1);
+}
+
+.role-list div.fr {
+  float: right;
+}
+
+
+/*授权侧边栏*/
+
+.empower {
+  width: 380px;
+  min-height: 560px;
+  position: absolute;
+  top: 55px;
+  bottom: 0px;
+  /*right: 0;*/
+  -moz-transition: all .5s linear;
+  /* Firefox 4 */
+  -webkit-transition: all .5s linear;
+  /* Safari 和 Chrome */
+  -o-transition: all .5s linear;
+  /* Opera */
+  transition: all .5s linear;
+  /*overflow: auto;*/
+  box-shadow: 0px 0px 15px;
+  z-index: 100;
+  border-radius: 15px 0 0 15px;
+  background: rgb(255, 255, 255);
+  overflow: hidden;
+  /*min-width: 400px;*/
+}
+
+.role-empower {
+  right: -380px;
+  -moz-transition: all .5s linear;
+  /* Firefox 4 */
+  -webkit-transition: all .5s linear;
+  /* Safari 和 Chrome */
+  -o-transition: all .5s linear;
+  /* Opera */
+  transition: all .5s linear;
+}
+
+.empower-show {
+  right: 0;
+  transition: all .5 linear;
+}
+
+.empower .empower-head {
+  border-bottom: 1px solid #ccc;
+  font-size: 16px;
+  padding: 14px;
+}
+
+.roleName {
+  color: #42A948;
+}
+
+.empower-content {
+  padding: 10px;
+  min-height: 400px;
+  position: relative;
+  overflow: auto;
+  height: 100%;
+}
+
+.empower-content .orgtree.checkbox-tree {
+  min-height: 400px;
+  height: 100%;
+  margin-bottom: 120px;
+}
+
+.empower-footer {
+  position: absolute;
+  bottom: 0px;
+  border-radius: 0 0 0 15px;
+  /*box-shadow: 0px 10px 15px;*/
+  height: 60px;
+  width: 100%;
+  line-height: 60px;
+  background-color: #fff;
+}
+
+.empower-footer>button {
+  margin-left: 15px;
+}
+
+.empower-footer>button.btn-reset {
+  background: #00aa7a;
+}
+
+
+/*弹窗*/
+
+div.handle {
+  border-top: 1px solid #ccc;
+  padding-top: 14px;
+}
+
+div.handle>button.btn-reset {
+  background: #00aa7a;
+}
+
+
+/*下拉  树*/
+
+div.dropdown {
+  width: 88%;
+  height: 200px;
+  background: #fff;
+  box-shadow: 0px 3px 7px;
+  position: absolute;
+  z-index: 50;
+  padding: 8px 0 0 10px;
+}
+
+
+/*字体提示信息*/
+
+span.error {
+  color: #a94442;
+  font-size: 12px;
+}
+
+span.error>span {
+  line-height: 34px;
+}
+
+
+/*下拉列表的图标*/
+
+span.dropdown-icon {
+  position: absolute;
+  right: 20px;
+  top: 14px;
+  /* left: 0px; */
+}
+
+
+/*当没有功能树的数据时，出现的提示*/
+
+span.tip {
+  /* color: #a94442; */
+  font-size: 12px;
+  display: block;
+  padding-bottom: 16px;
+}
+
+div.middleCenter {
+  line-height: 34px;
+}
+
+.modal-rule {
+  color: #ada7a7;
+  font-size: 12px
+}
+
+
+/* 授权弹窗  列表中可访问的数据范围中样式 */
+
+.modal-body .data-rule {
+  margin-right: 10px;
+}
+
+.modal-body input {
+  margin: 0;
+}
+
+.modal-body .data-rule input[type=radio] {
+  margin-right: 5px;
+}
+
+.modal-body .data-rule {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.modal-body label {
+  font-weight: normal;
+  margin-bottom: 0;
+}
+
+@media (min-width: 544px) {
+  .modal-authority {
+    max-width: 900px;
+    margin: 30px auto;
+  }
+}
+
+@media (min-width: 768px) {
+  .modal-authority {
+    width: 900px;
+    margin: 30px auto;
+  }
+}

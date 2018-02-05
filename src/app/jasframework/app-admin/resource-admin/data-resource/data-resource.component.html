@@ -1,0 +1,233 @@
+<div class="component clearfix primeng-treeTable">
+  <div class="content clearfix">
+    <button class="btn btn-reset fr" (click)="modalShow('add')" [disabled]='!button?.appDataResourceAddBtn'>
+      <i class=" fa fa-plus"></i>
+      添加资源
+    </button>
+    <div class="search-textinput fl">
+      <select class="search-select" [(ngModel)]="selectName">
+        <option value="资源名称" class="resourceName" selected="selected">名称</option>
+      </select>
+      <input class="search-input" type="text" [(ngModel)]='searchValue' size="36" placeholder="请输入关键字搜索">
+      <button class="btn btn-reset" (click)='search()'>搜索</button>
+    </div>
+    <div class="list-content fr">
+      <p-treeTable [value]="resourceListData" selectionMode="single" [(selection)]="selectedTreeTable" scrollable="true">
+        <p-column field="resourceName" header="名称" [style]="{width:'180px','min-width':'100px'}"></p-column>
+        <p-column field="description" header="描述"></p-column>
+        <p-column header="操作" styleClass="col-button" [style]="{width:'150px','text-align':'right','vertical-align':'middle'}">
+          <template let-row='rowData' pTemplate="body">
+            <span class="operate">
+              <button class="manager" (click)="modalShow('view',row)">查看</button>
+              <span class="secant-line">&nbsp;|&nbsp;</span>
+                <button class="manager" (click)="modalShow('edit',row)" [disabled]='!button?.appDataResourceEditBtn'>编辑</button>
+                <span class="secant-line">&nbsp;|&nbsp;</span>
+                <button class="manager" (click)="delete(row)" [disabled]='!button?.appDataResourceDelBtn'>删除</button>
+            </span>
+          </template>
+        </p-column>
+      </p-treeTable>
+    </div>
+  </div>
+
+  <!-- 弹窗 -->
+  <div class="modal fade common-modal" bsModal #Modal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title pull-left modal-title-color">{{modalName}}</h4>
+          <button type="button" class="close pull-right colorbgc" (click)="modalHide()" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        </div>
+
+        <div class="modal-body">
+          <form #modalForm="ngForm" class="form-horizontal">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+              <div *ngIf="modalName != '资源信息'" class="form-group control-body">
+                <label for="resourceName" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">名称：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                  <input type="text" class="form-control input-color" required id="resourceName" pattern='^([A-Za-z0-9_\u4E00-\u9FA5]|-)+$' maxlength="20" name="resourceName" [(ngModel)]="resourceFormData.resourceName" #resourceName="ngModel">
+                  <span class="confirm-error">长度1-20个字符或汉字，允许英文字母、数字、”-”、”_”</span>
+                </div>
+                <span *ngIf="resourceName.errors && (resourceName.dirty || resourceName.touched)" class='error'>
+                  <span [hidden]="!resourceName.errors.required">资源名称不能为空</span>
+                <span [hidden]="!resourceName.errors.pattern"> 格式不正确</span>
+                <!--<span [hidden]="!nameExistMes" class="error"> {{nameExistMes}} </span>-->
+                </span>
+              </div>
+
+              <!--添加资源时  资源编码-->
+              <div *ngIf="modalName == '添加数据资源'" class="form-group control-body">
+                <label for="resourceCode" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">编码：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                  <!-- (blur)="nameIsExist(resourceCode)" -->
+                  <input type="text" class="form-control" name="resourceCode" required id="resourceCode" #resourceCode='ngModel' [(ngModel)]="resourceFormData.resourceCode" maxlength="50" pattern="^([A-Za-z0-9_]|-)+$" #resourceCode="ngModel" (blur)="nameIsExist(resourceCode)">
+                  <span class="confirm-error">长度为1-50个字符，允许英文字母、数字、”-” 、”_”<br/><span style="color:#a94442">资源编码注册后不可修改</span></span>
+                </div>
+                <span *ngIf="resourceCode.errors && (resourceCode.dirty || resourceCode.touched)" class='error'>
+                  <span [hidden]="!resourceCode.errors.required"> 资源编码不能为空</span>
+                <span [hidden]="!resourceCode.errors.pattern"> 格式不正确</span>
+                </span>
+
+                <span *ngIf="codeExistMes && !resourceCode.errors" class="error">资源编码已经存在</span>
+              </div>
+              <!--不是添加资源时  资源编码（资源编码添加后不可修改）-->
+              <div *ngIf="modalName != '添加数据资源'" class="form-group control-body">
+                <label for="resourceCode" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">编码：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                  <input type="text" class="form-control" name="resourceCode" readonly [(ngModel)]="resourceFormData.resourceCode">
+                </div>
+              </div>
+              <!-- *ngIf="!selectedTreeTable || (selectedTreeTable && selectedTreeTable.parent)" -->
+              <div class="form-group control-body">
+                <label for="parentName" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">父级：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                  <div (click)='drop(dropdowntree)' id="dropdownTree">
+                    <span class='caret-down'></span>
+                    <input type="text" class="form-control" id="parentName" name="parentName" readonly [(ngModel)]="resourceFormData.parentName">
+                  </div>
+                  <div class='dropdowntree' #dropdowntree (click)="stopBubble($event)">
+                    <div class="searchBlock">
+                      <input type="text" id="search" name="search" class="searchText" autofocus [(ngModel)]='searchNodeValue'> <i class="iconfont-jas icon-jas-search node-search" (click)="nodeModalSearch()"></i>
+                    </div>
+                    <p-tree [value]="dropDownTree" selectionMode="single" [(selection)]="selectedFile" (onNodeSelect)="dropDownSelect($event,dropdowntree)"></p-tree>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group control-body">
+                <label for="description" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">描述：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 control-text">
+                  <textarea class="form-control input-color" id="description" name="description" placeholder='最多200个字' [(ngModel)]="resourceFormData.description" maxlength='200' cols="20" rows="10"></textarea>
+                </div>
+              </div>
+
+              <div class="form-group control-body">
+                <label for="remark" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">备注：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 control-text">
+                  <textarea class="form-control input-color" id="remark" name="remark" placeholder='最多200个字' [(ngModel)]="resourceFormData.remark" maxlength='200' cols="20" rows="10"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-body" style="border-top: 1px solid #e5e5e5;padding-top: 12px;">
+              <button type="button" class="btn btn-default pull-right btn-space" (click)="modalHide()">取消</button>
+              <button *ngIf="modalName == '添加数据资源'" type="button" class="btn pull-right btn-space btn-reset" (click)="addSave('add')" [disabled]="!modalForm.form.valid || codeExistMes">保存
+              </button>
+              <button *ngIf="modalName != '添加数据资源'" type="button" class="btn pull-right btn-space btn-reset" (click)="addSave('update')" [disabled]="!modalForm.form.valid || codeExistMes">保存
+              </button>
+            </div>
+            <div style="clear: both"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--查看弹窗-->
+<div class="modal fade common-modal" bsModal #viewModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left modal-title-color">资源详情</h4>
+        <button type="button" class="close pull-right colorbgc" (click)="viewModal.hide()" aria-label="Close"><span
+          aria-hidden="true">&times;</span></button>
+      </div>
+
+      <div class="modal-body">
+        <table style="table-layout:fixed" border class="table-view">
+          <tbody>
+            <tr>
+              <td>
+                <span class="text-muted">名称</span>
+              </td>
+              <td>
+                <span class="text-muted">{{resourceFormData?.data?.resourceName}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="text-muted">编码</span>
+              </td>
+              <td>
+                <span class="text-muted">{{resourceFormData?.data?.resourceCode}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="text-muted">父级</span>
+              </td>
+              <td>
+                <span class="text-muted">{{resourceFormData?.parent?.data?.resourceName}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="text-muted">创建人</span>
+              </td>
+              <td>
+                <span class="text-muted">{{resourceFormData?.data?.createUser}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="text-muted">创建时间</span>
+              </td>
+              <td>
+                <span class="text-muted">{{resourceFormData?.data?.createTime}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td rowspan="2" style="min-height:50px;height:70px">
+                <span class="text-muted">描述</span>
+              </td>
+              <td rowspan="2">
+                <span class="text-muted">{{resourceFormData?.data?.description}}</span>
+              </td>
+            </tr>
+            <tr></tr>
+            <tr>
+              <td rowspan="2" style="min-height:50px;height:70px">
+                <span class="text-muted" style="min-height:50px">备注</span>
+              </td>
+              <td rowspan="2">
+                <span class="text-muted">{{resourceFormData?.data?.remark}}</span>
+              </td>
+            </tr>
+            <tr></tr>
+
+          </tbody>
+        </table>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-body" style="border-top: 1px solid #e5e5e5;padding-top: 12px;margin-top:24px;padding-right: 0;">
+          <button type="button" class="btn pull-right btn-reset" (click)="viewModal.hide()">关闭</button>
+        </div>
+        <div style="clear:both;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" bsModal #childModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">提示</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="childModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="color:red;font-weight:500">{{errorMsg}}</p>
+        <button type="button" class="btn pull-right btn-space btn-reset" (click)="childModal.hide()">关闭</button>
+        <div style="clear: both"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- 成功提示  -->
+<p-growl [value]="msgs"></p-growl>

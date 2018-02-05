@@ -1,0 +1,26 @@
+<div class="component clearfix">
+  <div class="title">
+    <span>{{appInfo?.appName}}-数据策略</span>
+  </div>
+  <div class="line clearfix"></div>
+  <div class="tab">
+    <ul class="clearfix">
+      <li>
+        <a (click)="goRuleData()" [ngClass]='{"active":dataRule}'>数据规则</a>
+      </li>
+      <li>
+        <a (click)="goRuleStrategy()" [ngClass]='{"active":!dataRule}'>规则策略</a>
+      </li>
+    </ul>
+  </div>
+  <!-- <button nz-button [nzType]="'primary'">测试按钮</button> -->
+  <div class="strategy-content">
+
+    <!-- 数据规则 -->
+    <data-rule *ngIf="dataRule"></data-rule>
+
+    <!-- 规则策略 -->
+    <rule-strategy *ngIf="!dataRule"></rule-strategy>
+  </div>
+
+</div>

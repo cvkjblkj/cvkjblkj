@@ -1,0 +1,26 @@
+<div class='grid-pagination clearfix'>
+
+  <div class="pagefen fr">
+    <pagination class="pagination-sm" [totalItems]="totalItems" [(ngModel)]="gridpagination.currentPage" [maxSize]='maxSize'
+      [itemsPerPage]='gridpagination.itemsPerPage' [boundaryLinks]="true" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+      lastText="&raquo;" (numPages)="numTotalPages($event)" (pageChanged)='onPageChanged($event)'></pagination>
+  </div>
+  <div class="pageshowmodle fr">
+    <span>
+            第{{gridpagination.currentPage}} / {{totalPagesNum}}页
+        </span> &nbsp; 每页显示
+    <select #selectPage (change)="sizeData(selectPage.value)">
+            <option *ngFor="let pageSizeItem of pageSize" value={{pageSizeItem}}  [selected] = 'pageSizeItem == gridpagination.itemsPerPage' >{{pageSizeItem}}</option>
+        </select> 条 &nbsp;
+    <span>
+            共{{totalItems}}条
+        </span>
+  </div>
+
+
+
+</div>
+
+<!--使用范例-->
+
+<!--<datagrid [totalPages]='data.totalPages' [totalItems]='data.total' [size]='data.size' [pageSize]='pageSize' [maxSize]='maxSize' (sizeChanged)='sizeChanged($event)' (pageChanged)='pageChanged($event)'></datagrid>-->

@@ -1,0 +1,37 @@
+<div class="page-top clearfix" baScrollPosition maxHeight="50" (scrollChange)="scrolledChanged($event)" [ngClass]="{scrolled: isScrolled}">
+  <div class="logo">
+    <!--<a [routerLink]="['/cloundlink']" class="logo-pic">logo</a>-->
+    <!--<img [routerLink]="['/cloundlink']" class="logo-pic" src="./../../../../assets/icon/pass-icon.png">
+        <a routerLink="/cloudlink/dashboard" class="al-logo clearfix"><span>PaaS平台</span></a>-->
+    <img src="./../../../../assets/img/logo.png" alt="">
+  </div>
+
+
+
+
+
+  <div class="user-profile clearfix">
+
+    <!--<div class="search">
+            <i class="ion-ios-search-strong" ng-click="startSearch()"></i>
+            <input id="searchInput" type="text" placeholder="搜索...">
+        </div>-->
+    <div class="dropdown al-user-profile">
+      <span> <a (click)="signout()">退出</a></span>
+      <!--<a class="profile-toggle-link dropdown-toggle" id="user-profile-dd" data-toggle="dropdown" aria-expanded="false">-->
+      <!--<img src="{{ ( 'Nasta' | baProfilePicture ) }}">-->
+      <!--<span>中盈安信</span>-->
+      <!--</a>-->
+      <!--<ul class="dropdown-menu top-dropdown-menu profile-dropdown profile-dropdown-menu hover-display" aria-labelledby="user-profile-dd" #profileDropDown>-->
+      <!--<li class="dropdown-item"><i class="dropdown-arr"></i></li>-->
+      <!--<li class="dropdown-item"><a href><i class="fa fa-user"></i>Profile</a></li>
+                <li class="dropdown-item"><a href><i class="fa fa-cog"></i>Settings</a></li>-->
+      <!--<li class="dropdown-item"><a class="signout" (click)="signout()"><i class="fa fa-power-off"></i>退出</a></li>-->
+      <!--</ul>-->
+    </div>
+    <div class="user-info fr">
+      <span>{{userName}}</span>
+    </div>
+    <ba-msg-center></ba-msg-center>
+  </div>
+</div>

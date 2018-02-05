@@ -1,0 +1,17 @@
+.table-viewer-header {
+  margin-top: 10px;
+  margin-bottom: -1px;
+  height: 40px;
+  background: #F5f6FA;
+  line-height: 38px;
+  border: 1px solid #eeeeee;
+  position: relative;
+  border-left: 4px solid #00aa7a;
+}
+
+.table-viewer-header .table-viewer-topBar-title {
+  font-size: 18px;
+  color: #333333;
+  display: inline-block;
+  margin-left: 16px;
+}

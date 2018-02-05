@@ -1,0 +1,124 @@
+.detail-info ul {
+    padding: 0;
+    float: left;
+}
+
+
+/*内容区域*/
+
+.detail-info .content li {
+    list-style: none;
+    padding: 16px;
+}
+
+.detail-info .content {
+    /*border: 1px solid #ccc;*/
+    /*border-radius: 10px;*/
+    padding: 15px 20px;
+    /*margin: 20px 15px;*/
+}
+
+.detail-info li>span:first-child {
+    display: inline-block;
+    width: 110px;
+    text-align: right;
+}
+
+
+/*右边图片*/
+
+.detail-info .userpic {
+    float: right;
+    width: 190px;
+    height: 190px;
+    border: 1px solid #ccc;
+}
+
+.detail-info .placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: #333;
+}
+
+
+/*弹出框  布局*/
+
+div.modal-dialog div.modal-header h4 {
+    width: auto;
+}
+
+span.caret-down.user-info {
+    position: absolute;
+    right: 20px;
+    top: 14px;
+}
+
+
+/*按钮样式*/
+
+button.btn.btn-reset {
+    background: #00aa7a;
+    border: 1px solid #00aa7a;
+    border-radius: 0;
+    color: #fff;
+    margin-right: 15px;
+}
+
+button.btn.btn-reset[disabled]:hover {
+    background: #00aa7a;
+    color: #fff;
+}
+
+button.btn.btn-default {
+    border-radius: 0;
+}
+
+button.btn-reset.btn-cancle {
+    background: #fff;
+    color: #333;
+    border: #333;
+}
+
+button.btn-reset.btn-cancle:hover {
+    background: #fff;
+    color: #333;
+    border: #333;
+}
+
+div.handle {
+    padding-top: 16px;
+    border-top: 1px solid #ccc;
+}
+
+
+/*错误信息*/
+
+span.error,
+span.error>span {
+    color: #a94442;
+}
+
+
+/*必填表单颜色*/
+
+div.dropdown {
+    width: 88%;
+    height: 200px;
+    background: #fff;
+    box-shadow: 0px 3px 7px;
+    position: absolute;
+    z-index: 50;
+    padding: 8px 0 0 10px;
+}
+
+span.error,
+span.error>span {
+    /*display: block;*/
+    color: #a94442;
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+span.error.confirm {
+    color: #ada7a7;
+}

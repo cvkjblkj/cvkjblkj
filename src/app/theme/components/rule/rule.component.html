@@ -1,0 +1,75 @@
+<div class="rule " #ruleDel>
+    <!--<form #addForm="ngForm" class="form-horizontal" novalidate="false">
+     </form>  -->
+    <div class="btnDiv">
+        <button type="button" class="delete" (click)="delete()">
+                    <span>删除</span>
+       </button>
+    </div>
+
+    <div class="ruleName">
+        <span class="sign">*</span>
+        <span>规则名称：</span>
+        <p-autoComplete [(ngModel)]="ruleFilterData" [size]='30'></p-autoComplete>
+    </div>
+    <div class="ruleContent">
+        <span class="sign">*</span>
+        <span>规则内容：</span>
+        <div class="dropDownServerContent">
+            <select id="dropDownServerContent" style="min-width:206px;height:24px" [(ngModel)]="ruleServerContent" (change)='dropDownServer(ruleServerContent)'>
+                                    <option *ngFor="let manager of dropDownServerValue"
+                                   value={{manager.value}}  >{{manager.label}}</option>
+          </select>
+            <!--<p-dropdown *ngIf="dropDownServerValue" [options]="dropDownServerValue" [(ngModel)]="ruleServerContent" (onChange)="dropDownServer($event)" [style]="{'min-width':'150px','padding':'1px'}">
+            </p-dropdown>-->
+        </div>
+        <div class="dropDownMinContent">
+            <select id="dropDownMinContent" style="min-width:75px;height:24px" [(ngModel)]="ruleMinContent" (change)='dropDownMin(ruleMinContent)'>
+                                    <option *ngFor="let manager of dropDownServerMinValue"
+                                   value={{manager.value}}  >{{manager.label}}</option>
+          </select>
+        </div>
+        <div class="dropDownAverageContent">
+            <select id="dropDownAverageContent" style="min-width:75px;height:24px" [(ngModel)]="ruleAvarageContent" (change)='dropDownAvarage(ruleAvarageContent)'>
+                                    <option *ngFor="let manager of dropDownServerAvarageValue"
+                                   value={{manager.value}}  >{{manager.label}}</option>
+          </select>
+        </div>
+        <div class="dropDownMarkContent">
+            <select id="dropDownMarkContent" style="min-width:80px;height:24px" [(ngModel)]="ruleMarkContent" (change)='dropDownMark(ruleMarkContent)'>
+                                    <option *ngFor="let manager of dropDownMarkValue"
+                                   value={{manager.value}}  >{{manager.label}}</option>
+          </select>
+        </div>
+
+        <p-spinner size="10" [(ngModel)]="limitPercent" (change)="limitChange(limitPercent)" [step]="0.1"></p-spinner>
+        <p-spinner *ngIf="minPercent" size="10" [(ngModel)]="minPercentContent" (change)="minChange(minPercentContent)" [step]="0.1"></p-spinner>
+        <span *ngIf="metricUnit">{{metricUnit}}</span>
+        <div *ngIf="dropDownServerStates" class="rulePort">
+            <span class="sign">*</span>
+            <span>端口：</span>
+            <select id="dropDownServerPort" style="min-width:206px;height:24px" [(ngModel)]="selectServerPort" (change)='downServerPort(selectServerPort)'>
+                                    <option *ngFor="let manager of dropDownServerPort"
+                                   value={{manager.value}}  >{{manager.label}}</option>
+          </select>
+
+        </div>
+        <div class="networkStates" *ngIf="networkStates">
+            <span class="sign">*</span>
+            <span>磁盘设备：</span>
+            <select id="networkDeviceName" style="min-width:206px;height:24px" [(ngModel)]="selectNetworkDevice" (change)='ruleChangeNetworkStates(selectNetworkDevice)'>
+                                    <option *ngFor="let manager of networkDeviceName"
+                                   value={{manager.value}}  >{{manager.label}}</option>
+                         </select>
+        </div>
+        <div class="deviceStates" *ngIf="deviceStates">
+            <span class="sign">*</span>
+            <span>网络设备：</span>
+            <select id="deviceStates" style="min-width:206px;height:24px" [(ngModel)]="selectDevice" (change)='ruleChangeDeviceStates(selectDevice)'>
+                                    <option *ngFor="let manager of selectDeviceData"
+                                   value={{manager.value}}  >{{manager.label}}</option>
+                         </select>
+        </div>
+    </div>
+    <p-growl [value]="msgs"></p-growl>
+</div>

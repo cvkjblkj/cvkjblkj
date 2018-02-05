@@ -1,0 +1,164 @@
+<div class="authed-approve component clearfix">
+  <!--标题-->
+  <div class="title">
+    <span *ngIf='enpAuthInfo'>{{enpAuthInfo.authEnterpriseName}}</span>
+  </div>
+  <div class="line"></div>
+
+  <!--正文内容-->
+  <div class="content">
+    <!--显示基本信息-->
+    <div class="basic-info-header">
+      <span class="basic-info-header-title">审核信息</span>
+    </div>
+    <table *ngIf="enpAuthInfo" class="basic-info-table">
+      <tr>
+        <td>
+          <span class="table-cell">认证企业全称：</span>
+          <span>{{enpAuthInfo.authEnterpriseName}}</span>
+        </td>
+        <td>
+          <span class="table-cell">企业注册号：</span>
+          <span>{{enpAuthInfo.authRegisterNum}}</span>
+        </td>
+        <td>
+          <span class="table-cell">申请人：</span>
+          <span>{{enpAuthInfo.startUserName}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <span class="table-cell">申请时间：</span>
+          <span>{{enpAuthInfo.startTime}}</span>
+        </td>
+        <td>
+          <span class="table-cell">认证发起来源：</span>
+          <span>{{enpAuthInfo.fromAppName}}</span>
+        </td>
+        <td>
+          <span class="table-cell">审核人：</span>
+          <span>{{enpAuthInfo.approveUserName}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <span class="table-cell">审核时间：</span>
+          <span>{{enpAuthInfo.endTime}}</span>
+        </td>
+        <td>
+          <span class="table-cell">审核结果：</span>
+          <span>{{enpAuthInfo.approveResult}}</span>
+        </td>
+        <td>
+          <span class="table-cell">审核意见：</span>
+          <span>{{enpAuthInfo.approveContent}}</span>
+        </td>
+      </tr>
+    </table>
+
+    <div class="basic-info-header">
+      <span class="basic-info-header-title">企业基本信息</span>
+    </div>
+    <table *ngIf="enpBasicInfo" class="basic-info-table">
+      <tr>
+        <td>
+          <span class="table-cell">企业名称：</span>
+          <span>{{enpBasicInfo.enterpriseName}}</span>
+        </td>
+        <td>
+          <span class="table-cell">企业注册号：</span>
+          <span>{{enpBasicInfo.registerNum}}</span>
+        </td>
+
+        <td>
+          <span class="table-cell">企业规模：</span>
+          <span>{{enpBasicInfo.enterpriseScale | enterpriseScale }}</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <span class="table-cell">企业联系电话：</span>
+          <span>{{enpBasicInfo.telephoneNum}}</span>
+        </td>
+        <td>
+          <span class="table-cell">企业地址：</span>
+          <span>{{enpBasicInfo.address}}</span>
+        </td>
+        <td>
+          <span class="table-cell">企业注册时间：</span>
+          <span>{{enpBasicInfo.createTime}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <span class="table-cell">企业管理员姓名：</span>
+          <span>{{enpBasicInfo.enpAdminName}}</span>
+        </td>
+        <td>
+          <span class="table-cell">企业管理员电话：</span>
+          <span>{{mobileNum}}</span>
+        </td>
+        <td>
+        </td>
+      </tr>
+    </table>
+
+    <div class="basic-info-header">
+      <span class="basic-info-header-title">营业执照</span>
+    </div>
+    <div *ngIf="authLicensePhoto">
+      <span *ngFor="let item of authLicensePhoto">
+        <img src='/cloudlink/v1/cloudlink-core-file/file/downLoad?fileId={{item}}' alt="营业执照" class="img-picture"
+             (click)="showPictureBtn(item);showPictureModal.show()">
+      </span>
+    </div>
+    <div *ngIf="authLicensePhoto && 0 == authLicensePhoto.length">
+      <span>没有上传营业执照</span>
+    </div>
+
+    <!--<div class="picture">-->
+    <!--<ul *ngIf="bussinessUrl">-->
+    <!--<li *ngFor='let bussiness of bussinessUrl' class="fl ">-->
+    <!--<img src='/cloudlink/v1/cloudlink-core-file/file/downLoad?fileId={{bussiness}}' alt="营业执照" >-->
+    <!--</li>-->
+    <!--</ul>-->
+    <!--<div *ngIf="!bussinessUrl">-->
+    <!--<span>{{imgUrl}}</span>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <div class="basic-info-header">
+      <span class="basic-info-header-title">法人身份证</span>
+    </div>
+    <div *ngIf="authIdCardPhoto">
+      <span *ngFor="let item of authIdCardPhoto">
+        <img src='/cloudlink/v1/cloudlink-core-file/file/downLoad?fileId={{item}}' alt="法人身份证" class="img-picture"
+             (click)="showPictureBtn(item);showPictureModal.show()">
+      </span>
+    </div>
+    <div *ngIf="authIdCardPhoto && 0 == authIdCardPhoto.length">
+      <span>没有上传法人身份证</span>
+    </div>
+
+    <button class="btn btn-default btn-self" (click)="cancle()">返回</button>
+
+  </div>
+</div>
+
+<!--弹窗显示图片-->
+<div class="modal fade" bsModal #showPictureModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog"
+     aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content bgc-content">
+      <div>
+        <!--<h4 class="modal-title pull-left">图片</h4>-->
+        <!--<button type="button" class="close pull-right colorbgc " (click)="showPictureModal.hide()" aria-label="Close">-->
+        <span class="close-show-picture" aria-hidden="true" (click)="showPictureModal.hide()">&times;</span>
+        <!--</button>-->
+      </div>
+      <span *ngIf="pictureFileId" class="span-show">
+        <img src='/cloudlink/v1/cloudlink-core-file/file/downLoad?fileId={{pictureFileId}}' alt="图片">
+      </span>
+    </div>
+  </div>
+</div>

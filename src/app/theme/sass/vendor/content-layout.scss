@@ -1,0 +1,168 @@
+/*--------内容区域  页面布局------------*/
+
+
+/*最外层*/
+
+.viewFramework-product {
+  width: auto;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  overflow: hidden;
+  background: #FFF;
+}
+
+
+/*左边菜单*/
+
+.viewFramework-leftMenu {
+  width: 0px;
+  // background-color: deeppink;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  z-index: 2;
+  overflow: hidden;
+  -o-transition: all 0.2s ease;
+  -ms-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -webkit-transition: all 0.2s ease;
+}
+
+
+/*右边内容*/
+
+.viewFramework-middle-content {
+  position: absolute;
+  // width: auto;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  overflow: hidden;
+  overflow-y: auto;
+  -o-transition: all 0.2s ease;
+  -ms-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -webkit-transition: all 0.2s ease;
+  // background-color: pink;
+}
+
+
+/*按钮*/
+
+.product-navbar-collapse {
+  padding: 0 3px;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 20px;
+  height: 50px;
+  z-index: 3;
+  background-color: rgb(235, 237, 240);
+  border-radius: 27px 0 0 27px;
+  -o-transition: all 0.2s ease;
+  -ms-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -webkit-transition: all 0.2s ease;
+  transform: rotateY(180deg);
+}
+
+span.icon-dent {
+  display: inline-block;
+  line-height: 50px;
+  width: 100%;
+  font-size: 16px;
+  color: #999;
+}
+
+
+/* 菜单展开*/
+
+.product-collapse .viewFramework-leftMenu {
+  width: 180px;
+}
+
+.product-collapse .viewFramework-middle-content {
+  left: 180px;
+}
+
+.product-collapse .product-navbar-collapse {
+  left: 160px;
+  background: #fff;
+  transform: rotateY(0deg);
+}
+
+
+/* 组件标题*/
+
+.component {
+  // overflow: hidden;
+  .title>span {
+    font-size: 16px;
+    color: #323232;
+    margin: 20px 25px;
+    padding: 6px 10px;
+    border-left: 3px solid #00aa7a;
+    font-family: '微软雅黑';
+    display: block;
+    float: left;
+  }
+  .line {
+    border-bottom: 1px solid #EEF1F7;
+    margin-left: 22px;
+    margin-top: 70px;
+  }
+  .fr {
+    float: right;
+  }
+  .content {
+    padding: 15px;
+  }
+}
+
+// 基本信息页面
+
+/*页面风格*/
+
+div.table-viewer-header {
+  margin-top: 10px;
+  margin-bottom: -1px;
+  height: 40px;
+  background: #F5f6FA;
+  line-height: 38px;
+  border: 1px solid #eeeeee;
+  position: relative;
+  border-left: 4px solid #00aa7a;
+}
+
+div.table-viewer-header .table-viewer-topbar-title {
+  font-size: 14px;
+  color: #333333;
+  display: inline-block;
+  margin-left: 16px;
+}
+
+div.table-viewer-header .table-viewer-dropDown {
+  display: inline-block;
+  margin: 10px;
+  font-size: 20px;
+}
+
+.table-default-viewer {
+  width: 100%;
+  /*background-color: #c1ffce;*/
+}
+
+.table-default-viewer td {
+  padding: 11px 20px;
+  border: 1px solid #eeeeee;
+  width: 33%;
+}
+
+.table-default-viewer .text-muted {
+  padding-right: 8px;
+  /*表单字段与值 之间的距离*/
+}

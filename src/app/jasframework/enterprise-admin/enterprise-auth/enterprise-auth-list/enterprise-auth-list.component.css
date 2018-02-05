@@ -1,0 +1,50 @@
+.Userlist .auth-btn {
+  /* border-radius: 4px; */
+  background-color: #ace0f3;
+}
+
+
+/*改变ng2-bootstrap的 取消的颜色*/
+
+.colorbgc {
+  color: #989697;
+  opacity: 1;
+}
+
+div.enp-auth div.appList {
+  margin: 15px;
+  padding: 5px 10px;
+}
+
+.fl {
+  float: left;
+}
+
+
+/*待审核中风格设置*/
+
+div.tabset-content {
+  margin: 0 15px;
+  padding: 10px;
+  border: 1px solid #ebedf0;
+  /* border-radius: 10px; */
+}
+
+
+/*操作中字体的颜色*/
+
+div.tabset-content .toAuth {
+  color: #00aa7a;
+}
+
+
+/*操作中字体鼠标放上去的颜色*/
+
+div.tabset-content .toAuth:hover {
+  color: #000000;
+}
+
+div.enp-auth span.name {
+  width: 5%;
+  text-align: center;
+}

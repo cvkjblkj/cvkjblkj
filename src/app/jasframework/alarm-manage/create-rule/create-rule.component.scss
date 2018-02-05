@@ -1,0 +1,221 @@
+.content {
+    width: 98%;
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    margin: 15px 10px 10px 20px;
+    position: absolute;
+    padding: 15px 0;
+    .header {
+        width: 99%;
+        border-bottom: 1px solid #e5e5e5;
+        padding: 0px 10px 15px 10px;
+        margin-left: 6px;
+        .btn-default {
+            float: right;
+            background: #fff;
+            color: #333333;
+            border: 1px solid #e5e5e5;
+        }
+    }
+    .correlation {
+        .correlationIcon {
+            display: inline-block;
+            position: relative;
+            top: 7px;
+            left: 35px;
+            .fa-eraser {
+                color: rgb(0, 172, 32);
+                font-size: 14px;
+            }
+        }
+        .correlationLine {
+            border-bottom: 1px solid #e5e5e5;
+            width: 80%;
+            margin-left: 109px;
+        }
+        .monitorCategory {
+            width: 80%;
+            margin-left: 110px;
+            padding: 10px 0px;
+            .sign {
+                color: rgba(255, 0, 0, 0.8)
+            }
+            .monitorData {
+                display: inline-block
+            }
+        }
+        .monitorObject {
+            width: 80%;
+            margin-left: 110px; // padding: 10px 0px;
+            .sign {
+                float: left;
+                line-height: 20px;
+                padding: 2px;
+                color: rgba(255, 0, 0, 0.8)
+            }
+            .monitor {
+                display: inline-block;
+                padding-left: 1px;
+                float: left;
+                line-height: 23px;
+            }
+        }
+    }
+    .monitorRule {
+        .correlationIcon {
+            display: inline-block;
+            position: relative;
+            top: 7px;
+            left: 35px;
+            .fa-eraser {
+                color: rgb(0, 172, 32);
+                font-size: 14px;
+            }
+        }
+        .correlationLine {
+            border-bottom: 1px solid #e5e5e5;
+            width: 80%;
+            margin-left: 109px;
+        }
+        .ruleName {
+            width: 80%;
+            margin-left: 110px;
+            padding: 10px 0px;
+            .sign {
+                color: rgba(255, 0, 0, 0.8)
+            }
+        }
+        .ruleContent {
+            width: 80%;
+            margin-left: 110px;
+            padding: 10px 0px;
+            .sign {
+                color: rgba(255, 0, 0, 0.8)
+            }
+            .dropDownContent {
+                display: inline-block;
+                float: left;
+                padding-right: 8px;
+            }
+            .dropDownMin {
+                display: inline-block;
+                float: left;
+                padding-right: 8px;
+            }
+            .dropDownValue {
+                display: inline-block;
+                float: left;
+                padding-right: 8px;
+            }
+            .dropDownSign {
+                display: inline-block;
+                float: left;
+                padding-right: 8px;
+            }
+            .percent {
+                display: inline-block;
+                float: left;
+                padding-right: 8px;
+            }
+            .limitPercent {
+                display: inline-block;
+                float: left;
+                padding-right: 8px;
+            }
+            .metricUnit {
+                display: inline-block;
+                float: left;
+                padding: 5px 0;
+            }
+            .dropDownServer {
+                padding: 11px 0 0 24px;
+                .sign {
+                    color: rgba(255, 0, 0, 0.8)
+                }
+            }
+            .networkStates {
+                padding: 11px 0 0 0px;
+            }
+            .deviceStates {
+                padding: 11px 0 0 0px;
+            }
+            .ruleLine {
+                border-bottom: 1px solid #e5e5e5;
+                width: 100%; // margin-left: 100px;
+                padding-top: 10px
+            }
+        }
+    }
+    .addRule {
+        padding: 0 100px;
+        .addBtn {
+            margin: 2px 0;
+            border: none;
+            background: transparent;
+            color: #00AA7A;
+        }
+        .addBtn span:hover {
+            border-bottom: 1px solid #00AA7A
+        }
+    }
+    .alarmTime {
+        padding: 10px 110px;
+        span {
+            padding: 0 5px 0 0px;
+        }
+    }
+    .alramInform {
+        .correlationIcon {
+            display: inline-block;
+            position: relative;
+            top: 7px;
+            left: 35px;
+            .fa-eraser {
+                color: rgb(0, 172, 32);
+                font-size: 14px;
+            }
+        }
+        .correlationLine {
+            border-bottom: 1px solid #e5e5e5;
+            width: 80%;
+            margin-left: 109px;
+        }
+        .alramList {
+            width: 454px;
+            padding: 10px 165px;
+            .informBox {
+                position: absolute;
+                left: 100px;
+                .sign {
+                    color: rgba(255, 0, 0, 0.8)
+                }
+            }
+            .selected {
+                position: absolute;
+                padding: 7px 360px;
+            }
+        }
+    }
+    .informWay {
+        padding: 10px 88px;
+        .sign {
+            color: rgba(255, 0, 0, 0.8)
+        }
+        .inform {
+            padding: 0 5px 0 0;
+        }
+        .checkbox {
+            margin: 0;
+            display: inline-block;
+        }
+    }
+    .btn-body {
+        .btn-reset {
+            background: #00aa7a;
+            color: #fff
+        }
+        .default {
+            background: #e5e5e5
+        }
+    }
+}

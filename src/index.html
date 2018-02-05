@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>
+    <%= htmlWebpackPlugin.options.title %>
+  </title>
+  <link rel="icon" href="./assets/icon/2.png" type="image/x-icon">
+  <meta name="description" content="<%= htmlWebpackPlugin.options.metadata.description %>">
+
+
+  <!-- base url : 为页面上所有相对 URL 规定基准 URL-->
+  <!--
+  angular 路由
+  当引用CSS文件、脚本和图片时，浏览器会用<base href>的值作为相对URL的前缀。
+  关于路由详细介绍：https://angular.cn/docs/ts/latest/guide/router.html
+  htmlWebpackPlugin.options.metadata.baseUrl：
+    这里引用了webpack里面的数据，大致的路径：config/webpack.common.js 大约264行
+    这里最终的值： htmlWebpackPlugin.options.metadata.baseUrl  == '/'
+  -->
+  <base href="<%= htmlWebpackPlugin.options.metadata.baseUrl %>">
+  <!--国内的速度快-->
+  <!-- 阿里的字体图标样式  -->
+  <link rel="stylesheet" type="text/css" href="./assets/cloudlink-fonts/iconfont.css">
+  <!--<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">&lt;!&ndash;国内的速度快&ndash;&gt;-->
+  <!--本地速度更快-->
+  <link href="./assets/bootstrap.min.css" rel="stylesheet">
+  <!--arcgis API CSS样式 arcgisAPI == http://192.168.100.92/ -->
+  <link href="arcgisAPI/arcgis_js_api/library/4.4/esri/css/main.css" rel="stylesheet">
+  <link href="arcgisAPI/arcgis_js_api/library/3.18/esri/css/esri.css" rel="stylesheet">
+  <link href="arcgisAPI/arcgis_js_api/library/3.18/dijit/themes/claro/claro.css" rel="stylesheet">
+  
+</head>
+
+<body>
+  <!-- angular程序入口
+  这里引入的选择器：src/app/app.component.ts
+  从这里开始真正的执行程序了
+  -->
+  <app>
+  </app>
+
+  <div id="preloader">
+    <div></div>
+  </div>
+  <!--百度地图的api链接-->
+  <!--<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>-->
+  <% if (htmlWebpackPlugin.options.metadata.isDevServer && htmlWebpackPlugin.options.metadata.HMR !== true) { %>
+    <!-- Webpack Dev Server reload -->
+    <script src="/webpack-dev-server.js"></script>
+    <% } %>
+
+</body>
+
+</html>

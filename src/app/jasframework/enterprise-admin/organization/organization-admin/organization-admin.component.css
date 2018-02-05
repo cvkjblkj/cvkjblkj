@@ -1,0 +1,218 @@
+div.modal-dialog div.modal-header h4 {
+    width: auto;
+}
+
+div.dropdowntree {
+    display: none;
+    height: 200px;
+    background-color: #fff;
+    overflow-x: auto;
+    overflow-y: auto;
+    z-index: 20;
+    position: absolute;
+    box-shadow: 0px 1px 3px 1px #888888;
+    width: 87%;
+}
+
+
+/*修改ng2-bootstrap弹窗的层级*/
+
+div.modal {
+    z-index: 995;
+}
+
+
+/*改变弹出框的位置， 水平垂直居中  ng2-bootstrap  md  lg*/
+
+.aline-lg,
+.aline-md {
+    top: 50%;
+    left: 50%;
+}
+
+.aline-lg {
+    margin: -261px 0 0 -400px;
+}
+
+.aline-md {
+    margin: -140px 0 0 -254px;
+}
+
+
+/*表单验证的颜色*/
+
+
+/*改变ng2-bootstrap的 取消的颜色*/
+
+.colorbgc {
+    color: #989697;
+    opacity: 1;
+}
+
+
+/*treeTable 的样式修改*/
+
+.organization-admin th.ui-state-default.ui-unselectable-text {
+    padding: 20px .5em;
+    font-size: 14px;
+}
+
+.organization-admin .ui-treetable thead th {
+    border-style: none
+}
+
+.organization-admin .ui-treetable tbody .ui-treetable-row td.undefined {
+    border: inherit;
+    border-bottom: 1px solid black;
+    padding: 25px .5em;
+}
+
+
+/*添加弹框标题字体颜色*/
+
+.modal-title-color {
+    color: #323232;
+}
+
+
+/*表单副标题颜色*/
+
+.laber-color {
+    color: #323232;
+}
+
+
+/*输入框字体颜色*/
+
+.input-color {
+    color: #555555;
+}
+
+
+/*表单按钮样式*/
+
+.modal-body .caret-down {
+    position: absolute;
+    right: 1.5em;
+    top: 1.1em;
+}
+
+.organization-admin .model-add {
+    position: absolute;
+    top: 1.5em;
+    right: 3em;
+    cursor: pointer;
+    color: #ffffff;
+    background: #00AA7A;
+    border: none
+}
+
+.organization-admin .edit {
+    color: rgb(0, 170, 122);
+    display: inline-block;
+    border: none;
+    background: transparent;
+}
+
+.organization-admin .look {
+    color: rgb(255, 153, 0);
+    display: inline-block;
+    border: none;
+    background: transparent;
+}
+
+.organization-admin .delete {
+    color: #FF7473;
+    display: inline-block;
+    border: none;
+    background: transparent;
+    background: none
+}
+
+.control-txt {
+    background-color: #fff;
+    border: none;
+    height: 34px;
+    font-size: 12px;
+    line-height: 32px;
+}
+
+.modal-rule {
+    color: #ada7a7;
+    font-size: 12px
+}
+
+.organization-admin .empower-footer>button.btn-reset {
+    background: #00aa7a;
+}
+
+button.btn.btn-reset {
+    background: #00aa7a;
+    border: 1px solid #00aa7a;
+    color: #fff;
+    margin-right: 15px;
+}
+
+button.btn.btn-reset[disabled]:hover {
+    background: #00aa7a;
+    color: #fff;
+}
+
+.organization-admin .look span:hover {
+    border-bottom: 0.1px solid rgb(255, 153, 0);
+}
+
+.organization-admin .edit span:hover {
+    border-bottom: 0.1px solid rgb(0, 170, 122);
+}
+
+.organization-admin .delete span:hover {
+    border-bottom: 0.1px solid #FF7473;
+}
+
+.organization-admin .error {
+    font-size: 12px;
+    color: #a94442;
+    position: absolute;
+    z-index: 9999;
+    background: #fff
+}
+
+.modal-content {
+    overflow: auto
+}
+
+.btn-auth {
+    padding: 0.1em
+}
+
+.organization-admin .fal {
+    font-size: 12px;
+    color: #a94442;
+    line-height: 34px
+}
+
+.organization-admin .look span:hover {
+    border-bottom: 1px solid #FFC952
+}
+
+.organization-admin .edit span:hover {
+    border-bottom: 1px solid rgb(0, 170, 122)
+}
+
+.organization-admin .look span:hover {
+    border-bottom: 1px solid #FF7473
+}
+
+.organization-admin .btn .default {
+    border-color: rgb(204, 204, 204)
+}
+
+.organization-admin .model-add:hover {
+    background: rgba(0, 170, 122, .7);
+    transform: scale(1);
+}
+
+.btn-default[disabled] {
+    color: #ddd !important;
+}

@@ -1,0 +1,430 @@
+<div class="view-manage component clearfix primeng-treeTable">
+  <div class="title">
+    <span>{{appObj['appName']}}--视图管理</span>
+  </div>
+  <p-toolbar class="fr" [style]="{'margin-top':'15px'}">
+    <div class="ui-toolbar-group-left">
+      <button pButton type="button" icon="fa-plus" iconPos="left" label="添加视图" class="addView" (click)="addViewShow(addModal,promptCreateView)" [disabled]="!button.appViewAddBtn"></button>
+    </div>
+  </p-toolbar>
+  <div class="line"></div>
+  <div class="content clearfix">
+    <div class="view-type">
+      <div class="type-title">
+        <span>视图类型</span>
+        <button class="typeBtn" (click)="typeModal.show()" [disabled]="!button.appViewTypeAddBtn">
+          <span class="icon"></span>
+          <span>添加</span>
+        </button>
+      </div>
+      <ul class="m-list">
+        <li *ngFor="let type of typelist" (click)="navTable(type)" [class.active]="type.objectId==typeId"
+            [ngClass]="{'view-type-selected': type['objectId'] === this.viewTypeId}">
+          <span class="viewName">{{type.typeName}}</span>
+          <button class=" viewTypedelete" (click)="deleteViewType(type);$event.stopPropagation();" [disabled]="!button.appViewTypeDelBtn">删除
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div class="view-list">
+      <!--这里参考这个链接https://www.primefaces.org/primeng/#/treetable   这里的显示数据要求放在data中-->
+      <p-treeTable [value]="viewListShow" selectionMode="single" #dt [style]="{'word-wrap':'break-word'}" [(selection)]="selectedFile" scrollable="true">
+        <p-column field="name" header="视图名称"></p-column>
+        <p-column field="viewFuncCode" header="视图编码"></p-column>
+        <p-column field="type" header="类型"></p-column>
+        <p-column field="funcName" header="关联功能"></p-column>
+        <p-column field="opened" header="是否受控"></p-column>
+        <!--<p-column field="times" header="创建时间"></p-column>-->
+        <p-column header="操作" [style]="{'width':'150px','text-align':'right'}">
+          <template let-row="rowData" pTemplate="body">
+            <span class="operate">
+                <button class="viewEdit editor" (click)="editViewBtn(row);editModal.show()" [disabled]="!button.appViewEditBtn">编辑 </button>
+                <span class="secant-line" *ngIf="row['data'].id != viewList[0].data.id" >&nbsp;|&nbsp;</span>
+              <button *ngIf="row['data'].id != viewList[0].data.id" class="editor"
+                      (click)="deleteViewBtn(row);$event.stopPropagation()" [disabled]="!button.appViewDelBtn">删除
+                </button>
+            </span>
+          </template>
+        </p-column>
+      </p-treeTable>
+    </div>
+  </div>
+</div>
+
+<!--添加视图-->
+<!--添加视图-->
+<div class="modal fade common-modal" bsModal #addModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">添加视图</h4>
+        <!--<button type="button" class="close pull-right" aria-label="Close" (click)="addModal.hide();cancelAddView()">-->
+        <button type="button" class="close pull-right" aria-label="Close" (click)="resetViewFormDate(addModal)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #viewForm="ngForm" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">视图名称：</label>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+              <input type="text" class="form-control" name="viewname" required #viewFuncName="ngModel" [(ngModel)]="addView.viewFuncName" pattern='^([A-Za-z0-9_\u4E00-\u9FA5]|-)+$' maxlength="20">
+              <span class="confirm-error">长度1-20个字符或汉字，允许英文字母、数字、”-”、”_”</span>
+            </div>
+            <span *ngIf="viewFuncName.errors && (viewFuncName.dirty || viewFuncName.touched)" class="error">
+                            <span [hidden]='!viewFuncName.errors.required'>视图名称不能为空</span>
+            <span [hidden]="!viewFuncName.errors.pattern" class="error">格式不正确</span>
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">视图编码：</label>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+              <input type="text" class="form-control" name="viewid" maxlength="50" pattern="^([A-Za-z0-9_]|-)+$" required [(ngModel)]="addView.viewFuncCode" (blur)="checkViewCode(addView.viewFuncCode)" #viewFuncCode="ngModel">
+              <span class="confirm-error">长度为1-50个字符，允许英文字母、数字、”-” 、”_” </span>
+              <span style="color:#a94442;margin-top:10px;font-size: 12px">
+                                         必须唯一，不能被修改
+                                </span>
+            </div>
+            <span *ngIf="viewFuncCode.errors && (viewFuncCode.dirty || viewFuncCode.touched)" class='error'>
+                      <span [hidden]="!viewFuncCode.errors.required">视图编码不能为空</span>
+            <span [hidden]="!viewFuncCode.errors.pattern">格式不正确</span>
+            </span>
+            <span [hidden]="!viewCodeIsExist" class="error">视图编码名称已经存在</span>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">父级视图：</label>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+              <span class='caret-down edit-dropdown-icon postion-icon'></span>
+              <input type="text" class="form-control" name="parentName" [(ngModel)]='parentName' (click)="dropdownIsShow = !dropdownIsShow;" readonly required #viewParenName="ngModel">
+              <div class="dropDown" *ngIf="dropdownIsShow">
+                <tree-root [nodes]="nodes" [options]="options" (onActivate)="selectParent($event)"></tree-root>
+              </div>
+            </div>
+            <span *ngIf="viewParenName.errors && (viewParenName.dirty || viewParenName.touched)" class="error">
+              <span [hidden]='!viewParenName.errors.required'>父级视图名称不能为空</span>
+            </span>
+
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">类型：</label>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+              <label class="radio-inline">
+                <input type="radio" checked="true" name="radio" [(ngModel)]='addView.viewFuncType' value="1">菜单
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="radio" [(ngModel)]='addView.viewFuncType' value="2">按钮
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="radio" [(ngModel)]='addView.viewFuncType' value="3">其他
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">是否受控：</label>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+              <label class="radio-inline">
+                <input type="radio" name="radioMenu" [(ngModel)]='addView.opened' value="0">是
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="radioButton" [(ngModel)]='addView.opened' value="1">否
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">关联功能：</label>
+            <div class="col-sm-5">
+              <span class='caret-down edit-dropdown-icon postion-icon'></span>
+              <input type="text" class="form-control" name="funcId" [(ngModel)]='functionName' (click)="FuncdropdownIsShow = !FuncdropdownIsShow" #funcId='ngModel' readonly>
+              <div class="dropDown" *ngIf="FuncdropdownIsShow">
+                <input #filter (keyup)="filterNodes(filter.value, tree)" placeholder="搜索功能" class="funcInp">
+                <tree-root [nodes]="funcTree" [options]="options" #tree (onActivate)="selectNode($event)"></tree-root>
+              </div>
+            </div>
+          </div>
+          <!--只有菜单 才出现URL选项-->
+          <div class="form-group" *ngIf="1 == addView.viewFuncType">
+            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">URL：</label>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+              <input type="text" class="form-control" name="url" [(ngModel)]="addView.url" maxlength="" placeholder="">
+            </div>
+
+          </div>
+          <!--如果类型是其他，则没有图标样式选项-->
+          <div class="form-group" *ngIf="3 != addView.viewFuncType">
+            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">图标样式：</label>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+              <input type="text" class="form-control" name="icon" [(ngModel)]="addView.icon" maxlength="20" placeholder="长度最多20">
+            </div>
+          </div>
+          <!--如果类型是 按钮和 其他 则出现处理函数 选项-->
+          <div class="form-group" *ngIf="'23'.indexOf(addView.viewFuncType) != -1 ">
+            <!--按钮-->
+            <label *ngIf="2 == addView.viewFuncType" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">按钮处理函数：</label>
+            <!--其他-->
+            <label *ngIf="3 == addView.viewFuncType" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">处理函数：</label>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+              <input type="text" class="form-control" [(ngModel)]="addView.handler" [ngModelOptions]="{standalone: true}" maxlength="20" placeholder="长度最多20">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">视图描述：</label>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+              <textarea class="form-control" cols="30" rows="10" name="describe" [(ngModel)]="addView.description" placeholder="最多可输入200个字" maxlength="200"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">备注：</label>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+              <textarea class="form-control" cols="30" rows="10" name="remarks" [(ngModel)]="addView.remark" placeholder="最多可输入200个字" maxlength="200"></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer col-lg-12 col-md-12 col-sm-12 col-xs-12 handle">
+        <button class="btn btn-default pull-right btn-space" (click)="resetViewFormDate(addModal)">取消</button>
+        <button class="btn btn-default pull-right btn-space btn-reset" (click)="addViewData(addModal)" [disabled]="!viewForm.valid||viewCodeIsExist">
+          确定
+        </button>
+
+      </div>
+      <div style="clear:both;"></div>
+    </div>
+  </div>
+</div>
+
+<!--三级菜单中新建视图类型弹出框-->
+<div class="modal fade common-modal" bsModal #typeModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">添加视图类型</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="resetViewTypeFormDate(typeModal)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #typeForm="ngForm" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">
+              <span>视图类型名称：</span>
+            </label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" name="name" required [(ngModel)]="viewType.typeName" #typeName="ngModel" pattern='^([A-Za-z0-9_\u4E00-\u9FA5]|-)+$' maxlength="20">
+              <span class="confirm-error">长度1-20个字符或汉字，允许英文字母、数字、”-”、”_”</span>
+            </div>
+            <div class="col-sm-4">
+              <div class="warning">
+                <span *ngIf="typeName.errors && (typeName.dirty || typeName.touched)" class='error'>
+                                    <span [hidden]="!typeName.errors.required" class="error">视图类型名称不能为空</span>
+                <span [hidden]="!typeName.errors.pattern" class="error">格式不正确</span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">
+              <span>视图类型编码：</span>
+            </label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" name="id" required maxlength="50" pattern="^([A-Za-z0-9_]|-)+$" #typeCode='ngModel' [(ngModel)]="viewType.typeCode" (blur)="checkViewTyepCode(viewType.typeCode)">
+              <span class="confirm-error"> 长度为1-50个字符，允许英文字母、数字、”-” 、”_”</span>
+              <span style="color:#a94442;margin-top:10px;font-size: 12px">
+                                         必须唯一，不能被修改
+                                </span>
+            </div>
+            <div class="col-sm-4">
+              <div class="warning">
+                <span *ngIf="typeCode.errors && (typeCode.dirty || typeCode.touched)">
+                  <span [hidden]="!typeCode.errors.required" class="error">视图编码不能为空</span>
+                <span [hidden]="!typeCode.errors.pattern" style="color:#a94442;margin-top:10px;font-size: 12px">格式不正确</span>
+                </span>
+                <span [hidden]="!viewTypeCodeIsExist" class="error">视图类型编码已经存在</span>
+              </div>
+
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">视图类型描述：</label>
+            <div class="col-sm-5">
+              <textarea class="form-control" cols="30" rows="10" name="describe" [(ngModel)]="viewType.description" placeholder="最多可输入200个字" maxlength="200"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">备注：</label>
+            <div class="col-sm-5">
+              <textarea class="form-control" cols="30" rows="10" name="remarks" [(ngModel)]="viewType.remark" placeholder="最多可输入200个字" maxlength="200"></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer col-lg-12 col-md-12 col-sm-12 col-xs-12 handle">
+        <button class="btn btn-default pull-right btn-space" (click)="resetViewTypeFormDate(typeModal)">取消</button>
+        <button class="btn btn-default pull-right btn-space btn-reset" (click)="onSubmit(typeModal)" [disabled]="!typeForm.valid || viewTypeCodeIsExist" type="submit">
+          确定
+        </button>
+
+      </div>
+      <div style="clear:both;"></div>
+    </div>
+  </div>
+</div>
+
+<!--编辑视图-->
+<div class="modal fade common-modal" bsModal #editModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">编辑视图</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="editModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #editViewForm="ngForm" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">视图名称：</label>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+              <input type="text" class="form-control" name="viewFuncName" required #updateViewName="ngModel"
+                     [(ngModel)]="editViewData.viewFuncName" pattern='^([A-Za-z0-9_\u4E00-\u9FA5]|-)+$' maxlength="20">
+              <span class="confirm-error">长度1-20个字符或汉字，允许英文字母、数字、”-”、”_”</span>
+            </div>
+            <span *ngIf="updateViewName.errors && (updateViewName.dirty || updateViewName.touched)" class="error">
+                            <span [hidden]='!updateViewName.errors.required'>视图名称不能为空</span>
+            <span [hidden]="!updateViewName.errors.pattern" class="error">格式不正确</span>
+            </span>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">视图编码：</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" name="viewFuncCode" readonly value={{editViewData.viewFuncCode}}>
+            </div>
+          </div>
+          <div class="form-group" *ngIf="parentViewIsShow">
+            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">父级视图：</label>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+              <span class='caret-down edit-dropdown-icon postion-icon'></span>
+              <input type="text" class="form-control" name="parentName" [(ngModel)]='editParentName' (click)="dropdownIsShow = !dropdownIsShow" #orgName='ngModel' readonly required>
+              <div class="dropDown" *ngIf="dropdownIsShow">
+                <tree-root [nodes]="nodes" [options]="options" (onActivate)="editSelectParent($event)"></tree-root>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">类型：</label>
+            <div class="col-sm-9">
+              <label class="radio-inline">
+                <input type="radio" name="viewFuncType" id="inlineRadio1" [(ngModel)]='editViewData.viewFuncType' value="1">菜单
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="viewFuncType" id="inlineRadio2" [(ngModel)]='editViewData.viewFuncType' value="2">按钮
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="viewFuncType" id="inlineRadio3" [(ngModel)]='editViewData.viewFuncType'
+                       value="3">其他
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">是否受控：</label>
+            <div class="col-sm-9">
+              <label class="radio-inline">
+                <input type="radio" name="opened" id="inlineRadio4" [(ngModel)]='editViewData.opened' value="0">是
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="opened" id="inlineRadio5" [(ngModel)]='editViewData.opened' value="1">否
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">关联功能：</label>
+            <div class="col-sm-5">
+              <span class='caret-down edit-dropdown-icon postion-icon'></span>
+              <input type="text" class="form-control" name="funcId" [(ngModel)]='editFunctionName' (click)="FuncdropdownIsShow = !FuncdropdownIsShow" #funcId='ngModel' readonly>
+              <div class="dropDown" *ngIf="FuncdropdownIsShow">
+                <input #filter (keyup)="filterNodes(filter.value, tree)" placeholder="搜索功能" class="funcInp">
+                <tree-root [nodes]="funcTree" [options]="options" #tree (onActivate)="editSelectNode($event)"></tree-root>
+              </div>
+            </div>
+          </div>
+          <!--只有 菜单才出现 URL选项-->
+          <div class="form-group" *ngIf="1 == editViewData.viewFuncType">
+            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">URL：</label>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+              <input type="text" class="form-control" name="url" [(ngModel)]="editViewData.url" maxlength="" placeholder="">
+            </div>
+          </div>
+          <!--如果类型为其他，则不显示这个选项-->
+          <div class="form-group" *ngIf="3 != editViewData.viewFuncType">
+            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">图标样式：</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" name="icon" [(ngModel)]="editViewData.icon" maxlength="20" placeholder="长度最多20">
+            </div>
+          </div>
+          <div class="form-group" *ngIf="2 == editViewData.viewFuncType || 3 == editViewData.viewFuncType">
+            <label *ngIf="2 == editViewData.viewFuncType" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">按钮处理函数：</label>
+            <label *ngIf="3 == editViewData.viewFuncType" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">处理函数：</label>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+              <input type="text" class="form-control" [(ngModel)]="editViewData.handler" [ngModelOptions]="{standalone: true}" maxlength="20" placeholder="长度最多20">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">视图描述：</label>
+            <div class="col-sm-5">
+              <textarea class="form-control" cols="30" rows="10" name="description" [(ngModel)]="editViewData.description" placeholder="最多可输入200个字" maxlength="200"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">备注：</label>
+            <div class="col-sm-5">
+              <textarea class="form-control" cols="30" rows="10" name="remark" [(ngModel)]="editViewData.remark" placeholder="最多可输入200个字" maxlength="200"></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer col-lg-12 col-md-12 col-sm-12 col-xs-12 handle">
+        <button class="btn btn-default pull-right btn-space" (click)="editModal.hide()">取消</button>
+        <button class="btn btn-default pull-right btn-space btn-reset" (click)="editModal.hide();editViewDataBtn(editViewForm.value)" [disabled]="!editViewForm.valid">确定
+        </button>
+
+      </div>
+      <div style="clear:both;"></div>
+    </div>
+  </div>
+</div>
+
+<!--父级视图为空提示新建视图类型-->
+<div class="modal fade" bsModal #promptCreateView="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">提示</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="promptCreateView.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>请先创建一个视图类型,然后再新建视图。</div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+        <div class="prompt-line">&nbsp;</div>
+
+        <button class="btn btn-success pull-right" (click)="promptCreateView.hide()">
+          确定
+        </button>
+        <div style="clear:both;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--操作按钮是出现确认弹窗-->
+<p-confirmDialog header="提示" icon="fa fa-question-circle" width="425" #cd>
+  <p-footer>
+    <button class="btn-reset" type="button" pButton icon="fa-close" label="取消" (click)="cd.reject()"></button>
+    <button class="btn-reset" type="button" pButton icon="fa-check" label="确认" (click)="cd.accept()"></button>
+  </p-footer>
+</p-confirmDialog>
+<!--当冻结、解冻成功后出现提示-->
+<p-growl [value]='msgs'></p-growl>

@@ -1,0 +1,155 @@
+<div class="login-journal fixed-dataTable-height component journal-info clearfix primeng-treeTable">
+  <div class="title">
+    <span>登录日志</span>
+  </div>
+  <div class="line"></div>
+  <div class="content">
+    <div class="search-filter clearfix">
+      <div class="date-search">
+        <!--时间选择-->
+        <ul class="date-list clearfix" (click)="datePicker($event)">
+          <li><span [ngClass]="{'bgc-checked':isClick=='seven'}" id="seven">最近7天</span></li>
+          <li><span [ngClass]="{'bgc-checked':isClick=='fifteen'}" id="fifteen">最近15天</span></li>
+          <li><span [ngClass]="{'bgc-checked':isClick=='thirty'}" id="thirty">最近30天</span></li>
+          <li class='self-date'>
+            <span [ngClass]="{'bgc-checked':isClick=='self'|| isSelectedDate}" id='self'>自定义</span>
+            <span class="show-time" *ngIf="isSelectedDate" (click)='stopBubble($event)'>{{dateStartShow}} ~ {{dateEndShow}} </span>
+            <div class="date-picker appService clearfix primeng-datePicker" *ngIf="isClick=='self'" (click)='stopBubble($event)'>
+              <div class="fl calendar-father">
+                <!--<span class="time-show">{{ dateStartShow ? dateStartShow : dateStart | date:'yyyy-MM-dd HH:mm:ss'}}</span>-->
+                <p-calendar [(ngModel)]="dateStart" [inline]="true" [monthNavigator]="true" [showSeconds]='true' showTime="showTime" hourFormat="24" [maxDate]='dateEnd' [yearNavigator]="true" yearRange="2000:2030" [locale]="zn" [style]="{'position':'relative','top':'-16px'}"
+                  (onSelect)='selectStartDate($event)'></p-calendar>
+              </div>
+              <!--<span style="margin:0 2px">---</span>-->
+              <div class="fr calendar-father">
+                <!--<span class="time-show">{{ dateEndShow ? dateEndShow : dateEnd | date:'yyyy-MM-dd HH:mm:ss'}}</span>-->
+                <p-calendar [(ngModel)]="dateEnd" [inline]="true" [monthNavigator]="true" [showSeconds]='true' showTime="showTime" hourFormat="24" [yearNavigator]="true" yearRange="2000:2030" [locale]="zn" [style]="{'position':'relative','top':'-16px'}" (onSelect)='selectEndDate($event)'
+                  [minDate]='dateStart' [maxDate]='maxDate'></p-calendar>
+              </div>
+              <div class="button" style="clear:both;position: absolute;bottom: -10px;right: 0;">
+                <button class="btn btn-reset sure" (click)='sure($event)'>确定</button>
+              </div>
+            </div>
+
+
+          </li>
+        </ul>
+      </div>
+      <!--搜索框条件-->
+      <div class="select-box clearfix primeng-dropdown">
+        <div class="filter-box clearfix">
+          <div class="fl">
+            <span style='line-height:24px'>筛选：</span>
+          </div>
+          <div class="fl">
+            <div class="filter-item clearfix" *ngFor="let i of loop">
+              <span style="display:inline-block;margin-right:10px;float:left">
+                <p-dropdown *ngIf="filterSearchData[i][0] || i==row" [options]="loginFilterData" [(ngModel)]="filterSearchData[i][0]" (onChange)='changeSelectData($event,i)'
+                placeholder="请选择---" [style]="{'width':'150px','float':'left'}" filter="filter">
+              </p-dropdown>
+              </span>
+
+              <span *ngIf="filterSearchData[i][0]" class="primeng-chips primeng-multiSelect">
+                <p-chips *ngIf="!filterSearchData[i][2]"  [(ngModel)]="filterSearchData[i][1]" (onAdd)="addValue($event,i)" (onRemove)="removeValue($event)" #chips [style]="{'float':'left'}"></p-chips>
+                <p-multiSelect *ngIf="filterSearchData[i][2]" [style]="{'min-width':'130px','float':'left'}" [options]="dropdownData[filterSearchData[i][2]]" (onChange)="addValue($event,i)" [(ngModel)]="filterSearchData[i][1]"
+                [defaultLabel]="defaultLabel"></p-multiSelect>
+                <span *ngIf="filterSearchData[i][0]" class="select-close" (click)="reset(i)">&times;</span>
+              </span>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <button class="btn btn-reset search-btn" [disabled]='isSearched' (click)="search()">搜索</button>
+    </div>
+    <div class="charts-data">
+      <div class="app-charts">
+        <div id="log-statistics" *ngIf="this.logCountEcharts.series?.length != 0" [ng2-echarts]="logCountEcharts" style="height: 100%; width: 100%"></div>
+        <div *ngIf="this.logCountEcharts.series?.length == 0">
+          <span>应用登录统计</span>
+          <p style="color:#ccc;font-size:22px;line-height:220px;text-align:center">未查到相关数据</p>
+        </div>
+      </div>
+      <div class="host-map">
+        <span>
+          <div id="map-statistics" *ngIf="this.loginAreaMap.series.length != 0" [ng2-echarts]="loginAreaMap" style="height: 100%; width: 100%"></div>
+          <div *ngIf="this.loginAreaMap.series.length == 0">
+            <span>登录区域分布统计</span>
+        <p style="color:#ccc;font-size:22px;line-height:220px;text-align:center">未查到相关数据</p>
+      </div>
+      </span>
+    </div>
+  </div>
+  <div class="list" #listDiv>
+
+    <div *ngIf="selectData">
+      <div style="text-align:right">
+        <div class="custom-input">
+          <!--[disabled]="button.loginLogDownload"-->
+          <button class="btn btn-reset" [disabled]=" !button.loginLogDownload" (click)="downloadShow();stopBubble($event)">
+              <i class="fa fa-download" aria-hidden="true"></i>
+              下载
+            </button>
+          <div class="list-item list-download" *ngIf="downloadIsShow && button.loginLogDownload">
+            <ul (click)="downloadSelect($event);stopBubble($event)">
+              <li><span id='currentShow'>当前显示列</span></li>
+              <li><span id='all'>所有列</span></li>
+            </ul>
+
+          </div>
+          <button class="btn btn-reset custom-name" (click)="seletListItem();stopBubble($event)">列表项</button>
+          <div class="list-item list-select" *ngIf="listItem" (click)="stopBubble($event)">
+            <ul>
+              <li>
+                <div class="checkbox-custom">
+                  <input type="checkbox" value="1" id="checkboxInput-all" (click)="allChecked(ul)" [checked]='allcheck.IsAllCheckedInput' #allCheckedInput name="" />
+                  <label for="checkboxInput-all"></label>
+                </div>
+                <span>全选</span>
+              </li>
+            </ul>
+            <div class="line"></div>
+            <ul #ul>
+              <li *ngFor="let item of listData;let i=index">
+                <div class="checkbox-custom">
+                  <input type="checkbox" value={{i}} id="checkboxInput-{{i}}" name="" [checked]='item.checked' [disabled]='i==0' (click)="selectOption($event)" />
+                  <label for="checkboxInput-{{i}}">
+                    </label>
+                </div>
+                <span>{{item.header}}</span>
+
+              </li>
+            </ul>
+
+          </div>
+        </div>
+
+      </div>
+      <div class="border-set list-order ">
+        <p-dataTable #dt [value]="selectData" scrollable="true" frozenWidth="200px" [style]="{'margin-top':'20px'}" [emptyMessage]='emptyMessage' (onSort)="changeSort($event)" [sortField]="sortF" [sortOrder]="sortO">
+          <p-column field="userName" header="用户姓名" #dtFrozen [frozen]='true' [style]="{'width':'250px'}" *ngIf="frozenItem" [sortable]="true"></p-column>
+          <p-column *ngFor="let col of options " [field]="col.field" [header]="col.header" [style]="{'width':'200px'}" [sortable]="true"></p-column>
+        </p-dataTable>
+      </div>
+
+      <div #screenWidth [hidden]="!selectData ||(selectData && selectData.length==0)">
+        <query-data-overloaded *ngIf="totalItems > 1000" class="message-info" [total]="totalItems"></query-data-overloaded>
+        <grid-pagination [totalPages]='totalPages' [totalItems]='totalItems > 1000 ? 1000: totalItems' [size]='size' [pageSize]='rowsPerPageOptions' [maxSize]='maxSize' (sizeChanged)='sizeChanged($event)' (pageChanged)='paginate($event)'></grid-pagination>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!--提示信息-->
+<p-growl [value]="msgs"></p-growl>
+
+<p-confirmDialog header="提示" icon="fa fa-question-circle" width="425" #cd>
+  <p-footer>
+    <button type="button" pButton icon="fa-close" label="取消" (click)="cd.reject()" class="btn-cancle"></button>
+    <button type="button" pButton icon="fa-check" label="确认" (click)="cd.accept()" class="btn-reset"></button>
+  </p-footer>
+</p-confirmDialog>
+
+</div>

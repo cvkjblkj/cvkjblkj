@@ -1,0 +1,234 @@
+<div bsModal #editModal="bs-modal" class="modal fade common-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" [config]="{backdrop: 'static'}">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">编辑企业信息</h4>
+        <button type="button" class="close pull-right colorbgc" (click)="editModal.hide(); ngOnInit()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form class="form-horizontal" role="form" #orgform="ngForm" *ngIf="editInfo">
+          <div class="form-group">
+            <label for="enterpriseName" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">企业名称：</label>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+              <input type="text" class="form-control" id="enterpriseName" name="enterpriseName" required [(ngModel)]="editInfo.enterpriseName" (blur)="checkEnterpriseName(editInfo.enterpriseName, editInfo.objectId)">
+            </div>
+            <span *ngIf="editInfo.enterpriseName == ''" style="color:#a94442;font-size:12px;line-height:34px">
+                企业名称不能为空
+            </span>
+            <span *ngIf="enpNameIsExist" style="color:#a94442;font-size:12px;line-height:34px">
+                企业名称已经存在,请换一个名称
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="enterpriseScale" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">企业规模：</label>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+              <!--input 里 name 跟 [ngModelOptions] 要写一个,否则报错-->
+              <!--<input type="text" class="form-control" id="enterpriseScale"-->
+              <!--[(ngModel)]="detail.enterpriseScale" [ngModelOptions]="{standalone: true}" required>-->
+              <select id="enterpriseScale" class="form-control" name="enterpriseScale" [(ngModel)]="editInfo.enterpriseScale">
+                <option value="1" [selected]="editInfo.enterpriseScale == '1'">50人以下</option>
+                <option value="2" [selected]="editInfo.enterpriseScale == '2'">50-100人</option>
+                <option value="3" [selected]="editInfo.enterpriseScale == '3'">100-200人</option>
+                <option value="4" [selected]="editInfo.enterpriseScale == '4'">200-500人</option>
+                <option value="5" [selected]="editInfo.enterpriseScale == '5'">500人以上</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <!-- 跟id="registerNum",如果不写id,这里会报提示 -->
+            <label for="registerNum" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">企业注册号：</label>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+              <input type="text" class="form-control" name="registerNum" #registerNum="ngModel" [(ngModel)]="editInfo.registerNum" pattern="^[^\u4e00-\u9fa5]{0,}$" id="registerNum">
+            </div>
+            <span *ngIf="registerNum.errors && (registerNum.dirty || registerNum.touched)">
+                <span style="color:#a94442;font-size:12px;line-height:34px"
+                      [hidden]="!registerNum.errors.pattern">
+                    企业注册号不能为汉字
+                </span>
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="telephoneNum" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">企业电话：</label>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+              <input type="text" class="form-control" name="telephoneNum" #telephoneNum="ngModel" [(ngModel)]="editInfo.telephoneNum" (blur)="telephoneVerification(editInfo.telephoneNum)" pattern="^1(3|4|5|7|8)\d{9}$" id="telephoneNum">
+            </div>
+            <span *ngIf="telephoneMismatch" style="color:#a94442;font-size:12px;line-height:34px">
+                          电话号码格式不对
+              </span>
+          </div>
+
+          <div class="form-group">
+            <label for="address" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">企业地址：</label>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+              <input type="text" class="form-control" id="address" name="address" [(ngModel)]="editInfo.address">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="remark" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">备注：</label>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+              <!--<input type="text" class="form-control" id="remark" name="remark"-->
+              <!--[(ngModel)]="detail.remark">-->
+              <textarea class="form-control" name="remark" id="remark" cols="30" rows="10" [(ngModel)]="editInfo.remark"></textarea>
+            </div>
+          </div>
+          <div>
+            <button type="button" class="btn btn-default pull-right btn-space" (click)="editModal.hide(); ngOnInit()">取消
+            </button>
+            <button type="button" class="btn btn-default pull-right btn-space btn-reset" [disabled]="!orgform.form.valid || enpNameIsExist || telephoneMismatch" (click)="editSaveEnterPriseInfo(editModal)">
+              保存
+            </button>
+          </div>
+        </form>
+
+        <div style="clear: both"></div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+</div>
+<p-growl [value]='msgs'></p-growl>
+
+
+<div class="list-show-view component clearfix">
+  <div *ngIf='detail' class="title">
+    <span>{{detail.enterpriseName}}</span>
+  </div>
+  <div class="line"></div>
+  <div class="content">
+    <!--企业基本信息显示-->
+    <div class="table-viewer-header ">
+      <span class="table-viewer-topBar-title">基本信息</span>
+      <div class="pull-right table-viewer-topBar-content">
+        <div class="ng-editor">
+          <button class=" btn " [disabled]="!button.appEnpEditBtn" (click)="edit(editModal,detail)">
+            编辑
+          </button>
+        </div>
+      </div>
+      <!--显示,隐藏 基本信息-->
+      <!--<span simple-table-toggle="" class="toggle-drop-down-icon list-show-view" ng-hide="hideToggle"-->
+      <!--toggle-show="toggleShow">-->
+      <!--<span class="table-viewer-dropDown icon-up" ng-class="{false:'icon-down',true:'icon-up'}[ !!toggleShow ]">-->
+      <!--</span>-->
+      <!--</span>-->
+    </div>
+    <!--<table  ng-show="toggleShow != false" style="table-layout:fixed" class="table-default-viewer ng-scope" >-->
+    <table *ngIf='detail' style="table-layout:fixed" class="table-default-viewer ng-scope">
+      <tbody>
+        <tr class="simple-table-row">
+          <td class="simple-table-cell" width="33.33333333333333%">
+            <span class="text-muted">企业名称：</span>
+            <span>{{detail.enterpriseName}}</span>
+          </td>
+          <td class="simple-table-cell" width="33.33333333333333%">
+            <span class="text-muted">企业规模：</span>
+            <span>{{detail.enterpriseScale | enterpriseScale}}</span>
+          </td>
+          <td class="simple-table-cell" width="33.33333333333333%">
+            <span class="text-muted">企业电话：</span>
+            <span>{{detail.telephoneNum}}</span>
+          </td>
+        </tr>
+
+        <tr class="simple-table-row">
+          <td class="simple-table-cell" width="33.33333333333333%">
+            <span class="text-muted">认证状态：</span>
+            <span>{{detail.authenticateStatus | authStatus}}</span>
+          </td>
+          <td class="simple-table-cell" width="33.33333333333333%">
+            <span class="text-muted">企业注册号：</span>
+            <span>{{detail.registerNum}}</span>
+          </td>
+          <td class="simple-table-cell">
+            <span class="text-muted">企业类型：</span>
+            <span>{{detail.enterpriseType}}</span>
+          </td>
+
+        </tr>
+
+        <tr class="simple-table-row">
+          <td class="simple-table-cell">
+            <span class="text-muted">管理员姓名：</span>
+            <span>{{userName}}</span>
+          </td>
+          <td class="simple-table-cell">
+            <span class="text-muted">管理员手机号：</span>
+            <span>{{mobileNum}}</span>
+          </td>
+          <td class="simple-table-cell">
+            <span class="text-muted">企业地址：</span>
+            <span>{{detail.address}}{{detail.detailAddress}}</span>
+          </td>
+
+        </tr>
+        <tr class="simple-table-row">
+          <td class="simple-table-cell">
+            <span class="text-muted">注册来源：</span>
+            <span>{{detail.fromAppName}}</span>
+          </td>
+          <td class="simple-table-cell">
+            <span class="text-muted">注册时间：</span>
+            <span>{{detail.createTime}}</span>
+          </td>
+          <td class="simple-table-cell">
+          </td>
+        </tr>
+        <tr class="simple-table-row">
+
+          <td class="simple-table-cell" width="100%" colspan="3">
+            <span class="text-muted">备注：</span>
+            <span>{{detail.remark}}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!--应用使用情况-->
+    <div class="table-viewer-header ">
+      <span class="table-viewer-topbar-title">应用使用情况</span>
+    </div>
+    <!--应用列表-->
+    <p-dataTable class="dataTable" scrollable="true" [value]="enterpriseAppInfos" selectionMode="single" [(selection)]="selectedEnterprise" [emptyMessage]='emptyMessage'>
+      <p-column field="appName" header="应用名称"></p-column>
+      <p-column field="appCode" header="应用编码"></p-column>
+      <p-column field="useType" header="使用类型"></p-column>
+      <p-column field="useAppTime" header="激活时间"></p-column>
+      <p-column field="expireTime" header="到期时间"></p-column>
+      <p-column field="enpAppStatus" header="状态"></p-column>
+      <!--<p-column field="" header="应用使用类型"></p-column>-->
+      <!--<p-column field="expireTime" header="到期时间"></p-column>-->
+
+      <p-column field="enpAppStatus" header="操作">
+        <template let-col let-opt="rowData" pTemplate="body">
+          <span class="operate">
+            <span *ngIf="opt[col.field] == '已激活' ">
+              <button [disabled]="!button.appEnpFreezeBtn" class="frozen"
+                    (click)="freezeEnterpriseApp(opt)">冻结</button>
+            </span>
+            <span *ngIf="opt[col.field] == '已冻结' ">
+                <button [disabled]="!button.appEnpUnfreezeBtn" class="editor"
+                        (click)="unfreezeEnterpriseApp(opt)">解冻</button>
+            </span>
+          </span>
+        </template>
+      </p-column>
+    </p-dataTable>
+  </div>
+
+</div>
+
+<!--当点击冻结、解冻按钮是出现弹窗-->
+<p-confirmDialog header="提示" icon="fa fa-question-circle" width="425" #cd>
+  <p-footer>
+    <button type="button" pButton icon="fa-close" label="取消" (click)="cd.reject()" class="btn-cancle"></button>
+    <button type="button" pButton icon="fa-check" label="确认" (click)="cd.accept()" class="btn-reset"></button>
+  </p-footer>
+</p-confirmDialog>
+<!--当冻结、解冻成功后出现提示-->
+<p-growl [value]='msgs'></p-growl>

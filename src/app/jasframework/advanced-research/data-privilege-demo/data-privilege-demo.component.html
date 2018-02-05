@@ -1,0 +1,22 @@
+<div class="component data-privilege-demo clearfix">
+  <div class="title">
+    <span>数据权限</span>
+  </div>
+  <div class="line"></div>
+  <div class="content">
+    <span style="padding-bottom:15px;display:inline-block">当前登录用户角色信息：{{roleNames}}</span>
+
+    <p-dataTable class="dataTable" [value]="userList" selectionMode="single" scrollable="true" [emptyMessage]="emptyMessage">
+      <p-column field="userName" header="姓名"></p-column>
+      <p-column field="mobileNum" header="手机号"></p-column>
+      <p-column field="email" header="邮箱"></p-column>
+      <p-column field="enterpriseName" header="公司名称"></p-column>
+      <p-column field="createTime" header="注册时间"></p-column>
+      <p-column field="status" header="状态"></p-column>
+    </p-dataTable>
+  </div>
+
+</div>
+
+<!-- 成功提示  -->
+<p-growl [value]="msgs"></p-growl>

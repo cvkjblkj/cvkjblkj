@@ -1,0 +1,64 @@
+.rule {
+    border-top: 1px solid #e5e5e5;
+    margin-top: 10px;
+    .btnDiv {
+        position: relative;
+        .delete {
+            position: absolute;
+            left: 590px;
+            top: 15px;
+            border: none;
+            color: #00aa7a;
+            background: transparent;
+        }
+    }
+    .ruleName {
+        width: 80%;
+        padding: 15px 0 5px 0px;
+        .sign {
+            color: rgba(255, 0, 0, 0.8)
+        }
+    }
+    .ruleContent {
+        width: 100%;
+        padding: 10px 0px;
+        .sign {
+            color: rgba(255, 0, 0, 0.8)
+        }
+        .rulePort {
+            padding: 11px 0 0 24px;
+            .sign {
+                color: rgba(255, 0, 0, 0.8)
+            }
+        }
+        .dropDownServerContent {
+            display: inline-block;
+            min-width: 210px;
+            padding-right: 5px
+        }
+        .dropDownMinContent {
+            display: inline-block;
+            min-width: 30px;
+            padding-right: 5px
+        }
+        .dropDownMarkContent {
+            display: inline-block;
+            min-width: 30px;
+            padding-right: 5px
+        }
+        .dropDownAverageContent {
+            display: inline-block;
+            padding-right: 5px
+        }
+        .dropDownMarkContent {
+            display: inline-block;
+            padding-right: 5px
+        }
+        .networkStates {
+            padding: 11px 0 0 0px;
+        }
+        .deviceStates {
+            padding: 11px 0 0 0px;
+        }
+    }
+}

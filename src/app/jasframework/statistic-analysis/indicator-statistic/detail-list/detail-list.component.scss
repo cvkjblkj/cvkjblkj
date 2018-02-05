@@ -1,0 +1,21 @@
+@import './../indicator/indicator.component';
+.detail-list {
+  .content {
+    padding-top: 0px;
+  }
+  .back {
+    cursor: pointer;
+  }
+  .breadcrumb-trail {
+    display: block;
+    padding: 10px;
+    span:first-child {
+      &:hover {
+        color: #21B38E;
+      }
+    }
+    span.span {
+      color: #21B38E;
+    }
+  }
+}

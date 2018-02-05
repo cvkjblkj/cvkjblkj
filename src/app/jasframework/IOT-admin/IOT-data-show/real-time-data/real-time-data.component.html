@@ -1,0 +1,29 @@
+<div class='default-echarts'>
+  <div class="ecahrts" *ngIf="!empty">
+    <echarts-ng2 [showLoading]='true' [option]='options' [loadingTime]='3000'></echarts-ng2>
+  </div>
+  <div *ngIf="empty" style="height:300px;text-align:center;line-height:300px;">
+    <p style="font-size:22px;color:#ccc">未查到相关数据</p>
+  </div>
+
+  <div class="content-data">
+    <span class="clearfix attribute">
+      <span class="col-lg-6 col-md-6 col-sm-6">属性值：</span>
+    <span *ngIf="!empty" class="col-lg-6 col-md-6 col-sm-6">{{attributeValue}} {{unit}} </span>
+    <span *ngIf="empty" class="col-lg-6 col-md-6 col-sm-6"> </span>
+    </span>
+    <span class="clearfix">
+        <span class="col-lg-6 col-md-6 col-sm-6">采样频率：</span>
+    <span class="col-lg-6 col-md-6 col-sm-6">
+            <input #inputFrequency id="inputFrequency" type="number" [disabled]='empty' [(ngModel)]="frequency">
+            <span>秒</span>
+    </span>
+    </span>
+    <span class="clearfix">
+        <span class="col-lg-6 col-md-6 col-sm-6"> 采样时间为：</span>
+    <span *ngIf="!empty" #currentDate class="col-lg-6 col-md-6 col-sm-6"> </span>
+    <span *ngIf="empty" class="col-lg-6 col-md-6 col-sm-6"> </span>
+    </span>
+
+  </div>
+</div>

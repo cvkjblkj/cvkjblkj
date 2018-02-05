@@ -1,0 +1,215 @@
+<div class="detail" *ngIf="detail">
+  <div class="title clearfix">
+    <span [class.clickcolor]="isclicked" (click)="basicMes()">
+            基本信息
+        </span>
+    <span [class.clickcolor]=" !isclicked" (click)="historyShow()">
+            历史审核记录
+        </span>
+  </div>
+
+  <div *ngIf="isclicked">
+    <!--查看页面-->
+    <div *ngIf="toeChoice == 'look'">
+
+      <ul>
+        <li>
+          <span>企业名称：</span>
+          <span>{{detail.enterpriseName}}</span>
+        </li>
+        <li>
+          <span>企业规模：</span>
+          <span>{{detail.enterpriseScale | enterpriseScale}}</span>
+        </li>
+        <li>
+          <span>企业注册号：</span>
+          <span>{{detail.registerNum}}</span>
+        </li>
+        <li>
+          <span>企业认证状态：</span>
+          <span>{{detail.authenticateStatus | authStatus}}</span>
+        </li>
+        <li>
+          <span>企业电话：</span>
+          <span>{{detail.telephoneNum}}</span>
+        </li>
+        <li>
+          <span>企业地址：</span>
+          <span>{{detail.address}}</span>
+        </li>
+        <li class="clearfix">
+          <span class="companyPic">营业执照图片：</span>
+          <div class="bgc-color col-lg-8">
+            <ul *ngIf="bussinessUrl">
+              <li *ngFor='let bussiness of bussinessUrl' class="fl">
+                <img src='/cloudlink/v1/cloudlink-core-file/file/downLoad?fileId={{bussiness}}' alt="身份证照片" class="picshow">
+              </li>
+            </ul>
+            <div *ngIf="!bussinessUrl">
+              <span>
+                            {{imgUrl}}
+                        </span>
+            </div>
+          </div>
+
+        </li>
+        <li class="clearfix">
+          <span class="idcard">法人身份证照片：</span>
+          <div class="bgc-color col-lg-8">
+            <ul *ngIf="cardUrl">
+              <li *ngFor='let card of cardUrl' class="fl">
+                <img src='/cloudlink/v1/cloudlink-core-file/file/downLoad?fileId={{card}}' alt="身份证照片" class="picshow">
+              </li>
+            </ul>
+            <div *ngIf="!cardUrl">
+              <span>
+                            {{imgUrl}}
+                        </span>
+            </div>
+          </div>
+        </li>
+        <li>
+          <span>创建时间：</span>
+          <span>{{detail.createTime}}</span>
+        </li>
+        <li>
+          <span>创建人：</span>
+          <span>{{detail.createUserName}}</span>
+        </li>
+        <li>
+          <span>创建人账号：</span>
+          <span>{{createUsermobileNum}}</span>
+        </li>
+        <li>
+          <span>管理员姓名：</span>
+          <span>{{userName}}</span>
+        </li>
+        <li>
+          <span>管理员账号：</span>
+          <span>{{mobileNum}}</span>
+        </li>
+
+      </ul>
+      <button class="btn btn-warning" (click)="goBack()">返&nbsp;回</button>
+    </div>
+
+  </div>
+  <!--历史审核记录-->
+  <div *ngIf="!isclicked">
+    <div *ngIf="historise">
+      <h3 *ngIf="historise.length == 0" style='margin-top:18px'>
+        没有审核记录
+      </h3>
+      <div class="coat" *ngIf="historise.length != 0">
+        <div class="tableList">
+          <table #role_table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>序号</th>
+                <th>申请人</th>
+                <th>申请时间</th>
+                <th>审核人</th>
+                <th>审核时间</th>
+                <th>审核意见</th>
+              </tr>
+            </thead>
+            <tbody id="list">
+              <tr #userList class="Userlist" *ngFor="let history of historise,let i = index">
+                <td class="table-hover">
+                  {{i+1}}
+                </td>
+                <td class="table-hover">
+                  {{history.startUserName}}
+                </td>
+                <td class="table-hover">
+                  {{history.startTime}}
+                </td>
+                <td class="table-hover">
+                  {{history.approveUserName}}
+                </td>
+                <td class="table-hover">
+                  {{history.endTime}}
+                </td>
+                <td class="table-hover">
+                  {{history.approveContent}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!--添加页面-->
+<div class="detail" *ngIf="toeChoice == 'add'">
+  <div class="title clearfix">
+    <span [class.clickcolor]="isclicked" (click)="basicMes()">
+            企业基本信息
+        </span>
+  </div>
+  <!--添加页面-->
+  <div *ngIf="isclicked">
+    <div>
+      <form class="form-horizontal" style="margin-top:10px">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+          <div class="form-group">
+            <label for="enterpriseName" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">企业名称：</label>
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+              <input type="text" class="form-control" name="enterpriseName" [(ngModel)]="enterpriseName">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="enterpriseScale" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">企业规模：</label>
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+              <select #selectScale id="enterpriseScale" class="form-control" name="enterpriseScale" [(ngModel)]="scale">
+                                <option value="1" >50人以下</option>
+                                <option value="2">50-100人</option>
+                                <option value="3">100-200人</option>
+                                <option value="4">200-500人</option>
+                                <option value="5">500人以上</option>
+                            </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="registerNum" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">企业注册号：</label>
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+              <input type="text" class="form-control" name="registerNum" [(ngModel)]="registerNum">
+            </div>
+          </div>
+
+        </div>
+        <div id="organizations_info_right" class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+          <div class="form-group row">
+            <label for="telephoneNum" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">企业电话：</label>
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+              <input type="text" class="form-control" name="telephoneNum" required [(ngModel)]="telephoneNum">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="address" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">企业地址：</label>
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+              <input type="text" class="form-control" name="address" [(ngModel)]="address">
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <button type="button" class="btn btn-success  btn-space" (click)="addSave()">保存</button>
+          <button type="button" class="btn btn-primary btn-space" (click)="goBack()">取消</button>
+        </div>
+        <div style="clear:both;"></div>
+      </form>
+    </div>
+  </div>
+
+
+</div>
+
+<!--确认框-->
+<p-confirmDialog header="提示" icon="fa fa-question-circle" width="425" #cd>
+  <p-footer>
+    <button type="button" pButton icon="fa-close" label="取消" (click)="cd.reject()" class="btn-cancle"></button>
+    <button type="button" pButton icon="fa-check" label="确认" (click)="cd.accept()" class="btn-reset"></button>
+  </p-footer>
+</p-confirmDialog>

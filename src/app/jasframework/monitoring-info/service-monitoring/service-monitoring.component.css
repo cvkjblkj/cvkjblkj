@@ -1,0 +1,266 @@
+#trace-container {
+    font-size: 12px;
+    padding: 0 0 15px 0;
+    border-bottom: 1px solid #EEF1F7
+}
+
+#trace-container .tit {
+    padding: 8px 0 0 10px;
+    color: rgb(153, 153, 153);
+    font-size: 10px
+}
+
+
+/*clearfix.css*/
+
+.row:after,
+.row:before {
+    content: " ";
+    display: table;
+}
+
+
+/*clearfix.css*/
+
+#trace-container #timeLabel.span {
+    overflow: visible;
+    display: block;
+    white-space: nowrap;
+    padding-left: 0.5em;
+    margin-right: 40px
+}
+
+#trace-container .span {
+    cursor: pointer;
+    display: none;
+    position: relative;
+    margin-right: 18px
+}
+
+#trace-container #timeLabel {
+    padding: 5px 0
+}
+
+#trace-container #timeLabel.span .handle {
+    opacity: 1;
+    padding: 5px 0;
+}
+
+#trace-container .span .handle {
+    width: 110px;
+    overflow: hidden;
+    white-space: nowrap;
+    float: left;
+    opacity: .25;
+}
+
+#trace-container .span .duration-container {
+    position: relative;
+    margin-left: 80px;
+}
+
+#trace-container #timeLabel.span .time-marker {
+    margin-left: -1%;
+}
+
+#trace-container .span .time-marker-0 {
+    left: 0;
+}
+
+#trace-container .span .time-marker {
+    position: absolute;
+    color: #333;
+}
+
+#trace-container .span .time-marker-1 {
+    left: 20%;
+}
+
+#trace-container .span .time-marker-2 {
+    left: 40%;
+}
+
+#trace-container .span .time-marker-3 {
+    left: 60%;
+}
+
+#trace-container .span .time-marker-4 {
+    left: 80%;
+}
+
+#trace-container .span .time-marker-5 {
+    left: 97%;
+}
+
+#trace-container .span:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+
+#trace-container .service-span:hover .handle,
+#trace-container .span.highlight .handle {
+    opacity: 1;
+    padding: 3px
+}
+
+#trace-container .span .handle .service-name {
+    color: rgb(21, 21, 21);
+    padding: 2px;
+    background: rgba(66, 146, 198, 0.7);
+    border-bottom: 1px solid #fff
+}
+
+#trace-container .span .handle .expander {
+    margin-left: -1.1em;
+    color: #000;
+    margin-right: .25em;
+    cursor: pointer;
+    font-family: monospace;
+    float: left;
+    width: 40px;
+    height: 12px;
+    border-bottom: 1px dashed #999;
+    border-left: 1px dashed #999;
+    position: relative;
+    top: -3px;
+}
+
+#trace-container .span .handle .service-name:after {
+    content: ".";
+    visibility: hidden;
+}
+
+#trace-container .span.depth-1 .duration {
+    background: rgba(66, 146, 198, .2);
+}
+
+#trace-container .span .duration {
+    position: absolute;
+    background: #ccc;
+    overflow: visible;
+    white-space: nowrap;
+    padding: 2px;
+    border-bottom: 1px solid rgb(255, 255, 255)
+}
+
+#trace-container .service-span:hover {
+    border-color: #ccc;
+}
+
+#trace-container .title {
+    background: #e4e4e4;
+    text-align: left;
+    color: #999999;
+    position: relative;
+    left: -0.65em;
+    top: -0.3em;
+    width: 110%;
+    padding: 0.25em 1em;
+}
+
+.appService .timer {
+    width: 97%;
+    height: 100%;
+    padding: 9px 0 0px 4px;
+    min-height: 80px;
+    border: 1px solid #EEF1F7;
+    margin: 0px 0 17px 22px;
+    border-radius: 4px;
+}
+
+.appService .contentain {
+    margin: 10px 21px 20px 21px;
+    padding: 12px 12px 10px 11px;
+    bottom: 0;
+    width: 97%;
+    border: 1px solid #EEF1F7;
+    border-radius: 4px;
+}
+
+.appService .context {
+    width: auto;
+    overflow: auto;
+    border-left: 1px solid #EEF1F7
+}
+
+.appService .title>span {
+    font-size: 16px;
+    color: #323232;
+    margin: 20px 25px;
+    padding: 6px 10px;
+    border-left: 3px solid #00aa7a;
+    font-family: '微软雅黑';
+    display: block;
+    float: left;
+}
+
+.appService .line {
+    border-bottom: 1px solid #EEF1F7;
+    margin-left: 22px;
+    margin-top: 70px;
+}
+
+.appService .common-modal .simple-table-cell {
+    padding: 10px 0
+}
+
+.appService .common-modal .selectedItem tr:nth-child(odd) {
+    background: rgb(240, 240, 240)
+}
+
+.appService .common-modal .selectedItem {
+    padding: 15px 0 10px 10px;
+}
+
+.appService .common-modal .selectedItem td {
+    border-top: 1px solid rgb(221, 221, 221)
+}
+
+.appService .common-modal .text-muted {
+    margin-right: 15px
+}
+
+.appService .common-modal .text {
+    color: rgb(0, 0, 0) !important;
+}
+
+.appService .common-modal .model {
+    width: 97%;
+    margin: 0px 11px 0 11px;
+}
+
+.appService .box-inline {
+    display: inline-block;
+    padding: 5px 0 0 10px
+}
+
+.appService .common-modal .spanTxt {
+    padding-left: 20px
+}
+
+.appService .common-modal .model-content {
+    border-right: 1px solid rgb(221, 221, 221);
+    border-left: 1px solid rgb(221, 221, 221);
+    border-bottom: 1px solid rgb(221, 221, 221);
+}
+
+.appService .common-modal .modelTable {
+    width: 100%
+}
+
+.appService .common-modal .simple-table-row {
+    width: 100%;
+}
+
+.appService .common-modal .clearfix {
+    padding: 4px 0;
+}
+
+.appService .common-modal .clearfix .btn-reset {
+    position: relative;
+    right: -830px;
+}

@@ -1,0 +1,24 @@
+// 查看弹窗 table布局
+table.table-view {
+  font-size: 12px;
+  word-break: break-all;
+  width: 100%;
+  border: 1px solid #ddd;
+  tr {
+    width: 100%;
+    td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+    >td:nth-child(2n-1) {
+      background-color: #F0F0F0;
+      width: 25%;
+      text-align: right;
+    }
+  }
+  .text-muted {
+    padding-right: 8px;
+    color: #818a91
+  }
+}

@@ -1,0 +1,124 @@
+.master-monitor {
+  .content {
+    clear: both;
+  }
+  .master-box {
+    width: 98%;
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    margin: 15px 10px 10px 20px;
+    position: absolute;
+    padding: 15px 0;
+    .date-search {
+      width: 100%;
+      border-bottom: 1px solid #e5e5e5;
+      margin-left: 2px;
+      .select-box {
+        padding: 10px 0;
+      }
+      .dete-box {
+        padding: 5px 0;
+      }
+    }
+    .date-list {
+      margin-bottom: 10px;
+      min-height: 25px;
+      position: relative;
+      left: -18px;
+      top: 5px;
+      >li {
+        float: left;
+        padding: 2px 15px;
+        border-left: 1px solid #a2a1a1;
+        cursor: pointer;
+      }
+      >li:first-child {
+        border-left: none;
+      }
+      >li:last-child {
+        position: relative;
+      }
+      span {
+        padding: 1px 2px;
+      }
+      // 自定义时间选择框
+      .date-picker {
+        border: 1px solid #ddd;
+        width: 500px;
+        min-width: 280px;
+        height: 365px;
+        top: 24px;
+        position: absolute;
+        background-color: #fff;
+        z-index: 5;
+        padding: 7px 14px;
+        .sure {
+          position: absolute;
+          bottom: 15px;
+          right: 13px;
+        }
+        .calendar-father {
+          width: 48%;
+          margin-top: 10px;
+        }
+      }
+      .bgc-checked {
+        background-color: #00aa7a;
+        color: #fff;
+      }
+      .time-show {
+        width: 100%;
+        text-align: center;
+        padding: 5px 3px;
+        border: 1px solid #ccc;
+        display: block;
+        background-color: #CAEACE;
+        margin-bottom: 5px;
+      }
+    }
+    .tab {
+      border-bottom: 1px solid #e5e5e5;
+      margin: 0 10px;
+      li {
+        float: left;
+        border: 1px solid #E2E2E2;
+        width: 16.666%;
+        min-width: 100px;
+        height: 40px;
+        // border-radius: 10px 10px 0 0;
+        border-bottom: none;
+        a,
+        .route-link {
+          text-align: center;
+          background-color: #F2F2F2;
+          width: 100%;
+          height: 100%;
+          display: inline-block;
+          color: #323232;
+          line-height: 40px;
+          // border-radius: 10px 10px 0 0;
+          border: none;
+          &:not(disabled):hover {
+            color: #00AA7A;
+            background-color: #fff;
+            cursor: pointer;      //tab变小手
+          }
+        }
+        .active {
+          background-color: #fff;
+          color: #323232;
+          border-bottom: 3px solid #00AA7A;
+        }
+      }
+    }
+    .route-content {
+      //padding: 15px 0;
+    }
+  }
+}
+
+//根据要求从新编写的风格
+.my-content {
+  padding: 10px;
+  clear: both;
+}

@@ -1,0 +1,338 @@
+<div class="detail-info component clearfix">
+  <div class="title">
+    <span>
+            用户-{{name}}
+        </span>
+  </div>
+  <p-toolbar class="fr">
+    <div class="ui-toolbar-group-left">
+      <!--<button pButton type="button" [disabled]='!button.platUserEditBtn' label="编辑信息" icon="fa-pencil" (click)="editUser(editModal)" class="btn-reset"></button>-->
+      <!--<button pButton type="button" [disabled]='!button.platUserFreezeBtn' *ngIf="info.status == '已激活'" label="冻结" icon="fa-unlink" (click)="frozenUser()" class="btn-reset btn-danger"></button>-->
+      <!--<button pButton type="button" [disabled]='!button.platUserUnfreezeBtn' *ngIf="info.status == '冻结'" label="解冻" icon="fa-link" (click)="thaw()" class="btn-reset btn-danger"></button>-->
+    </div>
+  </p-toolbar>
+  <div class="line"></div>
+
+  <div class="content clearfix">
+    <div class="table-viewer-header">
+      <span class="table-viewer-topbar-title">基本信息</span>
+      <div class="pull-right table-viewer-topbar-content">
+        <div class="ng-editor">
+          <button class="btn btn-edit" [disabled]='!button.platUserEditBtn' (click)="editUser(editModal,detail)">
+                        编辑
+          </button>
+        </div>
+      </div>
+
+      <!--显示,隐藏 基本信息-->
+      <!--<span simple-table-toggle="" class="toggle-drop-down-icon ng-isolate-scope" ng-hide="hideToggle"-->
+      <!--toggle-show="toggleShow">-->
+      <!--<span class="table-viewer-dropDown icon-up" ng-class="{false：'icon-down',true：'icon-up'}[ !!toggleShow ]">-->
+      <!--</span>-->
+      <!--</span>-->
+    </div>
+    <table style="table-layout:fixed" class="table-default-viewer ng-scope">
+      <tbody>
+        <tr class="simple-table-row">
+          <td class="simple-table-cell">
+            <span class="text-muted">用户姓名：</span>
+            <span>{{basicInfo.userName}}</span>
+          </td>
+          <td class="simple-table-cell">
+            <span class="text-muted">手机号：</span>
+            <span>{{basicInfo.mobileNum}}</span>
+          </td>
+          <td class="simple-table-cell">
+            <span class="text-muted">邮箱：</span>
+            <span>{{basicInfo.email}}</span>
+          </td>
+        </tr>
+
+        <tr class="simple-table-row">
+
+
+          <td class="simple-table-cell">
+            <span class="text-muted">账号：</span>
+            <span>{{basicInfo.account}}</span>
+          </td>
+          <td class="simple-table-cell">
+            <span class="text-muted">账号状态：</span>
+            <span>{{basicInfo.status}}</span>
+          </td>
+          <td class="simple-table-cell">
+            <span class="text-muted">微信：</span>
+            <span>{{basicInfo.wechat}}</span>
+          </td>
+        </tr>
+
+        <tr class="simple-table-row">
+          <td class="simple-table-cell">
+            <span class="text-muted">年龄：</span>
+            <span>{{basicInfo.age}}</span>
+          </td>
+          <td class="simple-table-cell">
+            <span class="text-muted">性别：</span>
+            <span>{{basicInfo.sex}}</span>
+          </td>
+          <td class="simple-table-cell">
+            <span class="text-muted">QQ：</span>
+            <span>{{basicInfo.qq}}</span>
+          </td>
+        </tr>
+        <tr class="simple-table-row">
+
+          <td class="simple-table-cell">
+            <span class="text-muted">注册来源：</span>
+            <span>{{basicInfo.fromAppName}}</span>
+          </td>
+          <td>
+            <span class="text-muted">注册时间：</span>
+            <span>{{basicInfo.createTime}}</span>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <!--企业基本信息显示-->
+    <div class="table-viewer-header">
+      <span class="table-viewer-topbar-title">企业中用户基本信息</span>
+      <div class="pull-right table-viewer-topbar-content">
+        <div class="ng-editor">
+          <!--<button class="btn btn-default btn-xs ng-scope ng-isolate-scope" (click)="edit(editModal,detail)">-->
+          <button class="btn btn-edit" [disabled]='!button.platUserFreezeBtn' *ngIf="info.status == '已激活'" (click)="frozenUser()">
+                        冻结
+                    </button>
+          <button class="btn btn-edit" [disabled]='!button.platUserUnfreezeBtn' *ngIf="info.status == '冻结'" (click)=" thaw()">
+                        解冻
+                    </button>
+        </div>
+      </div>
+      <!--显示,隐藏 基本信息-->
+      <!--<span simple-table-toggle="" class="toggle-drop-down-icon ng-isolate-scope" ng-hide="hideToggle"-->
+      <!--toggle-show="toggleShow">-->
+      <!--<span class="table-viewer-dropDown icon-up" ng-class="{false： 'icon-down',true： 'icon-up'}[ !!toggleShow ]">-->
+      <!--</span>-->
+      <!--</span>-->
+    </div>
+    <table *ngIf='info' style="table-layout:fixed" class="table-default-viewer ng-scope">
+      <tbody>
+        <tr class="simple-table-row">
+          <td class="simple-table-cell">
+            <span class="text-muted">所属企业：</span>
+            <span>{{info.enterpriseName}}</span>
+          </td>
+          <td class="simple-table-cell">
+            <span class="text-muted">组织机构名称：</span>
+            <span>{{info.orgName}}</span>
+          </td>
+          <td class="simple-table-cell">
+            <span class="text-muted">职位：</span>
+            <span>{{info.position}}</span>
+          </td>
+        </tr>
+
+        <tr class="simple-table-row">
+          <td class="simple-table-cell">
+            <span class="text-muted">已拥有的角色：</span>
+            <span>{{info.roleNames}}</span>
+          </td>
+          <td class="simple-table-cell">
+            <span class="text-muted">用户状态：</span>
+            <span>{{info.status}}</span>
+          </td>
+          <td class="simple-table-cell">
+            <span class="text-muted">企业管理员：</span>
+            <span>{{isSysadmin}}</span>
+          </td>
+        </tr>
+        <tr class="simple-table-row">
+          <td class="simple-table-cell">
+            <span class="text-muted">加入企业的时间：</span>
+            <span>{{info.createTime}}</span>
+          </td>
+          <td class="simple-table-cell">
+
+          </td>
+          <td class="simple-table-cell">
+
+          </td>
+        </tr>
+
+
+      </tbody>
+    </table>
+
+  </div>
+  <!--冻结用户提示信息-->
+  <p-confirmDialog header="提示" icon="fa fa-question-circle" width="425" #cd>
+    <p-footer>
+      <button type="button" pButton icon="fa-close" label="取消" (click)="cd.reject()" class="btn-cancle"></button>
+      <button type="button" pButton icon="fa-check" label="确认" (click)="cd.accept()" class="btn-reset"></button>
+    </p-footer>
+  </p-confirmDialog>
+
+  <!--==========编辑信息==========-->
+
+  <div bsModal #editModal="bs-modal" class="modal fade common-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">编辑用户信息</h4>
+          <button type="button" class="close pull-right colorbgc" (click)="editModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" role="form" #userform="ngForm" *ngIf="basicInfoEdit">
+            <div *ngIf="info">
+              <div class="form-group">
+                <label for="userName" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">用户姓名：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                  <input type="text" class="form-control" required name="userName" [(ngModel)]="basicInfoEdit.userName" #userName='ngModel' pattern="^(([\u4e00-\u9fa5]{2,8})|([a-zA-Z]{2,16}))$">
+                  <span class="confirm-error">
+                                      中文为2-8个汉字，英文为2-16个字符
+                                    </span>
+                </div>
+                <span *ngIf="userName.errors && (userName.dirty || userName.touched)" class="error">
+                                        <span [hidden]="!userName.errors.required">
+                                            用户姓名不能为空
+                                        </span>
+                <span [hidden]="!userName.errors.pattern">
+                                            请填写正确的姓名
+                                        </span>
+                </span>
+              </div>
+              <div class="form-group">
+                <label for="mobileNum" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">手机号：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                  <input type="text" class="form-control" name="mobileNum" required [(ngModel)]="basicInfoEdit.mobileNum" #mobileNum='ngModel' pattern="^1(3|4|5|7|8)\d{9}$" (blur)="checkIsExit( 'mobile',mobileNum.value,mobileNum.errors)">
+
+                </div>
+                <span class="error" *ngIf="mobileNum.errors && (mobileNum.dirty || mobileNum.touched)">
+                                   <span [hidden]="!mobileNum.errors.required">
+                                            手机号不能为空
+                                        </span>
+                <span [hidden]="!mobileNum.errors.pattern">
+                                            请填写正确的手机号
+                                        </span>
+                </span>
+                <span *ngIf="IsSame.mobile && !mobileNum.errors" class="error">
+                                   该手机号已经被注册
+                            </span>
+              </div>
+              <div class="form-group">
+                <label for="orgName" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">组织机构：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                  <span class='caret-down user-info'></span>
+                  <input type="text" class="form-control" name="orgName" #orgName='ngModel' [(ngModel)]="info.orgName" (click)='dropdown()' readonly required>
+                  <div class="dropdown" *ngIf="dropdownIsShow">
+                    <tree-root #tree [nodes]="nodeTree" [options]="treeOptions" (onActivate)="orgSelectNode($event)">
+                    </tree-root>
+                  </div>
+                </div>
+                <span *ngIf="orgName.errors && (orgName.dirty || orgName.touched)" class="error">
+                                        <span [hidden]="!orgName.errors.required">
+                                            组织机构不能为空
+                                        </span>
+                </span>
+              </div>
+              <div class="form-group">
+                <label for="position" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">职位：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                  <input type="text" class="form-control" name="position" [(ngModel)]="basicInfoEdit.position">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="account" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">账号：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                  <input type="text" class="form-control" name="account" [(ngModel)]="basicInfoEdit.account" #account='ngModel' (blur)="checkIsExit( 'account',account.value,account.errors)">
+                </div>
+                <span *ngIf="IsSame.account" class="error">
+                                   该账号已经被注册
+                                </span>
+              </div>
+              <!--<div class="form-group">
+                                <label for="status" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">人员状态：</label>
+                                <div class="col-lg-5 col-md-9 col-sm-9 col-xs-9">
+                                    <select name="status" id="status" class="form-control" #selectStatus (change)=getStatus(selectStatus.value)>
+                                    <option value="1" [selected]="info.status==1">激活</option>
+                                    <option value="-1" [selected]="info.status==- 1">冻结</option>
+                                    <option value="0" [selected]="info.status==0">未激活</option>
+                                </select>
+                                </div>
+                            </div>-->
+              <div class="form-group">
+                <label for="sex" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">性别：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                  <input type="radio" name="sex" value='男' [(ngModel)]='basicInfoEdit.sex'>男
+                  <input type="radio" name="sex" value='女' [(ngModel)]='basicInfoEdit.sex'>女
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="age" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">年龄：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                  <input type="number" class="form-control" name="age" [(ngModel)]="basicInfoEdit.age">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="email" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">邮箱：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                  <input type="text" class="form-control" name="email" [(ngModel)]="basicInfoEdit.email" #email="ngModel" pattern="[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?" (blur)="checkIsExit( 'email',email.value,email.errors)">
+
+                </div>
+                <span *ngIf="email.errors && (email.dirty || email.touched)" class="error">
+                                    <span [hidden]="!email.errors.pattern">
+                                        请填写正确的邮箱地址
+                                    </span>
+                </span>
+                <span *ngIf="IsSame.email && !email.errors" class="error">
+                                   该邮箱已经被激活
+                                </span>
+              </div>
+              <div class="form-group">
+                <label for="qq" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">QQ：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                  <input type="text" class="form-control" name="qq" [(ngModel)]="basicInfoEdit.qq" #QQ='ngModel' pattern="^[1-9][0-9]{4,9}$">
+                </div>
+                <span *ngIf="QQ.errors && (QQ.dirty || QQ.touched)" class="error">
+                                        <span [hidden]="!QQ.errors.pattern">
+                                            请填写正确的QQ号
+                                        </span>
+                </span>
+              </div>
+              <div class="form-group">
+                <label for="wechat" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">微信：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                  <input type="text" class="form-control" name="wechat" [(ngModel)]="basicInfoEdit.wechat" #wechat='ngModel' pattern="^[a-zA-Z\d_]{5,}$">
+                </div>
+                <span *ngIf="wechat.errors && (wechat.dirty || wechat.touched)" class="error">
+                                    <span [hidden]="!wechat.errors.pattern">
+                                        请填写正确的微信号
+                                    </span>
+                </span>
+              </div>
+
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 handle">
+
+              <button type="button" class="btn btn-default pull-right btn-space" (click)="editModal.hide()">取消</button>
+              <button type="button" class="btn pull-right btn-space btn-reset" [disabled]="!userform.form.valid
+            || IsSame.mobile || IsSame.email || IsSame.account" (click)="saveEdit(editModal,userform)">保存</button>
+            </div>
+            <div class="clearfix"></div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--==========编辑信息==========-->
+
+  <!--刷新成功-->
+  <p-growl [value]="msgs"></p-growl>
+  <!--刷新成功-->
+
+</div>

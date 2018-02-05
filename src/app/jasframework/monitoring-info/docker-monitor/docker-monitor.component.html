@@ -1,0 +1,107 @@
+<div class="docker component  clearfix primeng-treeTable">
+    <div class="title">
+        <span>Docker容器监控</span>
+    </div>
+    <div class="line"></div>
+    <div>
+        <div class="search-filter filter-condition">
+            <div class="select-box clearfix primeng-dropdown">
+                <div class="filter-box clearfix" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                    <div class="filter" style="display:inline-block">
+                        <span>对象：</span>
+                        <p-dropdown [options]="dropDownServerNames" [(ngModel)]="selectServerName" placeholder="请选择" (onChange)="onChangeService($event)" [style]="{'min-width':'200px','padding':'1px'}">
+                        </p-dropdown>
+                    </div>
+
+                </div>
+            </div>
+            <div class="date-search col-lg-12 col-md-12 col-sm-12 col-xs-12 " style="border-bottom: 1px solid #e5e5e5">
+                <!--时间选择-->
+                <ul class="date-list clearfix filter" (click)="datePicker($event)">
+                    <li><span [ngClass]="{'bgc-checked':isClick=='one'}" id="one">最近1小时</span></li>
+                    <li><span [ngClass]="{'bgc-checked':isClick=='three'}" id="three">最近3小时</span></li>
+                    <li><span [ngClass]="{'bgc-checked':isClick=='six'}" id="six">最近6小时</span></li>
+                    <li class='self-date'>
+                        <span [ngClass]="{'bgc-checked':isClick=='self'|| isSelectedDate}" id='self'>自定义</span>
+                        <span class="show-time" *ngIf="isSelectedDate">{{dateStartShow }} ~ {{dateEndShow }} </span>
+                        <div class="date-picker appService clearfix primeng-datePicker" *ngIf="isClick=='self'" (click)='stopBubble($event)'>
+                            <div class="fl calendar-father">
+                                <p-calendar [(ngModel)]="dateStart" [inline]="true" [showSeconds]='true' [monthNavigator]="true" showTime="showTime" hourFormat="24" [yearNavigator]="true" yearRange="2000:2030" [style]="{'position':'relative','top':'-16px'}" (onSelect)='selectStartDate($event)'
+                                    [locale]="zn" [maxDate]='dateEnd'></p-calendar>
+                            </div>
+                            <div class="fr calendar-father">
+                                <p-calendar [(ngModel)]="dateEnd" [inline]="true" [showSeconds]='true' [monthNavigator]="true" showTime="showTime" hourFormat="24" [yearNavigator]="true" yearRange="2000:2030" [style]="{'position':'relative','top':'-16px'}" (onSelect)='selectEndDate($event)'
+                                    [locale]="zn" [minDate]='dateStart' [maxDate]='maxDate'></p-calendar>
+                            </div>
+                            <div class="button" style="clear:both;clear:both;position: absolute;bottom: -10px;right: 0;">
+                                <button class="btn btn-reset sure" (click)='sure($event)'>确定</button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <!--搜索框条件-->
+
+
+            </div>
+            <div class="echarts" #echarts>
+
+                <div class="echartsChild" *ngFor="let item of logCountEcharts;let i = index" (mouseover)="mouseover(i)" (mouseout)="mouseout(i)">
+                    <div class="echartsIcon" style="display:none" (click)="spanClick(i,monitor,viewModal,titleName)"><img src="./../../../../assets/img/fd.png" alt="" srcset=""></div>
+                    <div class="titleName" #titleName> {{item.title}}</div>
+                    <monitor #monitor [legendData]='item.data' [num]='item.num' [xAxisData]=' item.xAxis.data ' [seriesData]='item.series '></monitor>
+                </div>
+
+
+                <div class="echartsChild" *ngIf="this.itemObj.cpu.length == 0">
+                    <div class="titleName">CPU使用率(%)</div>
+                    <p class="default-empty">未查到相关数据</p>
+                </div>
+                <div class="echartsChild" *ngIf="this.itemObj.memory.length == 0">
+                    <div class="titleName">内存使用量(bytes)</div>
+                    <p class="default-empty">未查到相关数据</p>
+                </div>
+
+                <div class="echartsChild" *ngIf="this.itemObj.netInwork.length == 0">
+                    <div class="titleName">网络流入带宽(bytes/s)</div>
+                    <p class="default-empty">未查到相关数据</p>
+                </div>
+                <div class="echartsChild" *ngIf="this.itemObj.netOutwork.length == 0">
+                    <div class="titleName">网络流出带宽(bytes/s)</div>
+                    <p class="default-empty">未查到相关数据</p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+
+<div class="modal fade common-modal" bsModal #viewModal="bs-modal" [config]="{backdrop: 'static '}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+
+
+
+        <div class="modal-content">
+            <div class="modal-header headerName">
+                <span *ngIf="viewTitle">{{viewTitle}}</span>
+                <button type="button" class="close pull-right colorbgc" aria-label="Close" (click)="viewModal.hide()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+
+            </div>
+            <div class="modal-body" *ngIf="viewValue">
+                <monitor [legendData]='viewValue.legendData' [num]='viewValue.num' [xAxisData]='viewValue.xAxisData ' [seriesData]='viewValue.seriesData '></monitor>
+            </div>
+
+            <div style="clear:both"></div>
+
+        </div>
+    </div>
+</div>

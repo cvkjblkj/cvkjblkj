@@ -1,0 +1,96 @@
+.filter {
+    border-bottom: 1px solid #e5e5e5;
+    width: 99%;
+    margin-left: 7px;
+    padding: 10px 0 10px 0px;
+    .btn-reset {
+        float: right;
+    }
+    span.select-close {
+        color: #cfcfcf;
+        cursor: pointer;
+        font-size: 24px;
+        margin-left: 10px;
+        vertical-align: middle;
+        position: relative;
+        top: -4px;
+    }
+    span.select-close:hover {
+        color: rgba(255, 8, 22, 0.8);
+    }
+}
+
+.alarmContent {
+    clear: both;
+    padding: 20px 8px 10px 8px;
+    top: 50px;
+    bottom: 0;
+    width: 100%;
+    .listContent {
+        width: auto;
+        border-radius: 10px;
+        .oneStatus {
+            color: #FF3737
+        }
+        .fourStatus {
+            color: #999999
+        }
+        .twoStatus {
+            color: rgba(255, 153, 0, 0.8)
+        }
+        // .btn {
+        //     margin: 0px 5px;
+        // }
+        .btn div span:hover {
+            border-bottom: 1px solid #00aa7a
+        }
+        .look {
+            color: #00aa7a;
+        }
+        .history {
+            color: #00aa7a;
+        }
+        .edit {
+            color: #00aa7a;
+        }
+        .default {
+            color: #00aa7a;
+            // float: right;
+        }
+        .start {
+            color: #00aa7a;
+        }
+        .delete {
+            color: #00aa7a;
+        }
+    }
+}
+
+.modal-content {
+    overflow: auto;
+    .modal-body {
+        padding: 14px;
+        .ruleTable {
+            width: 100%;
+            tr {
+                width: 100%;
+                .table-td {
+                    width: 15%;
+                    border: 1px solid #e5e5e5;
+                    background: #F0F0F0;
+                    text-align: right;
+                    padding-right: 10px;
+                }
+                .table-tr {
+                    padding: 15px 6px;
+                    border: 1px solid #e5e5e5;
+                    word-break: break-all;
+                    width: 35%;
+                }
+            }
+        }
+        .btn-body {
+            padding: 20px 0;
+        }
+    }
+}

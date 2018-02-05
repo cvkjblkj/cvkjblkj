@@ -1,0 +1,253 @@
+<div class="organization-admin component clearfix primeng-treeTable">
+  <div class="title">
+    <span>
+            {{message}}-组织机构
+            </span>
+  </div>
+  <p-toolbar class="fr">
+    <div class="ui-toolbar-group-left">
+      <button pButton type="button" icon="fa-plus" (click)="add(addModal)" class="btn-reset" [disabled]='!button.orgAddBtn' label="添加"></button>
+    </div>
+  </p-toolbar>
+  <div class="line"></div>
+  <ba-card>
+    <p-treeTable [value]="organizationTree" [(selection)]="selectedNode" selectionMode="single" (onNodeSelect)="TreeTableSelect($event)">
+      <p-column field="name" header="组织机构名称" [style]="{'word-break':'break-all'}"></p-column>
+      <p-column field="description" header="描述" [style]="{'word-break':'break-all'}"></p-column>
+      <p-column field="createTime" header="创建时间" [style]="{'word-break':'break-all'}"></p-column>
+      <p-column header="操作">
+        <template let-Modal="rowData" pTemplate='body'>
+          <button type="button" class="look btn-default" (click)="look(Modal,viewModal)" ><span>查看</span></button>
+          <button type="button" class="edit btn-default" (click)="edit(Modal,editModal)" [disabled]='!button.orgEditBtn'><span>编辑</span></button>
+          <button type="button" class="delete btn-default" (click)="delete(Modal)" *ngIf="Modal.parent" [disabled]='!button.orgDelBtn'><span>删除</span></button>
+        </template>
+      </p-column>
+    </p-treeTable>
+  </ba-card>
+  <!--确认  提示框-->
+  <p-confirmDialog header="提示" icon="fa fa-question-circle" width="425" #cd>
+    <p-footer>
+      <button type="button" pButton icon="fa-close" label="取消" (click)="cd.reject()" class="btn-cancle"></button>
+      <button type="button" pButton icon="fa-check" label="确定" (click)="cd.accept()" class="btn-reset "></button>
+    </p-footer>
+  </p-confirmDialog>
+  <!--操作完成 提示框-->
+  <p-growl [value]="msgs"></p-growl>
+  <!--查看   弹出框-->
+  <div bsModal #viewModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title pull-left"><span><span>{{message}}</span>—<span>组织机构</span></span>
+          </h4>
+          <button type="button" class="close pull-right colorbgc" (click)="viewModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" role="form" #rgform="ngForm" *ngIf="orgMessage">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group">
+                <label for="orgName" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">组织机构名称：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                  <input type="text" id="orgName" class="form-control" name="orgName" required value={{orgMessage.orgName}} readonly>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="enterpriseName" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">所属企业：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                  <input type="text" id="enterpriseName" class="form-control" name="enterpriseName" value={{orgMessage.enterpriseName}} readonly>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="modifyUser" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">创建人：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                  <input type="text" id="modifyUser" class="form-control" name="modifyUser" value={{orgMessage.createUserName}} readonly>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="telephoneNum" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">联系电话：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                  <input type="text" id="telephoneNum" class="form-control" name="telephoneNum" value={{orgMessage.telephoneNum}} readonly>
+                </div>
+
+              </div>
+              <div class="form-group">
+                <label for="creatTime" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">创建时间：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                  <input type="text" id="creatTime" class="form-control" name="creatTime" value={{orgMessage.createTime}} readonly>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="description" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">描述：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+
+                  <textarea class="form-control input-color" id="description" name="description" value={{orgMessage.description}} cols="20" rows="10" readonly></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="remark" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">备注：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                  <textarea class="form-control input-color" id="remark" name="remark" value={{orgMessage.remark}} cols="20" rows="10" readonly></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <button type="button" class="btn btn-default pull-right btn-space" (click)="viewModal.hide()">取消</button>
+            </div>
+            <div style="clear:both;"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--修改 弹出框-->
+  <div class="modal fade common-modal" bsModal #editModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title pull-left"><span><span>{{message}}</span>—<span>修改组织机构</span></span>
+          </h4>
+          <button type="button" class="close pull-right colorbgc" (click)="editModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" role="form" #orgform="ngForm" *ngIf="orgMessage">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+              <div class="form-group">
+                <label for="orgName" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label laber-color">组织机构名称：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 input-color">
+                  <input type="text" class="form-control input-color" name="orgName" #orgName='ngModel' maxlength="20" [(ngModel)]="orgMessage.orgName" required pattern='^([A-Za-z]|[\u4E00-\u9FA5])+$' (blur)="isExist(this.orgMessage.orgName,this.enterpriseId,this.parentId,this.orgId)">
+                  <span class="modal-rule">长度1-20字符，中英文皆可</span> </div>
+                <span *ngIf="orgName.errors && (orgName.dirty || orgName.touched)" class='error'>
+                                  <span [hidden]="!orgName.errors.required">
+                                   组织机构名称不能为空
+                                </span>
+                <span [hidden]="!orgName.errors.pattern">
+                                    格式不正确
+                                </span>
+                </span>
+                <span [hidden]="isExistRel" class="fal">
+                                  {{isExistMes}}
+                                 </span>
+              </div>
+              <div class="form-group" *ngIf="parentIdIsExit">
+                <label for="parentId" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">父组织机构：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 input-color">
+                  <span class='caret-down'></span>
+                  <input type="text" class="form-control" name="parentId" required (click)='isShow(dropdowntree)' [(ngModel)]='parentName' readonly>
+                  <div class="dropdowntree" #dropdowntree>
+                    <p-tree [value]="dropDownTree" selectionMode="single" (onNodeSelect)="dropDownSelect($event,dropdowntree)" (onNodeUnselect)="nodeUnselect($event)"></p-tree>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="telephoneNum" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label laber-color">联系电话：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 input-color">
+                  <!--<input type="text" class="form-control input-color" name="telephoneNum" #telephoneNum='ngModel' [(ngModel)]="orgMessage.telephoneNum" pattern='^0\d{2,3}-?\d{7,8}$'>-->
+                  <input type="text" class="form-control input-color" name="telephoneNum" #telephoneNum='ngModel' [(ngModel)]="orgMessage.telephoneNum" (blur)="telephoneVerification(orgMessage.telephoneNum)">
+                  <span class="modal-rule">手机号,固定电话:区号+号码,区号以0开头,3位或4位号码由7位或8位数字组成</span>
+                </div>
+                <span *ngIf="telephoneMismatch" class="fal">
+                                    电话号码格式不正确
+                                </span>
+              </div>
+              <div class="form-group">
+                <label for="description" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label laber-color">描述：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 input-color">
+                  <textarea class="form-control input-color" id="description" name="description" placeholder='最多200个字' [(ngModel)]="orgMessage.description" maxlength='2000' cols="20" rows="10"></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="remark" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label laber-color">备注：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 input-color">
+                  <textarea class="form-control input-color" id="remark" name="remark" placeholder='最多200个字' [(ngModel)]="orgMessage.remark" maxlength='2000' cols="10" rows="10"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <button type="button" class="btn btn-default pull-right btn-space" (click)="hide(editModal)">取消</button>
+              <button type="button" class="btn btn-default pull-right btn-space btn-reset" (click)="editSave(editModal)" [disabled]="!orgform.form.valid|| isEixtShow || telephoneMismatch">保存</button>
+            </div>
+            <div style="clear:both;"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--添加弹出框 -->
+  <div class="modal fade common-modal" bsModal #addModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title pull-left modal-title-color">添加组织机构</h4>
+          <button type="button" class="close pull-right colorbgc" (click)="hiden(addModal,addform)" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" #addform="ngForm" novalidate="false">
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group">
+                <label for="orgName" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label">组织机构名称：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 input-color">
+                  <input type="text" class="form-control" name="orgName" required #orgName='ngModel' [(ngModel)]="model.orgName" maxlength="20" pattern='^([A-Za-z]|[\u4E00-\u9FA5])+$' (blur)="isExist(this.model.orgName,this.enterpriseId,this.model.parentId,this.orgId)">
+                  <span class="modal-rule">长度1-20字符，中英文皆可</span>
+                </div>
+                <span *ngIf="orgName.errors && (orgName.dirty || orgName.touched)" class='error'>
+                                   <span [hidden]="!orgName.errors.required">
+                                    组织机构名称不能为空
+                                </span>
+                <span [hidden]="!orgName.errors.pattern">
+                                    格式不正确
+                                </span>
+                </span>
+                <span [hidden]="isExistRel" class="fal">
+                                    {{isExistMes}}
+                                </span>
+              </div>
+              <div class="form-group">
+                <label for="parentId" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label laber-color">父组织机构：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 input-color">
+                  <span class='caret-down'></span>
+                  <input type="text" class="form-control input-color" id="parentId" name="parentId" (click)='isShow(dropdowntree)' [(ngModel)]='parentName' required readonly>
+                  <div class="dropdowntree input-color" #dropdowntree>
+                    <p-tree [value]="dropDownTree" selectionMode="single" [(selection)]="selectedFile" (onNodeSelect)="addDropDownSelect($event,dropdowntree)"></p-tree>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="telephoneNum" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label laber-color">联系电话：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 input-color">
+                  <input type="text" class="form-control input-color" name="telephoneNum" #telephoneNum='ngModel' [(ngModel)]="model.telephoneNum" (blur)="telephoneVerification(model.telephoneNum)">
+                  <span class="modal-rule">手机,固话:区号+号码,区号以0开头,3位或4位号码由7位或8位数字组成</span>
+                </div>
+                <span *ngIf="telephoneMismatch" class="fal">
+                                    电话号码格式不正确
+                                </span>
+              </div>
+              <div class="form-group">
+                <label for="description" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label laber-color">描述：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 input-color">
+                  <textarea class="form-control input-color" id="description" name="description" placeholder='最多200个字' [(ngModel)]="model.description" maxlength='2000' cols="20" rows="10"></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="remark" class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label laber-color">备注：</label>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 input-color">
+                  <textarea class="form-control input-color" id="remark" name="remark" placeholder='最多200个字' [(ngModel)]="model.remark" maxlength='2000' cols="10" rows="10"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <button type="button" class="btn btn-default pull-right btn-space" (click)="hiden(addModal,addform)">取消</button>
+              <button type="submit" class="btn btn-default pull-right btn-space btn-reset" (click)="addSave(addModal,addform)" [disabled]="!addform.form.valid||isEixtShow||telephoneMismatch">保存</button>
+            </div>
+            <div style=" clear:both; "></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

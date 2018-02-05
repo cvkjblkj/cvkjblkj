@@ -1,0 +1,57 @@
+@import "theme/theme";
+.modal-backdrop {
+    z-index: 994!important;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #000;
+}
+
+select.form-control:not([multiple]) option {
+    color: #333!important;
+}
+.caret-down {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 2px;
+    vertical-align: middle;
+    border-top: 6px solid;
+    border-top: 4px solid\9;
+    border-right: 3px solid transparent;
+    border-left: 3px solid transparent;
+}
+
+.journal-info .input-box .chosen {
+      display: inline-block;
+      height: 22px;
+      line-height: normal;
+      background: #E5F5FD;
+      font-size: 12px;
+      color: #333;
+      padding: 3px 6px 7px 6px;
+      margin-right: 6px;
+      margin-bottom: 5px;
+      border-radius: 3px;
+      .text {
+        display: inline-block;
+        font-size: 12px;
+        line-height: normal;
+        max-width: 80px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      .chosen-remove {
+        cursor: pointer;
+        margin-left: 5px;
+        color: #00A0EA;
+        font-size: 8px;
+        position: relative;
+        top: -3px;
+      }
+    }
+
+

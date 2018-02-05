@@ -1,0 +1,198 @@
+<div class="micro-service system-tab-content">
+  <div class="search-filter filter-condition">
+    <div class="date-search">
+      <!--时间选择-->
+      <ul class="date-list clearfix" (click)="datePicker($event)">
+        <li><span [ngClass]="{'bgc-checked':isClick=='one'}" id="one">最近1小时</span></li>
+        <li><span [ngClass]="{'bgc-checked':isClick=='three'}" id="three">最近3小时</span></li>
+        <li><span [ngClass]="{'bgc-checked':isClick=='six'}" id="six">最近6小时</span></li>
+        <li class='self-date'>
+
+          <span [ngClass]="{'bgc-checked':isClick=='self'|| isSelectedDate}" id='self'>自定义</span>
+          <span class="show-time" *ngIf="isSelectedDate">{{dateStartShow }} ~ {{dateEndShow }} </span>
+          <div class="date-picker appService clearfix primeng-datePicker" *ngIf="isClick=='self'" (click)='stopBubble($event)'>
+            <div class="fl calendar-father">
+              <!--[maxDate]='dateEndShow'-->
+              <!--<span class="time-show">{{ dateStartShow ? dateStartShow : dateStart | date:'yyyy-MM-dd HH:mm:ss'}}</span>-->
+              <p-calendar [(ngModel)]="dateStart" [inline]="true" [showSeconds]='true' [monthNavigator]="true" showTime="showTime" hourFormat="24" [yearNavigator]="true" yearRange="2000:2030" [style]="{'position':'relative','top':'-16px'}" (onSelect)='selectStartDate($event)'
+                [locale]="zn" [maxDate]='dateEnd'></p-calendar>
+            </div>
+            <!--<span style="margin:0 2px">---</span>-->
+            <div class="fr calendar-father">
+              <!--[maxDate]='maxDate'
+                [minDate]='dateStart-->
+              <!--<span class="time-show">{{ dateEndShow ? dateEndShow : dateEnd | date:'yyyy-MM-dd HH:mm:ss'}}</span>-->
+              <p-calendar [(ngModel)]="dateEnd" [inline]="true" [showSeconds]='true' [monthNavigator]="true" showTime="showTime" hourFormat="24" [yearNavigator]="true" yearRange="2000:2030" [style]="{'position':'relative','top':'-16px'}" (onSelect)='selectEndDate($event)'
+                [locale]="zn" [minDate]='dateStart' [maxDate]='maxDate'></p-calendar>
+            </div>
+            <div class="button" style="clear:both;clear:both;position: absolute;bottom: -10px;right: 0;">
+              <button class="btn btn-reset sure" (click)='sure($event)'>确定</button>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <!--搜索框条件-->
+      <div class="select-box clearfix primeng-dropdown">
+        <div class="filter-box clearfix">
+          <div class="fl">
+            <span style='line-height:24px'>筛选：</span>
+          </div>
+          <div class="fl">
+            <div class="filter-item clearfix" *ngFor="let i of loop">
+              <span style="display:inline-block;margin-right:10px;float:left">
+                <p-dropdown *ngIf="filterSearchData[i][0] || i==row" [options]="microServiceFilterData" [(ngModel)]="filterSearchData[i][0]"
+                  (onChange)='changeSelectData($event,i)' placeholder="请选择---" [style]="{'width':'150px','float':'left'}" filter="filter">
+                </p-dropdown>
+              </span>
+              <span *ngIf="filterSearchData[i][0]" class="primeng-chips primeng-multiSelect" style="display:inline-block;margin-left:10px">
+                <p-chips *ngIf="!filterSearchData[i][2]"  [(ngModel)]="filterSearchData[i][1]" (onAdd)="addValue($event,i)" (onRemove)="removeValue($event)" [max]='20' [style]="{'float':'left'}"></p-chips>
+                <p-multiSelect *ngIf="filterSearchData[i][2]" [style]="{'min-width':'130px','float':'left'}" [options]="dropdownData[filterSearchData[i][2]]" (onChange)="addValue($event,i)" [(ngModel)]="filterSearchData[i][1]" [defaultLabel]="defaultLabel"></p-multiSelect>
+                <span *ngIf="filterSearchData[i][0]" class="select-close" (click)="reset(i)">&times;</span>
+              </span>
+
+            </div>
+          </div>
+
+        </div>
+        <!--<div *ngIf="Property" class="Property">-->
+        <!--<span>当前仅显示前1000条数据，改进筛选条件以查看其他数据</span>-->
+        <!--</div>-->
+        <query-data-overloaded *ngIf="totalItems > 1000" class="message-info" [total]="totalItems"></query-data-overloaded>
+        <button class="btn btn-reset search-btn" [disabled]='isSearched' (click)="search()">搜索</button>
+      </div>
+
+    </div>
+  </div>
+  <div class="list list-order">
+
+    <p-dataTable #dt [value]="selectListData" [emptyMessage]='emptyMessage' (onSort)="changeSort($event)" [sortField]="sortF" [sortOrder]="sortO">
+      <p-column field="serviceName" header="服务名称" [sortable]="true"></p-column>
+      <p-column field="requestURI" header="请求URI" [sortable]="true"></p-column>
+      <p-column field="logLevel" header="日志级别" [sortable]="true"></p-column>
+      <p-column field="createTime" header="创建时间" [sortable]="true"></p-column>
+      <p-column header="操作">
+        <template let-view="rowData" pTemplate="body">
+          <span class="operate">
+                <!--[disabled]='!button.appRoleEditBtn'-->
+            <button class="editor" (click)="viewShow(viewModal,view)">查看</button>
+          </span>
+        </template>
+      </p-column>
+    </p-dataTable>
+    <div class="download-position" [hidden]="!selectListData ||(selectListData && selectListData.length==0)">
+      <button class="btn btn-reset button-position" [disabled]="!button.microservicesLogDownload" (click)="downloadShow()">
+        <i class="fa fa-download" aria-hidden="true"></i>
+        下载
+      </button>
+      <grid-pagination [totalPages]='totalPages ' [totalItems]='totalItems > 1000 ? 1000: totalItems' [size]='size ' [pageSize]='rowsPerPageOptions ' [maxSize]='maxSize ' (sizeChanged)='sizeChanged($event) ' (pageChanged)='paginate($event) '></grid-pagination>
+    </div>
+
+  </div>
+
+
+
+
+</div>
+
+
+
+<div class="modal fade common-modal" bsModal #viewModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">日志详情</h4>
+        <button type="button" class="close pull-right colorbgc" aria-label="Close" (click)="viewModal.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+      </div>
+      <div class="modal-body" style="padding-top:15px">
+        <div class="view" *ngIf="detailData" style="margin-bottom:50px;overflow:auto">
+          <!--<div class="confirm">
+            <span>基本信息</span>
+          </div>-->
+
+          <table border class="table-view" style="table-layout:fixed">
+            <tbody>
+              <tr>
+                <td>服务名称</td>
+                <td>{{detailData.serviceName}}</td>
+                <!--<td>API</td>
+                    <td>{{detailData.api}}</td>-->
+                <td>日志级别</td>
+                <td>{{detailData.logLevel}}</td>
+              </tr>
+              <tr>
+
+                <td>创建时间</td>
+                <td>{{detailData.createTime}}</td>
+                <td>链路节点</td>
+                <td>{{detailData.linkNode}}</td>
+              </tr>
+              <tr>
+
+                <td>异常编码</td>
+                <td>{{detailData.errorCode}}</td>
+                <td>应用名称</td>
+                <td>{{detailData.appName}}</td>
+              </tr>
+              <tr>
+
+                <td>应用版本</td>
+                <td>{{detailData.appVersion}}</td>
+                <td>应用ID</td>
+                <td>{{detailData.appId}}</td>
+              </tr>
+              <tr>
+                <td>服务端IP</td>
+                <td>{{detailData.serviceIp}}</td>
+                <td>服务端端口</td>
+                <td>{{detailData.servicePort}}</td>
+
+              </tr>
+              <tr>
+
+                <td>请求URI</td>
+                <td>{{detailData.requestURI}}</td>
+                <td>客户端类型</td>
+                <td>{{detailData.clientType}}</td>
+              </tr>
+              <tr>
+
+                <td>用户姓名</td>
+                <td>{{detailData.userName}}</td>
+                <td>用户ID</td>
+                <td>{{detailData.userId}}</td>
+              </tr>
+
+              <tr>
+                <td rowspan='4'>日志信息</td>
+                <td colspan='3' rowspan='4'>{{detailData.logInfo}}</td>
+              </tr>
+              <tr style="height:80px">
+              </tr>
+              <tr>
+              </tr>
+              <tr>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-body" style="border-top: 1px solid #e5e5e5;padding-top: 12px;margin-top:24px;padding-right: 0;">
+          <button class="btn btn-reset fr" (click)='viewModal.hide()'>关闭</button>
+        </div>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--提示信息-->
+<p-growl [value]="msgs"></p-growl>
+
+<p-confirmDialog header="提示" icon="fa fa-question-circle" width="425" #cd>
+  <p-footer>
+    <button type="button" pButton icon="fa-close" label="取消" (click)="cd.reject()" class="btn-cancle"></button>
+    <button type="button" pButton icon="fa-check" label="确认" (click)="cd.accept()" class="btn-reset"></button>
+  </p-footer>
+</p-confirmDialog>

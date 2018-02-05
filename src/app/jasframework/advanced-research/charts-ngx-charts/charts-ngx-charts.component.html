@@ -1,0 +1,315 @@
+<div>ngx-charts</div>
+<header class="table-viewer-header ">
+  <span class="table-viewer-topBar-title">Bar Charts</span>
+
+</header>
+<div style="width: 800px; height: 420px;">
+  <ngx-charts-bar-horizontal-2d
+    [view]="[700, 400]"
+    [scheme]="{domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']}"
+    [results]="multi"
+    [gradient]="false"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [legend]="showLegend"
+    [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [xAxisLabel]="xAxisLabel"
+    [yAxisLabel]="yAxisLabel"
+    (select)="onSelect($event)">
+  </ngx-charts-bar-horizontal-2d>
+</div>
+<div>
+  <p></p><p></p>
+</div>
+<div style="width: 800px; height: 420px;">
+  <ngx-charts-bar-vertical
+    [view]="[700, 400]"
+    [scheme]="{domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']}"
+    [results]="single"
+    [gradient]="false"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [legend]="showLegend"
+    [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [xAxisLabel]="xAxisLabel"
+    [yAxisLabel]="yAxisLabel"
+    (select)="onSelect($event)">
+  </ngx-charts-bar-vertical>s
+</div>
+
+<div>
+  <p></p>
+  <p></p>
+</div>
+<div style="width: 800px; height: 420px;">
+  <ngx-charts-bar-vertical-2d
+    [view]="[700, 400]"
+    [scheme]="{domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']}"
+    [results]="multiOne"
+    [gradient]="false"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [legend]="showLegend"
+    [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [xAxisLabel]="xAxisLabel"
+    [yAxisLabel]="yAxisLabel"
+    (select)="onSelect($event)">
+  </ngx-charts-bar-vertical-2d>
+</div>
+
+<div>
+  <p></p>
+  <p></p>
+</div>
+<div style="width: 800px; height: 420px;">
+  <ngx-charts-bar-horizontal-stacked
+    [view]="[700, 400]"
+    [scheme]="{domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']}"
+    [results]="multiOne"
+    [gradient]="false"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [legend]="showLegend"
+    [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [xAxisLabel]="xAxisLabel"
+    [yAxisLabel]="yAxisLabel"
+    (select)="onSelect($event)">
+  </ngx-charts-bar-horizontal-stacked>
+</div>
+
+<div>
+  <p></p>
+  <p></p>
+</div>
+<div style="width: 800px; height: 420px;">
+  <ngx-charts-bar-vertical-normalized
+    [view]="[700, 400]"
+    [scheme]="{domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']}"
+    [results]="multiOne"
+    [gradient]="false"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [legend]="showLegend"
+    [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [xAxisLabel]="xAxisLabel"
+    [yAxisLabel]="yAxisLabel"
+    (select)="onSelect($event)">
+  </ngx-charts-bar-vertical-normalized>
+</div>
+
+<div class="table-viewer-header ">
+  <span class="table-viewer-topBar-title">Pie Chart</span>
+</div>
+<div style="width: 800px; height: 420px;">
+  <ngx-charts-pie-chart
+    [view]="[700, 400]"
+    [scheme]="{domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']}"
+    [results]="single"
+    [legend]="true"
+    [explodeSlices]="explodeSlices"
+    [labels]="true"
+    [doughnut]="doughnut"
+    [gradient]="false"
+    (select)="onSelect($event)">
+  </ngx-charts-pie-chart>
+</div>
+<div>
+  <p></p>
+  <p></p>
+</div>
+<div style="width: 800px; height: 420px;">
+  <ngx-charts-advanced-pie-chart
+    [view]="[700, 400]"
+    [scheme]="{domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']}"
+    [results]="single"
+    [gradient]="true"
+    (select)="onSelect($event)">
+  </ngx-charts-advanced-pie-chart>
+</div>
+<div>
+  <p></p>
+  <p></p>
+</div>
+<div style="width: 800px; height: 420px;">
+  <ngx-charts-pie-grid
+    [view]="[700, 400]"
+    [scheme]="{domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']}"
+    [results]="single"
+    (select)="onSelect($event)">
+  </ngx-charts-pie-grid>
+</div>
+
+<div class="table-viewer-header ">
+  <span class="table-viewer-topBar-title">Line/Area Charts</span>
+</div>
+<div style="width: 800px; height: 420px;">
+  <ngx-charts-line-chart
+    [view]="[700, 400]"
+    [scheme]="{domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']}"
+    [results]="multiTwo"
+    [gradient]="gradient"
+    [xAxis]="true"
+    [yAxis]="true"
+    [legend]="true"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [xAxisLabel]="'Country'"
+    [yAxisLabel]="'Population'"
+    [autoScale]="true"
+    (select)="onSelect($event)">
+  </ngx-charts-line-chart>
+</div>
+<div style="width: 800px; height: 420px;">
+  <ngx-charts-area-chart
+    [view]="[700, 400]"
+    [scheme]="{domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']}"
+    [results]="multiTwo"
+    [gradient]="gradient"
+    [xAxis]="true"
+    [yAxis]="true"
+    [legend]="true"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [xAxisLabel]="'Country'"
+    [yAxisLabel]="'Population'"
+    [autoScale]="true"
+    (select)="onSelect($event)">
+  </ngx-charts-area-chart>
+</div>
+<div style="width: 800px; height: 420px;">
+  <ngx-charts-area-chart-stacked
+    [view]="[700, 400]"
+    [scheme]="{domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']}"
+    [results]="multiTwo"
+    [gradient]="gradient"
+    [xAxis]="true"
+    [yAxis]="true"
+    [legend]="true"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [xAxisLabel]="'Country'"
+    [yAxisLabel]="'Population'"
+    (select)="onSelect($event)">
+  </ngx-charts-area-chart-stacked>
+</div>
+<div style="width: 800px; height: 420px;">
+  <ngx-charts-area-chart-normalized
+    [view]="[700, 400]"
+    [scheme]="{domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']}"
+    [results]="multiTwo"
+    [gradient]="gradient"
+    [xAxis]="true"
+    [yAxis]="true"
+    [legend]="true"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [xAxisLabel]="'Country'"
+    [yAxisLabel]="'Population'"
+    (select)="onSelect($event)">
+  </ngx-charts-area-chart-normalized>
+</div>
+
+
+<div class="table-viewer-header ">
+  <span class="table-viewer-topBar-title">Heat Map Charts</span>
+</div>
+<div style="width: 800px; height: 420px;">
+  <ngx-charts-heat-map
+    [view]="[700, 400]"
+    [scheme]="{domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']}"
+    [results]="multiTwo"
+    [legend]="true"
+    [gradient]="gradient"
+    [xAxis]="true"
+    [yAxis]="true"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [xAxisLabel]="'Country'"
+    [yAxisLabel]="'Population'"
+    (select)="onSelect($event)">
+  </ngx-charts-heat-map>
+</div>
+
+<div class="table-viewer-header ">
+  <span class="table-viewer-topBar-title">Tree Map Charts</span>
+</div>
+<div style="width: 800px; height: 420px;">
+  <ngx-charts-tree-map
+    [view]="[700, 400]"
+    [scheme]="{domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']}"
+    [results]="single"
+    (select)="onSelect($event)">
+  </ngx-charts-tree-map>
+</div>
+
+<div class="table-viewer-header ">
+  <span class="table-viewer-topBar-title">Number Card Charts</span>
+</div>
+<div style="width: 800px; height: 420px;">
+  <ngx-charts-number-card
+    [view]="[700, 400]"
+    [scheme]="{domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']}"
+    [results]="single"
+    (select)="onSelect($event)">
+  </ngx-charts-number-card>
+</div>
+
+<div class="table-viewer-header ">
+  <span class="table-viewer-topBar-title">Gauge Charts</span>
+</div>
+<div style="width: 800px; height: 420px;">
+  <ngx-charts-gauge
+    [view]="[700, 400]"
+    [scheme]="{domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']}"
+    [results]="single"
+    [min]="0"
+    [max]="100"
+    [angleSpan]="240"
+    [startAngle]="-120"
+    [units]="'哎呀,咋地'"
+    [bigSegments]="10"
+    [smallSegments]="5"
+    (select)="onSelect($event)">
+  </ngx-charts-gauge>
+</div>
+
+<div class="table-viewer-header ">
+  <span class="table-viewer-topBar-title">Linear Gauge Charts</span>
+</div>
+<div style="width: 800px; height: 420px;">
+  <ngx-charts-linear-gauge
+    [view]="[200, 100]"
+    [scheme]="{domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']}"
+    [value]="60"
+    [previousValue]="80"
+    [min]="0"
+    [max]="100"
+    [units]="'温度计'"
+    (select)="onSelect($event)">
+  </ngx-charts-linear-gauge>
+</div>
+
+<div class="table-viewer-header ">
+  <span class="table-viewer-topBar-title">bubble-chart Charts</span>
+</div>
+<div style="width: 800px; height: 420px;"> <!--[title]="'123321'"-->
+  <ngx-charts-bubble-chart
+    [view]="[700, 400]"
+    [scheme]="{domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']}"
+    [results]="multiThree"
+    [legend]="true"
+    [xAxis]="true"
+    [yAxis]="true"
+    [autoScale]="true"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [xAxisLabel]="'Country'"
+    [yAxisLabel]="'Population'"
+    (select)="onSelect($event)">
+  </ngx-charts-bubble-chart>
+</div>

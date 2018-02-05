@@ -1,0 +1,167 @@
+<div class="alarm-rule component journal-info clearfix primeng-treeTable">
+
+    <div class="filter col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class=" clearfix primeng-dropdown">
+            <div class="filter-box clearfix">
+                <div class="fl">
+                    <span style='line-height:24px'>筛选：</span>
+                </div>
+                <div class="fl">
+                    <div class="filter-item clearfix" *ngFor="let i of loop">
+                        <span style="display:inline-block;margin-right:10px;float:left">
+                <p-dropdown *ngIf="filterSearchData[i][0] || i==row" [options]="alarmOpions" [(ngModel)]="filterSearchData[i][0]" (onChange)='changeSelectData($event,i)'
+                placeholder="请选择---" [style]="{'width':'150px','float':'left'}" filter="filter">
+              </p-dropdown>
+              </span>
+
+                        <span *ngIf="filterSearchData[i][0]" class="primeng-chips primeng-multiSelect">
+                <p-chips *ngIf="!filterSearchData[i][2]"  [(ngModel)]="filterSearchData[i][1]" (onAdd)="addValue($event,i)" (onRemove)="removeValue($event)" [max]='20' #chips [style]="{'float':'left'}"></p-chips>
+                <p-multiSelect *ngIf="filterSearchData[i][2]" [style]="{'min-width':'130px','float':'left'}" [options]="dropdownData[filterSearchData[i][2]]" (onChange)="addValue($event,i)" [(ngModel)]="filterSearchData[i][1]"
+                [defaultLabel]="defaultLabel"></p-multiSelect>
+                <span *ngIf="filterSearchData[i][0]" class="select-close" (click)="reset(i)">&times;</span>
+                        </span>
+
+                    </div>
+                </div>
+
+            </div>
+            <button class="btn btn-reset search-btn" [disabled]='isSearched' (click)="searchData()">搜索</button>
+        </div>
+    </div>
+    <p-growl [value]="msgs"></p-growl>
+    <p-confirmDialog icon="iconfont-jas icon-jas-gantanhao11-copy" width="425" #cd>
+        <p-footer>
+            <button type="button" pButton icon="fa-close" label="取消" (click)="cd.reject()" class="btn-cancle"></button>
+            <button type="button" pButton icon="fa-check" label="确认" class="btn btn-default pull-right btn-space" (click)="cd.accept()" class="btn-reset"></button>
+        </p-footer>
+    </p-confirmDialog>
+    <div class="alarmContent ">
+        <div class="listContent list-order">
+            <p-dataTable [value]="ruleDate" [emptyMessage]='emptyMessage' (onSort)="changeSort($event)" [sortField]="sortF" [sortOrder]="sortO">
+
+                <p-column field="ruleName" [sortable]="true" header="规则名称"></p-column>
+                <!--field="ruleStates"-->
+                <p-column field='ruleStates' header="规则状态" [style]="{'width':'10%'}" [sortable]="true">
+                    <template let-Modal="rowData" pTemplate='body'>
+                       <div *ngIf="Modal.ruleStates=='0'" class="oneStatus">
+                            {{Modal.ruleStatesData}}
+                       </div>
+                       <div *ngIf="Modal.ruleStates=='1'" class="twoStatus">
+                            {{Modal.ruleStatesData}}
+                       </div>
+                        <div *ngIf="Modal.ruleStates=='2'" class="threeStatus">
+                            {{Modal.ruleStatesData}}
+                       </div>
+                        <div *ngIf="Modal.ruleStates=='3'" class=" fourStatus">
+                            {{Modal.ruleStatesData}}
+                       </div>
+                    </template>
+                </p-column>
+                <p-column field="isEnable" [sortable]="true" header="启用/禁用" [style]="{'width':'10%'}"></p-column>
+                <p-column field="metric" [sortable]="true" [style]="{'width':'16%'}" header="规则描述"></p-column>
+                <p-column field="metricDescribe" [sortable]="true" header="监控项"></p-column>
+                <p-column field="monitorObject" [sortable]="true" header="监控对象"></p-column>
+                <p-column field="monitorType" [sortable]="true" [style]="{'width':'10%'}" header="监控类别"></p-column>
+                <p-column field="notifyUserName" [sortable]="true" [style]="{'width':'10%'}" header="通知人"></p-column>
+                <p-column header="操作" [style]="{'width':'150px','text-align':'right'}">
+                    <template let-Modal="rowData" pTemplate='body'>
+                  <div style="float:right">
+
+
+                     <span class="operate">
+                      <button type="button" class="look btn " (click)="look(Modal,addModal)" [disabled]="!button.alarmViewButton"><span>查看</span></button>
+                      <span>&nbsp;| &nbsp;</span>
+                      <button type="button"  class="edit btn " (click)="edit(Modal)" [disabled]="!button.alarmEditButton"><span>编辑</span></button>
+                     <span>&nbsp;|&nbsp;</span>
+                     <button  class="history btn" (click)="history(Modal)" [disabled]="!button.alarmHistoryButton"><span>历史</span></button>
+                    </span>
+                  </div>
+                  <div style="clear:both;position: relative;top: 10px;">
+
+                  <span class="operate">
+                     <button type="button" class="default btn" *ngIf="Modal.isEnable=='已启用'"   (click)="defaultClick(Modal)" [disabled]="!button.alarmDefaultButton"><span>禁用</span></button>
+                    <button type="button" class="start btn " *ngIf="Modal.isEnable=='已禁用'"    (click)="startClick(Modal)" [disabled]="!button.alarmStartButton"><span>启用</span></button>
+                    <span>&nbsp;|&nbsp;</span>
+                   <button type="button" class="delete btn" (click)="deleteClick(Modal)"   [disabled]="!button.alarmDeleteButton"><span>删除</span></button>
+                  </span>
+
+
+                  </div>
+
+
+        </template>
+                </p-column>
+
+            </p-dataTable>
+            <div *ngIf="rows?.length != 0">
+                <grid-pagination [totalPages]='totalPages' [totalItems]='totalItems' [size]='size' [pageSize]='rowsPerPageOptions' [maxSize]='maxSize' (sizeChanged)='sizeChanged($event)' (pageChanged)='paginate($event)'></grid-pagination>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal fade common-modal" bsModal #addModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left modal-title-color">报警规则详情</h4>
+                <button type="button" class="close pull-right colorbgc" (click)="addModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <div class="modal-body">
+                <form #addForm="ngForm" class="form-horizontal" novalidate="false">
+
+                    <table class="ruleTable" *ngIf="ruleValue">
+                        <tr class="table-cell">
+                            <td class="table-td">规则名称</td>
+                            <td class="table-tr"><span>{{ruleValue.ruleName}}</span></td>
+                            <td class="table-td">规则状态</td>
+                            <td class="table-tr"><span>{{ruleValue.ruleStatesData}}</span></td>
+                        </tr>
+                        <tr class="table-cell">
+                            <td class="table-td">监控项</td>
+                            <td class="table-tr">{{ruleValue.metricDescribe}}</td>
+                            <td class="table-td">监控对象</td>
+                            <td class="table-tr">{{ruleValue.monitorObject}}</td>
+                        </tr>
+                        <tr class="table-cell">
+                            <td class="table-td">监控类别</td>
+                            <td class="table-tr">{{ruleValue.monitorType}}</td>
+                            <td class="table-td">启用/禁用</td>
+                            <td class="table-tr">{{ruleValue.isEnable}}</td>
+                            <!--<td class="table-td">规则描述</td>
+                            <td class="table-tr" style="width:85%">{{ruleValue.metricDescribe}}</td>-->
+                        </tr>
+                        <tr>
+                            <!--<span>规则描述</span><span>{{ruleValue.metricDescribe}}</span>-->
+                            <td class="table-td" colspan='1'>规则描述</td>
+                            <td class="table-tr" colspan='3'>{{ruleValue.metricDescribeData}}</td>
+                        </tr>
+                        <tr class="table-cell">
+
+                            <td class="table-td">通知人</td>
+                            <td class="table-tr">{{ruleValue.notifyUserName}}</td>
+                            <td class="table-td">通知方式</td>
+                            <td class="table-tr">{{ruleValue.notifyType}}</td>
+                        </tr>
+                        <tr class="table-cell">
+                            <td class="table-td">创建人</td>
+                            <td class="table-tr">{{ruleValue.createUserName}}</td>
+                            <td class="table-td">创建时间</td>
+                            <td class="table-tr">{{ruleValue.createTime}}</td>
+                        </tr>
+                    </table>
+
+
+
+
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-body">
+                        <button type="button" class="btn btn-reset pull-right btn-space" (click)="addModal.hide()">关闭</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

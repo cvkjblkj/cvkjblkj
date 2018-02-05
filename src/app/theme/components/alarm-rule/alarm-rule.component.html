@@ -1,0 +1,25 @@
+<div class="monitorRule">
+    <div class="ruleName">
+        <span class="sign">*</span>
+        <span>规则名称：</span>
+        <p-autoComplete [(ngModel)]="filterSearchData" [size]='30'></p-autoComplete>
+    </div>
+    <div class="ruleContent">
+
+        <span class="sign">*</span>
+        <span>规则内容：</span>
+        <p-dropdown [options]="dropDownServerNames" [(ngModel)]="selectServerName" placeholder="请选择服务名" (onChange)="onChangeService(selectServerName)" [style]="{'min-width':'210px','padding':'1px'}"></p-dropdown>
+        <p-dropdown [options]="dropDownServerNames" [(ngModel)]="selectServerName" (onChange)="onChangeService(selectServerName)" [style]="{'min-width':'20px','padding':'1px'}"></p-dropdown>
+        <p-dropdown [options]="dropDownServerNames" [(ngModel)]="selectServerName" (onChange)="onChangeService(selectServerName)" [style]="{'min-width':'20px','padding':'1px'}"></p-dropdown>
+        <p-dropdown [options]="dropDownServerNames" [(ngModel)]="selectServerName" (onChange)="onChange($event)" [style]="{'min-width':'20px','padding':'1px'}"></p-dropdown>
+
+        <p-spinner *ngIf="limitValue" size="10" [(ngModel)]="limit" [min]="0" [step]="1"></p-spinner>
+        <p-spinner size="10" [(ngModel)]="limit" [min]="0" [step]="1"></p-spinner>
+        <div *ngIf="dropDownServer" class="dropDownServer">
+            <span class="sign">*</span>
+            <span>端口：</span>
+            <p-dropdown [options]="dropDownServerNames" [(ngModel)]="selectServer" placeholder="请选择服务名" [style]="{'min-width':'210px','padding':'1px'}" filter='filter'></p-dropdown>
+        </div>
+        <div class="ruleLine"></div>
+    </div>
+</div>
